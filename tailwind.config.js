@@ -1,17 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src//*.{js,jsx,ts,tsx}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       colors: {
-        blueLight: '#B4D4FF',
-        blue: '#0E46A3'
-      },
-      fontFamily: {
-        title: ['sans-serif'],
-        subtitle: ['sans-serif'],
-        p: ['sans-serif']
-      },
+        primary: "#BDEB00",
+        secondary: {
+          100: "#1E1F25",
+          900: "#131517"
+
+        }
+      }
     },
   },
   plugins: [],

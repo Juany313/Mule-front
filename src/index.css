@@ -1,3 +1,11 @@
+/* Importaciones Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Para que se vea más lindo el scroll como en mac */
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
