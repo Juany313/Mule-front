@@ -1,5 +1,5 @@
 import React from 'react';
-import Error404 from '../pages/Error404'
+import Error404 from '../views/Error404'
 
 const LayoutError = () => {
   return (

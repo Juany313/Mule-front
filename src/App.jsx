@@ -5,28 +5,37 @@ import LayoutAuth from './layouts/LayoutAuth';
 import LayoutAdmin from './layouts/LayoutAdmin';
 import LayoutError from './layouts/LayoutError';
 /* Pages auth*/
-import Login from './pages/auth/Login';
-import Register from './pages/auth/Register';
-import ForgetPassword from './pages/auth/ForgetPassword';
+import Landing from './views/Landing';
+import Service from './views/Service';
+import Ordershipment from './views/Ordershipment';
+import About from './views/About';
+import Login from './views/auth/Login';
+import Register from './views/auth/Register';
+import ForgetPassword from './views/auth/ForgetPassword';
 
 /* Pages admin */
-import Home from './pages/admin/Home'
-import Chat from './pages/admin/Chat';
+import Home from './views/admin/Home'
 
 function App() {
  
   return (
     <BrowserRouter>
-      <Routes> 
+      <Routes > 
         <Route path='/auth' element={<LayoutAuth/>}>
           <Route index element={<Login/>}/>
           <Route path='registro' element={<Register/>}/>
           <Route path='olvide-password' element={<ForgetPassword/>}/>
         </Route>
-        <Route path='/' element={<LayoutAdmin/>}>
-          <Route index element={<Home/>}/>
-          <Route path='chat' element={<Chat/>}/>
+        
+          <Route exact path="/" element={<Landing/>}/> 
+
+        <Route path='/header' element={<LayoutAdmin/>}>
+          <Route  index element={<Home/>}/> 
+          <Route  path='about' element={<About/>}/> 
+          <Route  path='service' element={<Service/>}/> 
+          <Route  path='ordershipment' element={<Ordershipment/>}/> 
         </Route>
+
         <Route path='*' element={<LayoutError/>}/>
       </Routes>
     </BrowserRouter>
