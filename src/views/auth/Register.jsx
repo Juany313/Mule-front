@@ -28,6 +28,7 @@ const Register = () => {
             placeholder='Nombre/s'
           />
         </div>
+        
         <div className='relative mb-4'>
         <RiUserLine  className='absolute top-1/2 -translate-y-1/2 left-2 text-primary' />
           <input 
@@ -37,11 +38,35 @@ const Register = () => {
           />
         </div>
         <div className='relative mb-4'>
-        <RiMailLine  className='absolute top-1/2 -translate-y-1/2 left-2 text-primary' />
+          <RiUserLine  className='absolute top-1/2 -translate-y-1/2 left-2 text-primary' />
+          <input 
+            type="text"
+            className='py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary'
+            placeholder='DNI'
+          />
+        </div>
+        <div className='relative mb-4'>
+          <RiMailLine  className='absolute top-1/2 -translate-y-1/2 left-2 text-primary' />
           <input 
             type="email"
             className='py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary'
             placeholder='Correo electrónico'
+          />
+        </div>
+        <div className='relative mb-4'>
+          <RiMailLine  className='absolute top-1/2 -translate-y-1/2 left-2 text-primary' />
+          <input 
+            type="text"
+            className='py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary'
+            placeholder='Domicilio'
+          />
+        </div>
+        <div className='relative mb-4'>
+          <RiMailLine  className='absolute top-1/2 -translate-y-1/2 left-2 text-primary' />
+          <input 
+            type="text"
+            className='py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary'
+            placeholder='teléfono'
           />
         </div>
         <div className='relative mb-4'>
