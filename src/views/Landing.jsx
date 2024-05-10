@@ -25,9 +25,12 @@ const Landing = () => {
   }, [dispatch, allDrivers]);
 
   return (
-    <div className='min-h-screen'>
+    <div className='min-h-screen flex items-center justify-center'>
       <h1>Landing</h1>
-      <button onClick={()=>console.log(allDrivers)} className='bg-primary text-secondary-900'>GetDrivers</button>
+      <section className='w-[500px] h-[500px] '>
+        <img src="https://www.freepik.es/fotos-premium/mujer-tiro-medio-que-vive-casa-campo_53946251.htm" 
+        className='object-cover' />
+      </section>
     </div>
 
   )
