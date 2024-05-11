@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Link } from 'react-router-dom';
+import { Link } from 'react-scroll';
 const NavBar = () => {
   return (
     <nav className="bg-p300 p-4">
@@ -18,20 +18,32 @@ const NavBar = () => {
             >
               Inicio
             </NavLink>
-            <NavLink
-              to="/header/about"
-              className="text-white hover:text-gray-300 p-2"
-              activeClassName="text-blue-500"
-            >
-              Nosotros
-            </NavLink>
-            <NavLink
-              to="/header/service"
-              className="text-white hover:text-gray-300 p-2"
-              activeClassName="text-blue-500"
-            >
-              Servicios
-            </NavLink>
+            
+            
+            <span className="text-white hover:text-gray-300 p-2">
+              <Link
+                to="about"
+                spy={true}
+                smooth={true}
+                offset={-70} // Ajusta el offset según tu diseño
+                duration={700}
+              >
+                Nosotros
+              </Link>
+            </span>
+            <span className="text-white hover:text-gray-300 p-2">
+              <Link
+                to="service"
+                spy={true}
+                smooth={true}
+                offset={-70} // Ajusta el offset según tu diseño
+                duration={700}
+              >
+                Servicios
+              </Link>
+            </span>
+           
+            
             <NavLink
               to="/agencias"
               className="text-white hover:text-gray-300 p-2"
@@ -54,9 +66,9 @@ const NavBar = () => {
               Cotizar
             </NavLink>
             
-            <Link to ='/auth/' className='text-primary hover:text-gray-100 transition-colors '>
+            <NavLink to ='/auth/' className='text-primary hover:text-gray-100 transition-colors '>
               <button className="bg-s300 py-2 px-4 rounded">Ingresar</button>
-          </Link>
+          </NavLink>
 
           </div>
         </div>
