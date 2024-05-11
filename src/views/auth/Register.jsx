@@ -41,7 +41,7 @@ const Register = () => {
 
 
   return (
-    <div className='bg-secondary-100 p-8 rounded-xl w-auto  lg:w-[450px]'>
+    <div className='bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]'>
       <h1 className='text-3xl text-center uppercase font-bold tracking-[5px] text-white mb-8'>
         Crear  <span className='text-primary'>cuenta</span>
       </h1>
@@ -156,7 +156,7 @@ const Register = () => {
           
         </div>
         <div>
-          <button type='submit'className='bg-primary text-black uppercase font-bold text-sm w-full py-3 px-4 rounded-lg hover:text-gray-100 transition-colors'>
+          <button type='submit'className='bg-s300 text-black uppercase font-bold text-sm w-full py-3 px-4 rounded-lg hover:text-gray-100 transition-colors'>
             Registrarme
           </button>
         </div>

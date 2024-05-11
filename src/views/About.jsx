@@ -3,7 +3,7 @@ import about from "../assets/about.jpg";
 
 const About = () => {
   return (
-    <div className="bg-p300 flex justify-end w-full h-screen ">
+    <div className="bg-p300 flex justify-end w-full h-[90vh] ">
       <div
         className="w-full bg-cover bg-center h-3/4 bg-no-repeat"
         style={{ backgroundImage: `url(${about})` }}

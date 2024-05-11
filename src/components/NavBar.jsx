@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
+import { Link } from 'react-router-dom';
 const NavBar = () => {
   return (
     <nav className="bg-p300 p-4">
@@ -53,7 +53,11 @@ const NavBar = () => {
             >
               Cotizar
             </NavLink>
-            <button className="bg-s300 py-2 px-4 rounded">Ingresar</button>
+            
+            <Link to ='/auth/' className='text-primary hover:text-gray-100 transition-colors '>
+              <button className="bg-s300 py-2 px-4 rounded">Ingresar</button>
+          </Link>
+
           </div>
         </div>
       </div>
