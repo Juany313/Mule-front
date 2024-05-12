@@ -43,6 +43,13 @@ const NavBar = () => {
               Agencias
             </NavLink>
             <NavLink
+              to="pedido"
+              className="text-white hover:text-gray-300 p-2"
+              activeClassName="text-blue-500"
+            >
+              Iniciar Pedido
+            </NavLink>
+            <NavLink
               to="/contacto"
               className="text-white hover:text-gray-300 p-2"
               activeClassName="text-blue-500"
