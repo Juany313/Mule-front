@@ -12,9 +12,12 @@ import About from './views/About';
 import Login from './views/auth/Login';
 import Register from './views/auth/Register';
 import ForgetPassword from './views/auth/ForgetPassword';
+import Detail from './views/Detail'
+
 
 /* Pages admin */
 import Home from './views/admin/Home'
+
 
 function App() {
  
@@ -33,7 +36,8 @@ function App() {
           <Route  index element={<Home/>}/> 
           <Route  path='about' element={<About/>}/> 
           <Route  path='service' element={<Service/>}/> 
-          <Route  path='ordershipment' element={<Ordershipment/>}/> 
+          <Route  path='ordershipment' element={<Ordershipment/>}/>
+          <Route  path='ordershipment/detail/:id' element={<Detail/>}/>
         </Route>
 
         <Route path='*' element={<LayoutError/>}/>

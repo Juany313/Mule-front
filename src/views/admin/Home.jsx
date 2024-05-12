@@ -3,6 +3,7 @@ import React from 'react'
 /* views */
 import About from '../About'
 import Service from '../Service'
+import SearchBar from '../../components/SearchBar';
 
 const Home = () => {
   return (
@@ -26,6 +27,7 @@ const Home = () => {
       </div>
       <Service/>
       <About/>
+      <SearchBar/>
     </>
   );
 };
