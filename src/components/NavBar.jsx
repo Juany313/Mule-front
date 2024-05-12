@@ -11,6 +11,13 @@ const NavBar = () => {
           </div>
           <div className="flex space-x-4 font-bold">
            
+          <NavLink
+              to="/header"
+              className="text-white hover:text-gray-300 p-2"
+              activeClassName="text-blue-500"
+            >
+              Inicio
+            </NavLink>
             <span className="text-white  hover:text-gray-300 p-2 ">
               <Link
                 to="about"

@@ -4,11 +4,10 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import LayoutAuth from './layouts/LayoutAuth';
 import LayoutAdmin from './layouts/LayoutAdmin';
 import LayoutError from './layouts/LayoutError';
-/* Pages auth*/
+/* Pages*/
 import Landing from './views/Landing';
-import Service from './views/Service';
-import Ordershipment from './views/Ordershipment';
-import About from './views/About';
+import Detail from './views/Detail'
+
 import Login from './views/auth/Login';
 import Register from './views/auth/Register';
 import ForgetPassword from './views/auth/ForgetPassword';
@@ -35,6 +34,7 @@ function App() {
         <Route path='/header' element={<LayoutAdmin/>}>
           <Route  index element={<Home/>}/> 
           <Route  path='pedido' element={<OrderForm/>}/> 
+          <Route  path='ordershipment/detail/:id' element={<Detail/>}/>
         </Route>
 
         <Route path='*' element={<LayoutError/>}/>
