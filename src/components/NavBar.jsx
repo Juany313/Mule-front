@@ -3,24 +3,15 @@ import { NavLink } from "react-router-dom";
 import { Link } from 'react-scroll';
 const NavBar = () => {
   return (
-    <nav className="bg-p300 p-4">
+    <nav className="bg-p300 py-4 pl-4 pr-8">
       <div className="mx-auto">
         <div className="flex justify-between items-center">
           <div className="text-white font-bold pl-9 text-4xl pt-1">
             <NavLink to="/">MULE</NavLink>
           </div>
-          <div className="flex space-x-4">
-            <NavLink
-              to="/header"
-              className="text-white hover:text-gray-300 p-2"
-              activeClassName="text-blue-500"
-              exact
-            >
-              Inicio
-            </NavLink>
-            
-            
-            <span className="text-white hover:text-gray-300 p-2">
+          <div className="flex space-x-4 font-bold">
+           
+            <span className="text-white  hover:text-gray-300 p-2 ">
               <Link
                 to="about"
                 spy={true}
@@ -66,7 +57,7 @@ const NavBar = () => {
               Cotizar
             </NavLink>
             
-            <NavLink to ='/auth/' className='text-primary hover:text-gray-100 transition-colors '>
+            <NavLink to ='/auth/' className='text-primary font-normal hover:text-gray-100 transition-colors '>
               <button className="bg-s300 py-2 px-4 rounded">Ingresar</button>
           </NavLink>
 

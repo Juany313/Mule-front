@@ -17,12 +17,23 @@ const Service = () => {
         <hr className='border-t-4 border-s400 mt-4 mb-4 w-[95vw]' />
       </div>
 
-      <div className='w-[80vw] h-[40vh] mt-8 bg-red-400 p-8 flex justify-evenly'>
-        <div className='h-full w-[250px] bg-slate-300 rounded-xl'></div>
-        <div className='h-full w-[250px] bg-slate-300 rounded-xl'></div>
-        <div className='h-full w-[250px] bg-slate-300 rounded-xl'></div>
-        <div className='h-full w-[250px] bg-slate-300 rounded-xl'></div>
-
+      <div className='w-[80vw] h-[40vh] mt-8 p-8 flex justify-evenly'>
+        <div className='h-full w-[250px] bg-white rounded-xl '>
+          <div className='bg-red-300 h-[80%] rounded-t-xl'>IMAGEN</div>
+          <div className=' w-full text-center text-3xl px-2 text-slate-600'><span>Puerta a Puerta</span></div>
+        </div>
+        <div className='h-full w-[250px] bg-white rounded-xl '>
+          <div className='bg-red-300 h-[80%] rounded-t-xl'>IMAGEN</div>
+          <div className=' w-full text-center text-3xl px-2 text-slate-600'><span>Sucursal a Puerta</span></div>
+        </div>
+        <div className='h-full w-[250px] bg-white rounded-xl '>
+          <div className='bg-red-300 h-[80%] rounded-t-xl'>IMAGEN</div>
+          <div className=' w-full text-center text-3xl px-2 text-slate-600'><span>Puerta a Sucursal</span></div>
+        </div>
+        <div className='h-full w-[250px] bg-white rounded-xl '>
+          <div className='bg-red-300 h-[80%] rounded-t-xl'>IMAGEN</div>
+          <div className=' w-full text-center text-3xl  text-slate-600'><span >Sucursal a Sucursal</span></div>
+        </div>
       </div>
 
     </div>
