@@ -3,6 +3,7 @@ import React from 'react'
 /* views */
 import About from '../About'
 import Service from '../Service'
+import SearchBar from '../../components/SearchBar';
 
 const Home = () => {
   return (
@@ -14,18 +15,13 @@ const Home = () => {
         <div className='absolute w-[500px] h-[300px]  top-[200px] left-[50px] right-0 bottom-0 flex flex-col justify-center items-start'>
           <div className=' p-4  rounded-md text-center'>
             <h1 className='text-black text-start font-semibold text-2xl mb-2'>SEGUIMIENTO DE TU ENVÍO</h1>
-            <div className='bg-white border border-gray-800 flex justify-center w-[500px] p-0 rounded-md'>
-              <input type="text" 
-                className='flex-1 pl-2 py-1 rounded-l-md bg-white'
-                placeholder='Número de seguimiento'
-              />
-              <button className='bg-yellow-500 rounded-md px-4 py-2'>Buscar</button>
-            </div>
+            <SearchBar/>
           </div>
         </div>
       </div>
       <Service/>
       <About/>
+      
     </>
   );
 };

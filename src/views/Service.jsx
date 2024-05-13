@@ -1,7 +1,11 @@
 import React from 'react'
 
 /* imagenes */
-import puerta_a_puerta from "../assets/puerta_a_puerta.png"
+import puertaPuerta from "../assets/puertaPuerta.jpg"
+import puertaSucursal from "../assets/puertaSucursal.jpg"
+import sucursalPuerta from "../assets/sucursalPuerta.jpg"
+import sucursalSucursal from "../assets/sucursalSucursal.jpg"
+
 const Service = () => {
   return (
     <>
@@ -20,24 +24,36 @@ const Service = () => {
       </div>
 
       <div className='w-[80vw] h-[40vh] mt-8 p-8 flex justify-evenly'>
+
         <div className='h-full w-[250px] bg-white rounded-xl '>
-          <div className='bg-red-300 h-[80%] rounded-t-xl'>
-          <img src={puerta_a_puerta} alt="" className='w-[220px] h-[220px]'/>
-          </div>
-          <div className=' w-full text-center text-3xl px-2 text-slate-600'><span>Puerta a Puerta</span></div>
-        </div>
-        <div className='h-full w-[250px] bg-white rounded-xl '>
-          <div className='bg-red-300 h-[80%] rounded-t-xl'>IMAGEN</div>
-          <div className=' w-full text-center text-3xl px-2 text-slate-600'><span>Sucursal a Puerta</span></div>
+            <div className='bg-red-300 h-[80%] rounded-t-xl flex justify-center'>
+              <img src={puertaPuerta} alt="" className='w-[220px] h-[220px] '/>
+            </div>
+            
+            <div className=' w-full text-center text-3xl px-2 text-slate-600'><span>Puerta a Puerta</span></div>
         </div>
         <div className='h-full w-[250px] bg-white rounded-xl '>
-          <div className='bg-red-300 h-[80%] rounded-t-xl'>IMAGEN</div>
-          <div className=' w-full text-center text-3xl px-2 text-slate-600'><span>Puerta a Sucursal</span></div>
+            <div className='bg-red-300 h-[80%] rounded-t-xl flex justify-center'>
+              <img src={puertaSucursal} alt="" className='w-[220px] h-[220px] '/>
+            </div>
+            
+            <div className=' w-full text-center text-3xl px-2 text-slate-600'><span>Puerta a Sucursal</span></div>
         </div>
-        <div className='h-full w-auto bg-white rounded-xl '>
-          <div className='bg-red-300 h-[80%] rounded-t-xl'>IMAGEN</div>
-          <div className=' w-full text-center text-3xl px-2 text-slate-600'><span >Sucursal a Sucursal</span></div>
+        <div className='h-full w-[250px] bg-white rounded-xl '>
+            <div className='bg-red-300 h-[80%] rounded-t-xl flex justify-center'>
+              <img src={sucursalPuerta} alt="" className='w-[220px] h-[220px] '/>
+            </div>
+            
+            <div className=' w-full text-center text-3xl px-2 text-slate-600'><span>Sucursal a puerta</span></div>
         </div>
+        <div className='h-full w-[267px] bg-white rounded-xl '>
+            <div className='bg-red-300 h-[80%] rounded-t-xl flex justify-center'>
+              <img src={sucursalSucursal} alt="" className='w-[220px] h-[220px]'/>
+            </div>
+            
+            <div className=' w-full text-center text-3xl px-2 text-slate-600'><span>Sucursal a Sucursal</span></div>
+        </div>
+        
       </div>
 
     </div>
