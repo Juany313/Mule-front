@@ -1,19 +1,17 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 /* utils */
-import validate from "../utils"
+import validate from "../utils";
 
 /* hooks */
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 
 /* actions */
-import {createOrder} from "../redux/actions/index"
-
-
+import { createOrder } from "../redux/actions/index";
 
 const OrderForm = () => {
-
-/* Estados Locales */
+  /* Estados Locales */
   const [userData, setUserData] = useState({
     name_claimant: "",
     cedula_claimant: "",
@@ -30,13 +28,17 @@ const OrderForm = () => {
     declared_value: "",
     product_image: "",
     pay_method: "",
-    typeShipmentId: null,
-    measureId: null,
-    user_id: null,
+    // typeShipmentId: "",
+    // measureId: "",
+    // user_id: "",
   });
   const [errors, setErrors] = useState({
     name_claimant: "",
+    name_claimant: "",
   });
+
+  /* Estado global */
+  const dispatch = useDispatch();
 
   /* Estado global */
   const dispatch = useDispatch();
@@ -46,23 +48,28 @@ const OrderForm = () => {
     const value = event.target.value;
   
     setUserData({ ...userData, [property]: value });
-  
+
     setErrors((prevErrors) => {
       const newErrors = validate({
         ...userData,
-        [property]: value, 
+        [property]: value,
       });
-  
 
       return newErrors;
-      });
-    };
- 
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      dispatch(createOrder(userData));
-      alert("CONDUCTOR CREADO CON EXITO!!")
-    };
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    dispatch(createOrder(userData));
+  };
+  //   try {
+  //     await axios.post(`http://localhost:3000/order_shipments/`);
+  //   } catch (error) {
+  //     window.alert(error.message);
+  //   }
+  //   alert("CONDUCTOR CREADO CON EXITO!!");
+  // };
 
   return (
     <div className="min-h-screen bg-p300 flex items-center justify-center p-4">
@@ -74,6 +81,7 @@ const OrderForm = () => {
         <h2>Datos del usuario</h2>
 
         <form className="mb-8" onSubmit={handleSubmit}>
+        <form className="mb-8" onSubmit={handleSubmit}>
           <div className="relative mb-4">
             <input
               type="text"
@@ -82,7 +90,10 @@ const OrderForm = () => {
               onChange={handleChange}
               className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
               placeholder="Nombre/s"
-            /> <span className="text-red-600 font-semibold">{errors.name_claimant}</span>
+            />{" "}
+            <span className="text-red-600 font-semibold">
+              {errors.name_claimant}
+            </span>
           </div>
 
           <div className="relative mb-4">
