@@ -42,13 +42,13 @@ const NavBar = () => {
             </span>
            
             
-            <NavLink
+            {/* <NavLink
               to="/agencias"
               className="text-white hover:text-gray-300 p-2"
               activeClassName="text-blue-500"
             >
               Agencias
-            </NavLink>
+            </NavLink> */}
             <NavLink
               to="pedido"
               className="text-white hover:text-gray-300 p-2"
@@ -56,7 +56,7 @@ const NavBar = () => {
             >
               Iniciar Pedido
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="/contacto"
               className="text-white hover:text-gray-300 p-2"
               activeClassName="text-blue-500"
@@ -69,7 +69,7 @@ const NavBar = () => {
               activeClassName="text-blue-500"
             >
               Cotizar
-            </NavLink>
+            </NavLink> */}
             
             <NavLink to ='/auth/' className='text-primary font-normal hover:text-gray-100 transition-colors '>
               <button className="bg-s300 py-2 px-4 rounded">Ingresar</button>
