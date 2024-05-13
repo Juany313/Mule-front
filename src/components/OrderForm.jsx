@@ -34,7 +34,11 @@ const OrderForm = () => {
   });
   const [errors, setErrors] = useState({
     name_claimant: "",
+    name_claimant: "",
   });
+
+  /* Estado global */
+  const dispatch = useDispatch();
 
   /* Estado global */
   const dispatch = useDispatch();
@@ -42,7 +46,7 @@ const OrderForm = () => {
   const handleChange = (event) => {
     const property = event.target.name;
     const value = event.target.value;
-
+  
     setUserData({ ...userData, [property]: value });
 
     setErrors((prevErrors) => {
@@ -76,6 +80,7 @@ const OrderForm = () => {
 
         <h2>Datos del usuario</h2>
 
+        <form className="mb-8" onSubmit={handleSubmit}>
         <form className="mb-8" onSubmit={handleSubmit}>
           <div className="relative mb-4">
             <input
