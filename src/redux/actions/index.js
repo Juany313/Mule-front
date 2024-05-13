@@ -100,7 +100,7 @@ const getOrderById = (id)=>{
 // }
 
 
-const orderDeclaredValue = (selectedValues) => {
+const orderDeclaredValue = (selectedValues,) => {
     return async (dispatch) => {
         try {
             // Construir la cadena de parámetros de consulta con claves asociadas a los valores seleccionados
@@ -110,7 +110,7 @@ const orderDeclaredValue = (selectedValues) => {
             
             // Realizar la solicitud GET con la URL construida
             const { data } = await axios.get(url);
-            console.log("Carlosssss action", data);
+            console.log('estoy en action', data)
             // Despachar la acción con los datos obtenidos
             return dispatch({
                 type: FILTER_VALUES,
