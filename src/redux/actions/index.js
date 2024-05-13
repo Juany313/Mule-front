@@ -5,7 +5,24 @@ export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_ORDER_ID = "GET_ORDER_ID";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 
+export const CREATE_ORDER = "CREATE_ORDER";
+
 const URL_BASE = "http://localhost:3000"
+
+export function createOrder(userData) {
+    return async function(dispatch) {
+        try {
+        const response = await axios.post(`${URL_BASE}/order_shipments`);
+
+        return dispatch({
+            type: CREATE_ORDER,
+            payload: response.data,
+        });
+        } catch (error) {
+        console.error(error);
+        }
+    };
+}
 
 const getAllUsers = ()=>{
     return async (dispatch)=>{
