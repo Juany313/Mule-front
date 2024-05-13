@@ -3,6 +3,7 @@ import landing from "../assets/landing.jpg";
 import { NavLink } from "react-router-dom";
 
 
+
 const Landing = () => {
 
   return (
@@ -19,6 +20,8 @@ const Landing = () => {
           MULE
         </NavLink>
       </div>
+
+
     </div>
   );
 };
