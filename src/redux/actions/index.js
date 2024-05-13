@@ -4,7 +4,7 @@ export const GET_USER_DETAIL = "GET_USER_DETAIL";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_ORDER_ID = "GET_ORDER_ID";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
-export const ORDER_DECLARED_VALUE = "ORDER_DECLARED_VALUE"
+export const FILTER_VALUES = "FILTER_VALUES"
 
 const URL_BASE = "http://localhost:3000"
 
@@ -84,6 +84,22 @@ const getOrderById = (id)=>{
 //     }
 // }
 
+// const filterByCityTransmiter = (order)=>{
+//     return async (dispatch) => {
+//         try {
+//             const {data} = await axios.get (`http://localhost:3000/order_shipments?${order}`)
+//             return dispatch({
+//                 type: ORDER_CITY_TRANSMITER,
+//                 payload: data
+//             });
+//         }catch (error) {
+//             window.alert(error.message);
+//         }
+//     }
+
+// }
+
+
 const orderDeclaredValue = (selectedValues) => {
     return async (dispatch) => {
         try {
@@ -94,10 +110,10 @@ const orderDeclaredValue = (selectedValues) => {
             
             // Realizar la solicitud GET con la URL construida
             const { data } = await axios.get(url);
-            console.log("Carlosssss", data);
+            console.log("Carlosssss action", data);
             // Despachar la acción con los datos obtenidos
             return dispatch({
-                type: ORDER_DECLARED_VALUE,
+                type: FILTER_VALUES,
                 payload: data
             });
         } catch (error) {
@@ -110,6 +126,7 @@ export {
     getAllUsers, 
     getOrderById,
     getAllOrders,
+    // filterByCityTransmiter,
     orderDeclaredValue}
 
     // const getUserDetail = (id) => {

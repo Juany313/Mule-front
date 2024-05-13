@@ -1,4 +1,4 @@
-import { GET_ALL_ORDERS, GET_ALL_USERS, GET_ORDER_ID, GET_USER_DETAIL, ORDER_DECLARED_VALUE } from "../actions";
+import { GET_ALL_ORDERS, GET_ALL_USERS, GET_ORDER_ID, GET_USER_DETAIL, FILTER_VALUES } from "../actions";
 
 
 let initialState = {
@@ -35,10 +35,16 @@ function rootReducer(state = initialState, action){
                 orderDetail: action.payload
             }; 
 
-        case  ORDER_DECLARED_VALUE:
+        // case ORDER_CITY_TRANSMITER:
+        //     return {
+        //         ...state,
+        //         allOrders: action.payload
+        //     }
+
+        case  FILTER_VALUES:
             return {
                 ...state,
-                allorders:action.payload
+                allOrders:action.payload
             }
            
         default:
