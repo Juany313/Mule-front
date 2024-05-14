@@ -1,12 +1,13 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react';
-import { filterCityTransmiter, getAllOrders, filterCityReceiver} from '../redux/actions';
+import { filterCityTransmiter, getAllOrders, filterCityReceiver, allFilters} from '../redux/actions';
 import Pagination from '../components/Pagination';
 
 const Ordershipment = () => {
   const dispatch = useDispatch();
   const allOrders = useSelector ((state)=>state.allOrders)
+  const filters = useSelector ((state)=>state.filters)
 
 
 
@@ -14,15 +15,24 @@ const Ordershipment = () => {
     dispatch(getAllOrders());
   }, [dispatch])
 
-  const handleFilterCityTransmiter = (e) =>{
-    e.preventDefault();
-    dispatch(filterCityTransmiter(e.target.value))
+  const handlerFilter = (filters)=>{
+    const {city_receiver, city_transmiter, pay_method} = filters
+    const ordersFiltered= allOrders.filter(()=>{
+      order.city_receiver === city_receiver && order.city_transmiter === city_transmiter && order.pay_method === pay_method
+    })
+    dispatch(getAllOrders(ordersFiltered))   
   }
 
-  const handleFilterCityReceiver = (e) =>{
+    const handleFilters = (e) =>{
     e.preventDefault();
-    dispatch(filterCityReceiver(e.target.value))
+    dispatch(allFilters(...filters, {city_receiver: e.target.value}, 
+      {city_transmiter: e.target.value}, {pay_method: e.target.value}))
   }
+
+  // const handleFilterCityReceiver = (e) =>{
+  //   e.preventDefault();
+  //   dispatch(filterCityReceiver(e.target.value))
+  // }
 //  console.log(allOrders)
  
 //  const [options, setOptions] = useState([]);
@@ -97,7 +107,7 @@ const Ordershipment = () => {
       </h1>
       <div>
       <select className='text-g500' onChange={(e)=>{
-                handleFilterCityTransmiter(e)
+                handleFilters(e)
               }}>
                 <option value="all">Ciudad origen</option>
                 {allOrders.map((elem)=>{
@@ -109,13 +119,25 @@ const Ordershipment = () => {
                 })}
             </select>
             <select className='text-g500' onChange={(e)=>{
-                handleFilterCityReceiver(e)
+                handleFilters(e)
               }}>
                 <option value="all">Ciudad destino</option>
                 {allOrders.map((elem)=>{
                   return (
                     <option value={elem.city_receiver} key={elem.city_receiver}>
                       {elem.city_receiver}
+                    </option>
+                  )
+                })}
+            </select>
+            <select className='text-g500' onChange={(e)=>{
+                handleFilters(e)
+              }}>
+                <option value="all">Método de pago</option>
+                {allOrders.map((elem)=>{
+                  return (
+                    <option value={elem.pay_method} key={elem.pay_method}>
+                      {elem.pay_method}
                     </option>
                   )
                 })}

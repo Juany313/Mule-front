@@ -3,9 +3,9 @@ import {
     GET_ALL_USERS,
     GET_ORDER_ID, 
     FILTER_VALUES, 
-    GET_USER_DETAIL, 
-    FILTER_CITY_TRANSMITER,
-    FILTER_CITY_RECEIVER } from "../actions";
+    GET_USER_DETAIL,
+    FILTER_VALUES, 
+ } from "../actions";
 
 
 let initialState = {
@@ -14,6 +14,8 @@ let initialState = {
     allOrders: [],
     allOrdersCopy: [],
     orderDetail: [],
+    filters: {city_transmiter: "", city_receiver: "", pay_method: ""},
+    filtersCopy:{},
 
 }
 
@@ -37,6 +39,13 @@ function rootReducer(state = initialState, action){
                 allOrders: action.payload,
                 allOrdersCopy: action.payload
             }; 
+
+        case FILTER_VALUES:
+            return {
+                ...state,
+                filters: action.payload,
+               
+            }
 
             // case FILTER_CITY_TRANSMITER:
             //     const cityTransmiterFilter =
@@ -62,16 +71,18 @@ function rootReducer(state = initialState, action){
             //             ...state,
             //             allOrders: action.payload === "all" ? state.allOrdersCopy : cityFilterReceiver,
             //         };
-            case FILTER_CITY_TRANSMITER:
-  let filteredByTransmitter = [];
 
-  if (action.payload === "all") {
-    filteredByTransmitter = state.allOrdersCopy;
-  } else {
-    filteredByTransmitter = state.allOrdersCopy.filter(order =>
-      order.city_transmiter?.includes(action.payload)
-    );
-  }
+
+//             case FILTER_CITY_TRANSMITER:
+//   let filteredByTransmitter = [];
+
+//   if (action.payload === "all") {
+//     filteredByTransmitter = state.allOrdersCopy;
+//   } else {
+//     filteredByTransmitter = state.allOrdersCopy.filter(order =>
+//       order.city_transmiter?.includes(action.payload)
+//     );
+//   }
 
   return {
     ...state,

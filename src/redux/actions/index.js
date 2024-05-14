@@ -6,8 +6,9 @@ export const GET_ORDER_ID = "GET_ORDER_ID";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const CREATE_ORDER = "CREATE_ORDER";
 export const FILTER_VALUES = "FILTER_VALUES";
-export const FILTER_CITY_TRANSMITER = "FILTER_CITY_TRANSMITER";
-export const FILTER_CITY_RECEIVER = "FILTER_CITY_RECEIVER";
+// export const FILTER_CITY_TRANSMITER = "FILTER_CITY_TRANSMITER";
+// export const FILTER_CITY_RECEIVER = "FILTER_CITY_RECEIVER";
+
 
 const URL_BASE = "http://localhost:3000";
 
@@ -25,6 +26,24 @@ const getAllUsers = () => {
     }
   };
 };
+
+const allFilters = ()=>{
+  return async (dispatch)=>{
+    try {
+      const {data} = await axios.get ("http://localhost:3000/order_shipments")
+      return dispatch({
+        type: FILTER_VALUES,
+        payload: data
+      })
+    } catch (error) {
+      window.alert(error.message);
+    }
+  }
+}
+
+// const OrdersFilters = () =>{
+
+// }
 
 // const createOrder = () => {
 //   return async (dispatch) => {
@@ -110,19 +129,19 @@ const getOrderById = (id) => {
     }
   };
 };
-const filterCityTransmiter = (filter) => {
-  return {
-    type: FILTER_CITY_TRANSMITER,
-    payload: filter,
-  };
-};
+// const filterCityTransmiter = (filter) => {
+//   return {
+//     type: FILTER_CITY_TRANSMITER,
+//     payload: filter,
+//   };
+// };
 
-const filterCityReceiver = (filter) => {
-  return {
-    type: FILTER_CITY_RECEIVER,
-    payload: filter,
-  };
-};
+// const filterCityReceiver = (filter) => {
+//   return {
+//     type: FILTER_CITY_RECEIVER,
+//     payload: filter,
+//   };
+// };
 
 // const orderDeclaredValue = (selectedFilters) => {
 //   return async (dispatch) => {
@@ -159,6 +178,6 @@ export {
   getAllUsers, 
   getOrderById, 
   getAllOrders, 
-  createOrder, 
-  filterCityTransmiter, 
-  filterCityReceiver };
+  createOrder,
+  allFilters 
+  };
