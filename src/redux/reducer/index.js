@@ -1,10 +1,18 @@
-import { GET_ALL_ORDERS, GET_ALL_USERS, GET_ORDER_ID, FILTER_VALUES, GET_USER_DETAIL } from "../actions";
+import { 
+    GET_ALL_ORDERS, 
+    GET_ALL_USERS,
+    GET_ORDER_ID, 
+    FILTER_VALUES, 
+    GET_USER_DETAIL, 
+    FILTER_CITY_TRANSMITER,
+    FILTER_CITY_RECEIVER } from "../actions";
 
 
 let initialState = {
     allUsers:[],
     userDetail:[],
     allOrders: [],
+    allOrdersCopy: [],
     orderDetail: [],
 
 }
@@ -27,7 +35,64 @@ function rootReducer(state = initialState, action){
             return {
                 ...state,
                 allOrders: action.payload,
+                allOrdersCopy: action.payload
             }; 
+
+            // case FILTER_CITY_TRANSMITER:
+            //     const cityTransmiterFilter =
+            //         action.payload === "all"
+            //         ? state.allOrdersCopy
+            //         : state.allOrdersCopy.filter((e) => {
+            //             return e.city_transmiter?.includes(action.payload);
+            //             });
+            //     return {
+            //         ...state,
+            //         allOrders: action.payload === "all" ? state.allOrdersCopy : cityTransmiterFilter,
+            //     };
+
+            //     case FILTER_CITY_RECEIVER:
+            //         const cityFilterReceiver =
+            //             action.payload === "all"
+            //             ? state.allOrdersCopy
+            //             : state.allOrdersCopy.filter((e) => {
+            //                 return e.city_receiver?.includes(action.payload);
+                            
+            //                 });
+            //         return {
+            //             ...state,
+            //             allOrders: action.payload === "all" ? state.allOrdersCopy : cityFilterReceiver,
+            //         };
+            case FILTER_CITY_TRANSMITER:
+  let filteredByTransmitter = [];
+
+  if (action.payload === "all") {
+    filteredByTransmitter = state.allOrdersCopy;
+  } else {
+    filteredByTransmitter = state.allOrdersCopy.filter(order =>
+      order.city_transmiter?.includes(action.payload)
+    );
+  }
+
+  return {
+    ...state,
+    allOrders: filteredByTransmitter,
+  };
+
+  case FILTER_CITY_RECEIVER:
+  let filteredByReceiver = [];
+
+  if (action.payload === "all") {
+    filteredByReceiver = state.allOrdersCopy;
+  } else {
+    filteredByReceiver = state.allOrdersCopy.filter(order =>
+      order.city_receiver?.includes(action.payload)
+    );
+  }
+
+  return {
+    ...state,
+    allOrders: filteredByReceiver,
+  };
 
         case GET_ORDER_ID:
             return {
