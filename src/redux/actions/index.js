@@ -5,6 +5,7 @@ export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_ORDER_ID = "GET_ORDER_ID";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const CREATE_ORDER = "CREATE_ORDER";
+export const FILTER_VALUES = "FILTER_VALUES";
 
 const URL_BASE = "http://localhost:3000";
 
@@ -107,27 +108,34 @@ const getOrderById = (id) => {
     }
   };
 };
+const orderDeclaredValue = (selectedFilters) => {
+  return async (dispatch) => {
+    try {
+      // Construir la URL base
+      let url = 'http://localhost:3000/order_shipments?';
 
-const orderDeclaredValue = (selectedValues,) => {
-    return async (dispatch) => {
-        try {
-            // Construir la cadena de parámetros de consulta con claves asociadas a los valores seleccionados
-            const queryParams = selectedValues.map(field => `${Object.keys(field)[0]}=${Object.values(field)[0]}`).join('&');
-            // Agregar la cadena de parámetros de consulta a la URL base
-            const url = `http://localhost:3000/order_shipments?${queryParams}`;
-            
-            // Realizar la solicitud GET con la URL construida
-            const { data } = await axios.get(url);
-            console.log('estoy en action', data)
-            // Despachar la acción con los datos obtenidos
-            return dispatch({
-                type: FILTER_VALUES,
-                payload: data
-            });
-        } catch (error) {
-            window.alert(error.message);
+      // Iterar sobre los filtros seleccionados y agregarlos a la URL
+      Object.entries(selectedFilters).forEach(([key, value]) => {
+        if (value) { // Solo agregar el filtro si tiene un valor seleccionado
+          url += `${key}=${value}&&`;
         }
-    };
+      });
+
+      // Eliminar el último '&' de la URL si es necesario
+      url = url.slice(0, -1);
+
+      // Realizar la solicitud HTTP con la URL construida
+      const { data } = await axios.get(url);
+
+      // Despachar la acción con los datos obtenidos
+      dispatch({
+        type: FILTER_VALUES,
+        payload: data
+      });
+    } catch (error) {
+      window.alert(error.message);
+    }
+  };
 };
 
 export { getUserDetail, getAllUsers, getOrderById, getAllOrders, createOrder, orderDeclaredValue };

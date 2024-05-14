@@ -4,7 +4,6 @@ import React from 'react'
 import About from '../About'
 import Service from '../Service'
 import SearchBar from '../../components/SearchBar';
-import SearchBar from '../../components/SearchBar';
 
 const Home = () => {
   return (
