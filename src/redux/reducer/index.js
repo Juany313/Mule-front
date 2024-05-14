@@ -34,6 +34,12 @@ function rootReducer(state = initialState, action){
                 ...state,
                 orderDetail: action.payload
             }; 
+
+        case  FILTER_VALUES:
+            return {
+                ...state,
+                allOrders:action.payload
+            }
            
         default:
             return {...state};
@@ -41,4 +47,3 @@ function rootReducer(state = initialState, action){
 }
 
 export default rootReducer;
-

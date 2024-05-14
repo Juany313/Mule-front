@@ -24,17 +24,21 @@ const Pagination = ({allOrders}) => {
   
     return (
       <div>
-        <Cards OrdersList={currentCards} />
         <div>
-          <div>
-            <button  onClick={prevPage} disabled={currentPage === 1}>
-              Previous
+        <Cards OrdersList={currentCards} />
+        </div>
+        <div>
+        <div className='flex justify-center gap-4 mt-4'>
+            <button  className='bg-p300 hover:bg-p500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+            onClick={prevPage} disabled={currentPage === 1}>
+              Anterior
             </button>
-          </div>
-            <button  onClick={nextPage} disabled={indexOfLastCard >= allOrders.length}>
-              Next
+            <button  className='bg-p300 hover:bg-p500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+            onClick={nextPage} disabled={indexOfLastCard >= allOrders.length}>
+              Siguiente
             </button>
         </div>
+      </div>
       </div>
     );
   };
