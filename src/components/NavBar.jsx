@@ -23,12 +23,24 @@ const NavBar = () => {
                 to="about"
                 spy={true}
                 smooth={true}
-                offset={-70} // Ajusta el offset según tu diseño
+                offset={-70} 
                 duration={700}
               >
                 Nosotros
               </Link>
             </span>
+            <span className="text-white  hover:text-gray-300 p-2 ">
+              <Link
+                to="orderShipment"
+                spy={true}
+                smooth={true}
+                offset={-70} 
+                duration={700}
+              >
+                Pedidos
+              </Link>
+            </span>
+            
             <span className="text-white hover:text-gray-300 p-2">
               <Link
                 to="service"

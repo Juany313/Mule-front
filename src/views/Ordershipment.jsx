@@ -56,7 +56,7 @@ const Ordershipment = () => {
  
   return (
     <>
-    <div id='service' className='min-h-screen bg-p300 flex flex-col items-center justify-start pt-[7rem] text-white' >
+    <div id='orderShipment' className='min-h-screen bg-p300 flex flex-col items-center justify-start pt-[7rem] text-white' >
       <h1 className='mb-[100px] font-bold text-4xl mb-2'>
         Clientes que confían en nosotros
       </h1>
