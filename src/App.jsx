@@ -7,11 +7,17 @@ import LayoutError from './layouts/LayoutError';
 /* Pages*/
 import Landing from './views/Landing';
 import Detail from './views/Detail'
+import About from './views/About'
+import Service from './views/Service'
+import Ordershipment from './views/Ordershipment'
+
+/* Components */
+import OrderForm from "./components/OrderForm";
 
 import Login from './views/auth/Login';
 import Register from './views/auth/Register';
 import ForgetPassword from './views/auth/ForgetPassword';
-import Detail from './views/Detail'
+
 
 
 /* Pages admin */
@@ -36,6 +42,7 @@ function App() {
           <Route  path='about' element={<About/>}/> 
           <Route  path='service' element={<Service/>}/> 
           <Route  path='ordershipment' element={<Ordershipment/>}/>
+          <Route  path='pedido' element={<OrderForm/>}/>
           <Route  path='ordershipment/detail/:id' element={<Detail/>}/>
         </Route>
 

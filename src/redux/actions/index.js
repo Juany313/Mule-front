@@ -5,6 +5,8 @@ export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_ORDER_ID = "GET_ORDER_ID";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const CREATE_ORDER = "CREATE_ORDER";
+export const FILTER_VALUES = "FILTER_VALUES";
+
 
 const URL_BASE = "http://localhost:3000";
 

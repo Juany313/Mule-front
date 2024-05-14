@@ -33,15 +33,14 @@ const OrderForm = () => {
     // user_id: "",
   });
   const [errors, setErrors] = useState({
-    name_claimant: "",
+   
     name_claimant: "",
   });
 
   /* Estado global */
   const dispatch = useDispatch();
 
-  /* Estado global */
-  const dispatch = useDispatch();
+
 
   const handleChange = (event) => {
     const property = event.target.name;
@@ -62,13 +61,13 @@ const OrderForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     dispatch(createOrder(userData));
+    alert("PEDIDO CREADO CON EXITO!!");
   };
   //   try {
   //     await axios.post(`http://localhost:3000/order_shipments/`);
   //   } catch (error) {
   //     window.alert(error.message);
   //   }
-  //   alert("CONDUCTOR CREADO CON EXITO!!");
   // };
 
   return (
@@ -80,7 +79,7 @@ const OrderForm = () => {
 
         <h2>Datos del usuario</h2>
 
-        <form className="mb-8" onSubmit={handleSubmit}>
+        
         <form className="mb-8" onSubmit={handleSubmit}>
           <div className="relative mb-4">
             <input
