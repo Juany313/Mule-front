@@ -15,7 +15,17 @@ const DetailOrder = () => {
 
   return (
     <div>
-        <p>Id: {id}</p>   
+      <div className="lg:flex justify-center gap-4 items-stretch">
+      <div className="bg-white md:p-2 p-6 rounded-lg border border-gray-200 mb-4 lg:mb-0 shadow-md lg:w-[85%]">
+      <table className="table-auto w-full">
+         <thead>
+         <tr>
+                 <th className="px-4 py-2 text-left border-b-2 w-full">
+                     <h2 className="text-ml font-bold text-gray-600"><p>PEDIDO: {id}</p></h2>
+                 </th>
+             </tr>
+         </thead>
+             
         <p>Nombre y apellido: {orderDetail?.name_claimant}</p>
         <p>Documento: {orderDetail?.cedula_claimant}</p>
         <p>Teléfono: {orderDetail?.cellphone_claimant}</p>
@@ -35,6 +45,9 @@ const DetailOrder = () => {
             <img src = {orderDetail?.product_image} alt= "name" />
         </div>
         </div>
+    </table>
+    </div>
+    </div>
     </div>
   )
 }

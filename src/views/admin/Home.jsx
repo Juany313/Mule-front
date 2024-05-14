@@ -4,6 +4,7 @@ import React from 'react'
 import About from '../About'
 import Service from '../Service'
 import SearchBar from '../../components/SearchBar';
+import Ordershipment from '../Ordershipment';
 
 const Home = () => {
   return (
@@ -21,7 +22,7 @@ const Home = () => {
       </div>
       <Service/>
       <About/>
-      
+      <Ordershipment/>
     </>
   );
 };
