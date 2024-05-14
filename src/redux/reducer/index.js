@@ -11,42 +11,15 @@ let initialState = {
 
 function rootReducer(state = initialState, action){
     switch (action.type) {
-        case GET_ALL_USERS:
+
+        
+        case GET_DRIVERS:
             return {
                 ...state,
-                allUsers: action.payload,
-            };
-
-        case GET_USER_DETAIL:
-            return {
-                ...state,
-                userDetail: action.payload,
-            };
-
-        case GET_ALL_ORDERS:
-            return {
-                ...state,
-                allOrders: action.payload,
-            }; 
-
-        case GET_ORDER_ID:
-            return {
-                ...state,
-                orderDetail: action.payload
-            }; 
-
-        // case ORDER_CITY_TRANSMITER:
-        //     return {
-        //         ...state,
-        //         allOrders: action.payload
-        //     }
-
-        case  FILTER_VALUES:
-            return {
-                ...state,
-                allOrders:action.payload
-            }
-           
+                allDrivers: action.payload,
+              };
+        
+            
         default:
             return {...state};
     }
