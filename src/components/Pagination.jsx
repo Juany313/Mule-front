@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Cards from './Cards';
 
-const Pagination = ({allOrders}) => {
+const Pagination = ({data}) => {
     
     const [currentPage, setCurrentPage] = useState(1);
     const cardsPerPage = 4;
@@ -10,7 +10,7 @@ const Pagination = ({allOrders}) => {
     // Calcular el índice inicial y final de las tarjetas en la página actual
     const indexOfLastCard = currentPage * cardsPerPage; 
     const indexOfFirstCard = indexOfLastCard - cardsPerPage;                   
-    const currentCards = allOrders.slice(indexOfFirstCard, indexOfLastCard); 
+    const currentCards = data.slice(indexOfFirstCard, indexOfLastCard); 
   
     // Cambiar a la página siguiente
     const nextPage = () => {
@@ -34,7 +34,7 @@ const Pagination = ({allOrders}) => {
               Anterior
             </button>
             <button  className='bg-p300 hover:bg-p500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-            onClick={nextPage} disabled={indexOfLastCard >= allOrders.length}>
+            onClick={nextPage} disabled={indexOfLastCard >= data.length}>
               Siguiente
             </button>
         </div>

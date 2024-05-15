@@ -19,6 +19,8 @@ const Ordershipment = () => {
     pay_method: ''
   });
 
+  const [filtrosActivos, setFiltrosActivos] = useState(false);
+
   const manejarCambio = (e) => {
     const { name, value } = e.target;
     setEstado(prevState => ({
@@ -37,6 +39,7 @@ const Ordershipment = () => {
 
     if (Object.keys(pedido).length > 0) {
       dispatch(agregarPedido(pedido));
+      setFiltrosActivos(true); // Activar los filtros
     } else {
       console.log('No hay propiedades para agregar al pedido.');
     }
@@ -44,12 +47,13 @@ const Ordershipment = () => {
 
   const manejarSinFiltrosClick = () => {
     // Establecer todas las propiedades del estado a cadenas vacías
-    dispatch(getAllOrders())
-    console.log("acaaaaa", allOrders);
+    dispatch(getAllOrders());
+    setFiltrosActivos(false); // Desactivar los filtros
   };
+
   return (
     <>
-      <div id='orderShipment' className='min-h-screen bg-p300 flex flex-col items-center justify-start pt-[7rem] text-white' >
+      <div id='orderShipment' className='min-h-screen bg-p300 flex flex-col items-center justify-start pt-[7rem] text-white'>
         <h1 className='mb-[100px] font-bold text-4xl mb-2'>
           Clientes que confían en nosotros
         </h1>
@@ -58,20 +62,22 @@ const Ordershipment = () => {
             <h1 className='font-bold'>Ciudad origen</h1>
             <select className='text-g500' name="city_transmiter" value={estado.city_transmiter} onChange={manejarCambio}>
               <option value="">Seleccionar</option>
-              <option value="Rosario">Rosario</option>
-              <option value="Esperanza">Esperanza</option>
-              <option value="Reconquista">Reconquista</option>
-              <option value="Rufino">Rufino</option>
+              <option value="Santa Fe">Santa Fe</option>
+              <option value="Buenos Aires">Buenos Aires</option>
+              <option value="Cordoba">Cordoba</option>
+              <option value="Entre Rios">Entre Rios</option>
+              <option value="Corrientes">Corrientes</option>
             </select>
           </section>
           <section>
             <h1 className='font-bold'>Ciudad destino</h1>
             <select className='text-g500' name="city_receiver" value={estado.city_receiver} onChange={manejarCambio}>
-              <option value="">Seleccionar</option>
-              <option value="Rosario">Rosario</option>
-              <option value="Esperanza">Esperanza</option>
-              <option value="Reconquista">Reconquista</option>
-              <option value="Rufino">Rufino</option>
+            <option value="">Seleccionar</option>
+              <option value="Santa Fe">Santa Fe</option>
+              <option value="Buenos Aires">Buenos Aires</option>
+              <option value="Cordoba">Cordoba</option>
+              <option value="Entre Rios">Entre Rios</option>
+              <option value="Corrientes">Corrientes</option>
             </select>
           </section>
           <section>
@@ -89,19 +95,19 @@ const Ordershipment = () => {
             <select className='text-g500' name="pay_method" value={estado.pay_method} onChange={manejarCambio}>
               <option value="">Seleccionar</option>
               <option value="Efectivo">Efectivo</option>
-              <option value="Tarjeta de debito">Tarjeta de débito</option>
-              <option value="Tarjeta de credito">Tarjeta de crédito</option>
+              <option value="Credito">Tarjeta de crédito</option>
+              <option value="Debito">Tarjeta de débito</option>
             </select>
           </section>
-            <div>
-              <button onClick={manejarFiltrarClick} className='text-primary hover:text-gray-100 transition-colors '>Filtrar</button>
-            </div>
-            <div>
-              <button onClick={manejarSinFiltrosClick} className='text-primary hover:text-gray-100 transition-colors '>Sin Filtros</button>
-            </div>
+          <div>
+            <button onClick={manejarFiltrarClick} className='text-primary hover:text-gray-100 transition-colors '>Filtrar</button>
+          </div>
+          <div>
+            <button onClick={manejarSinFiltrosClick} className='text-primary hover:text-gray-100 transition-colors '>Sin Filtros</button>
+          </div>
         </div>
         <div>
-          <Pagination allOrders={filtrados.length > 0 ? filtrados : allOrders} />
+          <Pagination data={filtrosActivos ? filtrados : allOrders} />
         </div>
       </div>
     </>
@@ -109,6 +115,7 @@ const Ordershipment = () => {
 }
 
 export default Ordershipment;
+
 
 
 
