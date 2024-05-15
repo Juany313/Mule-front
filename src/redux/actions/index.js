@@ -7,8 +7,35 @@ export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const CREATE_ORDER = "CREATE_ORDER";
 export const FILTER_VALUES = "FILTER_VALUES";
 
+/* Juanyyyy */
+export const AGREGAR_PEDIDO = 'AGREGAR_PEDIDO';
+
 
 const URL_BASE = "http://localhost:3000";
+
+
+/* Juanyyyyy */
+
+// actions.js
+
+export const agregarPedido = (pedido) => {
+  return {
+    type: AGREGAR_PEDIDO,
+    payload: pedido
+  };
+};
+
+
+
+
+
+
+
+
+
+/* Juanyyyyy */
+
+
 
 const getAllUsers = () => {
   return async (dispatch) => {
@@ -25,24 +52,6 @@ const getAllUsers = () => {
   };
 };
 
-// const createOrder = () => {
-//   return async (dispatch) => {
-//     try {
-//       const { data } = await axios.post(
-//         "http://localhost:3000/order_shipments"
-//       );
-//       return dispatch(
-//         {
-//           type: CREATE_ORDER,
-//           payload: data,
-//         },
-//         console.log("INFO:", data)
-//       );
-//     } catch (error) {
-//       window.alert(error.message);
-//     }
-//   };
-// };
 
 const createOrder = (userData) => {
   return async (dispatch) => {
