@@ -2,12 +2,8 @@ import React from "react";
 import landing from "../assets/landing.jpg";
 import { NavLink } from "react-router-dom";
 
-
-
 const Landing = () => {
-
   return (
-
     <div
       className="bg-cover bg-center h-screen"
       style={{ backgroundImage: `url(${landing})` }}
@@ -20,11 +16,8 @@ const Landing = () => {
           MULE
         </NavLink>
       </div>
-
-
     </div>
   );
 };
-
 
 export default Landing;
