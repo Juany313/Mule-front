@@ -1,133 +1,117 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { getAllOrders, orderDeclaredValue } from "../redux/actions";
-import Pagination from "../components/Pagination";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllOrders, agregarPedido } from '../redux/actions';
+import Pagination from '../components/Pagination';
 
 const Ordershipment = () => {
   const dispatch = useDispatch();
   const allOrders = useSelector((state) => state.allOrders);
+  const filtrados = useSelector((state) => state.filtrados);
 
   useEffect(() => {
     dispatch(getAllOrders());
   }, [dispatch]);
-  //  console.log(allOrders)
 
-  //  const [options, setOptions] = useState([  ]);
+  const [estado, setEstado] = useState({
+    city_transmiter: '',
+    city_receiver: '',
+    declared_value: '',
+    pay_method: ''
+  });
 
-  //  const set = new Set();
+  const [filtrosActivos, setFiltrosActivos] = useState(false);
 
-  //  useEffect(() => {
-  //    const fetchData = async () => {
-  //      try {
-  //        const response = await fetch("http://localhost:3000/order_shipments");
-
-  //        const data = await response.json();
-
-  //        data.map((elem) => set.add(elem.city_transmiter, elem.city_receiver, declared_value, pay_method));
-
-  //        const optionsArr = [...set];
-
-  //        setOptions(optionsArr);
-  //      } catch (error) {
-  //        console.log("error: ", error);
-  //      }
-  //    };
-
-  //    fetchData();
-  //  }, []);
-
-  //order
-  const handleClickOrderDeclaredValue = (e) => {
-    e.preventDefault();
-
-    // Obtener los nombres de los campos (claves) de los <select>
-    const fieldNames = Array.from(
-      e.target.parentNode.querySelectorAll("select")
-    ).map((select) => select.name);
-
-    // Obtener los valores seleccionados de los <select>
-    const selectedValues = Array.from(
-      e.target.parentNode.querySelectorAll("select")
-    ).map((select) => select.value);
-
-    // Crear un array de objetos donde cada objeto tiene una clave y su valor asociado
-    const selectedFields = fieldNames.map((fieldName, index) => ({
-      [fieldName]: selectedValues[index],
+  const manejarCambio = (e) => {
+    const { name, value } = e.target;
+    setEstado(prevState => ({
+      ...prevState,
+      [name]: value
     }));
+  };
 
-    // Llamar a dispatch con el array de objetos clave-valor
-    dispatch(orderDeclaredValue(selectedFields));
+  const manejarFiltrarClick = () => {
+    const pedido = Object.keys(estado).reduce((acc, key) => {
+      if (estado[key] !== '') {
+        acc[key] = estado[key];
+      }
+      return acc;
+    }, {});
+
+    if (Object.keys(pedido).length > 0) {
+      dispatch(agregarPedido(pedido));
+      setFiltrosActivos(true); // Activar los filtros
+    } else {
+      console.log('No hay propiedades para agregar al pedido.');
+    }
+  };
+
+  const manejarSinFiltrosClick = () => {
+    // Establecer todas las propiedades del estado a cadenas vacías
+    dispatch(getAllOrders());
+    setFiltrosActivos(false); // Desactivar los filtros
   };
 
   return (
     <>
-      <div
-        id="orderShipment"
-        className="min-h-screen bg-p300 flex flex-col items-center justify-start pt-28 text-white"
-      >
-        <h1 className="font-bold text-4xl mb-6">
+      <div id='orderShipment' className='min-h-screen bg-p300 flex flex-col items-center justify-start pt-[7rem] text-white'>
+        <h1 className='mb-[100px] font-bold text-4xl mb-2'>
           Clientes que confían en nosotros
         </h1>
-        <div className="w-full max-w-lg">
-          <section className="mb-4">
-            <h2 className="font-semibold mb-2">Ciudad origen</h2>
-            <select
-              className="w-full p-2 bg-white text-g500 rounded-md"
-              name="city_transmiter"
-              onChange={handleClickOrderDeclaredValue}
-            >
-              <option value="null">Rosario</option>
-              <option value="Esperanza">Esperanza</option>
-              <option value="Reconquista">Reconquista</option>
-              <option value="Rufino">Rufino</option>
+        <div>
+          <section>
+            <h1 className='font-bold'>Ciudad origen</h1>
+            <select className='text-g500' name="city_transmiter" value={estado.city_transmiter} onChange={manejarCambio}>
+              <option value="">Seleccionar</option>
+              <option value="Santa Fe">Santa Fe</option>
+              <option value="Buenos Aires">Buenos Aires</option>
+              <option value="Cordoba">Cordoba</option>
+              <option value="Entre Rios">Entre Rios</option>
+              <option value="Corrientes">Corrientes</option>
             </select>
           </section>
-          <section className="mb-4">
-            <h2 className="font-semibold mb-2">Ciudad destino</h2>
-            <select
-              className="w-full p-2 bg-white text-g500 rounded-md"
-              name="city_receiver"
-              onChange={handleClickOrderDeclaredValue}
-            >
-              <option value="null">Rosario</option>
-              <option value="Esperanza">Esperanza</option>
-              <option value="Reconquista">Reconquista</option>
-              <option value="Rufino">Rufino</option>
+          <section>
+            <h1 className='font-bold'>Ciudad destino</h1>
+            <select className='text-g500' name="city_receiver" value={estado.city_receiver} onChange={manejarCambio}>
+            <option value="">Seleccionar</option>
+              <option value="Santa Fe">Santa Fe</option>
+              <option value="Buenos Aires">Buenos Aires</option>
+              <option value="Cordoba">Cordoba</option>
+              <option value="Entre Rios">Entre Rios</option>
+              <option value="Corrientes">Corrientes</option>
             </select>
           </section>
-          <section className="mb-4">
-            <h2 className="font-semibold mb-2">Valor Declarado</h2>
-            <select
-              className="w-full p-2 bg-white text-g500 rounded-md"
-              name="declared_value"
-              onChange={handleClickOrderDeclaredValue}
-            >
-              <option value="null">10000</option>
+          <section>
+            <h1>Valor Declarado</h1>
+            <select className='text-g500' name="declared_value" value={estado.declared_value} onChange={manejarCambio}>
+              <option value="">Seleccionar</option>
+              <option value="10000">10000</option>
               <option value="20000">20000</option>
               <option value="30000">30000</option>
               <option value="40000">40000</option>
             </select>
           </section>
-          <section className="mb-4">
-            <h2 className="font-semibold mb-2">Método de pago</h2>
-            <select
-              className="w-full p-2 bg-white text-g500 rounded-md"
-              name="pay_method"
-              onChange={handleClickOrderDeclaredValue}
-            >
+          <section>
+            <h1>Método de pago</h1>
+            <select className='text-g500' name="pay_method" value={estado.pay_method} onChange={manejarCambio}>
+              <option value="">Seleccionar</option>
               <option value="Efectivo">Efectivo</option>
-              <option value="Tarjeta de débito">Tarjeta de débito</option>
-              <option value="Tarjeta de crédito">Tarjeta de crédito</option>
+              <option value="Credito">Tarjeta de crédito</option>
+              <option value="Debito">Tarjeta de débito</option>
             </select>
           </section>
+          <div>
+            <button onClick={manejarFiltrarClick} className='text-primary hover:text-gray-100 transition-colors '>Filtrar</button>
+          </div>
+          <div>
+            <button onClick={manejarSinFiltrosClick} className='text-primary hover:text-gray-100 transition-colors '>Sin Filtros</button>
+          </div>
         </div>
-        <div className="mt-6">
-          <Pagination allOrders={allOrders} />
+        <div>
+          <Pagination data={filtrosActivos ? filtrados : allOrders} />
         </div>
       </div>
     </>
   );
-};
+}
 
 export default Ordershipment;

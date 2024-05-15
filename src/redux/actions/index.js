@@ -1,5 +1,4 @@
 import axios from "axios";
-import swal from "sweetalert2";
 
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
 export const GET_ALL_USERS = "GET_ALL_USERS";
@@ -8,7 +7,35 @@ export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const CREATE_ORDER = "CREATE_ORDER";
 export const FILTER_VALUES = "FILTER_VALUES";
 
+/* Juanyyyy */
+export const AGREGAR_PEDIDO = 'AGREGAR_PEDIDO';
+
+
 const URL_BASE = "http://localhost:3000";
+
+
+/* Juanyyyyy */
+
+// actions.js
+
+export const agregarPedido = (pedido) => {
+  return {
+    type: AGREGAR_PEDIDO,
+    payload: pedido
+  };
+};
+
+
+
+
+
+
+
+
+
+/* Juanyyyyy */
+
+
 
 const getAllUsers = () => {
   return async (dispatch) => {
@@ -25,27 +52,8 @@ const getAllUsers = () => {
   };
 };
 
-// const createOrder = () => {
-//   return async (dispatch) => {
-//     try {
-//       const { data } = await axios.post(
-//         "http://localhost:3000/order_shipments"
-//       );
-//       return dispatch(
-//         {
-//           type: CREATE_ORDER,
-//           payload: data,
-//         },
-//         console.log("INFO:", data)
-//       );
-//     } catch (error) {
-//       window.alert(error.message);
-//     }
-//   };
-// };
 
 const createOrder = (userData) => {
-  console.log("userData", userData);
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
@@ -56,20 +64,9 @@ const createOrder = (userData) => {
         type: CREATE_ORDER,
         payload: data,
       });
-      swal.fire({
-        title: "¡Orden de pedido creada!",
-        text: "La orden de pedido ha sido creada exitosamente",
-        icon: "success",
-        confirmButtonText: "Aceptar",
-      });
-      // Mueve la impresión de la información dentro del bloque 'try'
+      console.log("INFO:", data); // Mueve la impresión de la información dentro del bloque 'try'
     } catch (error) {
-      swal.fire({
-        title: "¡Error!",
-        text: "No se ha podido crear la orden de pedido",
-        icon: "error",
-        confirmButtonText: "Aceptar",
-      });
+      window.alert(error.message);
     }
   };
 };
@@ -122,35 +119,26 @@ const getOrderById = (id) => {
   };
 };
 
-const orderDeclaredValue = (selectedValues) => {
-  return async (dispatch) => {
-    try {
-      // Construir la cadena de parámetros de consulta con claves asociadas a los valores seleccionados
-      const queryParams = selectedValues
-        .map((field) => `${Object.keys(field)[0]}=${Object.values(field)[0]}`)
-        .join("&");
-      // Agregar la cadena de parámetros de consulta a la URL base
-      const url = `http://localhost:3000/order_shipments?${queryParams}`;
-
-      // Realizar la solicitud GET con la URL construida
-      const { data } = await axios.get(url);
-      console.log("estoy en action", data);
-      // Despachar la acción con los datos obtenidos
-      return dispatch({
-        type: FILTER_VALUES,
-        payload: data,
-      });
-    } catch (error) {
-      window.alert(error.message);
-    }
-  };
+const orderDeclaredValue = (selectedValues,) => {
+    return async (dispatch) => {
+        try {
+            // Construir la cadena de parámetros de consulta con claves asociadas a los valores seleccionados
+            const queryParams = selectedValues.map(field => `${Object.keys(field)[0]}=${Object.values(field)[0]}`).join('&');
+            // Agregar la cadena de parámetros de consulta a la URL base
+            const url = `http://localhost:3000/order_shipments?${queryParams}`;
+            
+            // Realizar la solicitud GET con la URL construida
+            const { data } = await axios.get(url);
+            console.log('estoy en action', data)
+            // Despachar la acción con los datos obtenidos
+            return dispatch({
+                type: FILTER_VALUES,
+                payload: data
+            });
+        } catch (error) {
+            window.alert(error.message);
+        }
+    };
 };
 
-export {
-  getUserDetail,
-  getAllUsers,
-  getOrderById,
-  getAllOrders,
-  createOrder,
-  orderDeclaredValue,
-};
+export { getUserDetail, getAllUsers, getOrderById, getAllOrders, createOrder, orderDeclaredValue };
