@@ -14,19 +14,19 @@ const OrderForm = () => {
       .max(8, "Debe tener 8 dígitos")
       .required("DNI es requerido"),
     cellphone_claimant: Yup.string()
-      .matches(/^[0-9]+$/, "Debe ser solo números")
+      .matches(/^\d{10}$/, "Debe tener 10 dígitos")
       .max(10, "Debe tener 10 dígitos")
       .required("Teléfono es requerido"),
     name_transmiter: Yup.string().required("Nombre es requerido"),
     celphone_transmiter: Yup.string()
-      .matches(/^[0-9]+$/, "Debe ser solo números")
+      .matches(/^\d{10}$/, "Debe tener 10 dígitos")
       .max(10, "Debe tener 10 dígitos")
       .required("Teléfono es requerido"),
     city_transmiter: Yup.string().required("Ciudad es requerida"),
     address_transmiter: Yup.string().required("Dirección es requerida"),
     name_receiver: Yup.string().required("Nombre es requerido"),
     celphone_receiver: Yup.string()
-      .matches(/^[0-9]+$/, "Debe ser solo números")
+      .matches(/^\d{10}$/, "Debe tener 10 dígitos")
       .max(10, "Debe tener 10 dígitos")
       .required("Teléfono es requerido"),
     city_receiver: Yup.string().required("Ciudad es requerida"),
@@ -177,31 +177,11 @@ const OrderForm = () => {
                 onChange={formik.handleChange}
                 className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
               >
-                <option value="Buenos Aires">Buenos Aires</option>
-                <option value="Catamarca">Catamarca</option>
-                <option value="Chaco">Chaco</option>
-                <option value="Chubut">Chubut</option>
-                <option value="Cordoba">Córdoba</option>
-                <option value="Corrientes">Corrientes</option>
-                <option value="Entre Rios">Entre Ríos</option>
-                <option value="Formosa">Formosa</option>
-                <option value="Jujuy">Jujuy</option>
-                <option value="La Pampa">La Pampa</option>
-                <option value="La Rioja">La Rioja</option>
-                <option value="Mendoza">Mendoza</option>
-                <option value="Misiones">Misiones</option>
-                <option value="Neuquen">Neuquén</option>
-                <option value="Rio Negro">Río Negro</option>
-                <option value="Salta">Salta</option>
-                <option value="San Juan">San Juan</option>
-                <option value="San Luis">San Luis</option>
-                <option value="Santa Cruz">Santa Cruz</option>
-                <option value="Santa Fe">Santa Fe</option>
-                <option value="Santiago del Estero">Santiago del Estero</option>
-                <option value="Tierra del Fuego">
-                  Tierra del Fuego, Antártida e Islas del Atlántico Sur
-                </option>
-                <option value="Tucuman">Tucumán</option>
+                <option value="buenos aires">Buenos Aires</option>
+                <option value="cordoba">Córdoba</option>
+                <option value="corrientes">Corrientes</option>
+                <option value="entre rios">Entre Ríos</option>
+                <option value="santa fe">Santa Fe</option>
               </select>
 
               {/* <input
@@ -280,31 +260,11 @@ const OrderForm = () => {
                 onChange={formik.handleChange}
                 className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
               >
-                <option value="Buenos Aires">Buenos Aires</option>
-                <option value="Catamarca">Catamarca</option>
-                <option value="Chaco">Chaco</option>
-                <option value="Chubut">Chubut</option>
-                <option value="Cordoba">Córdoba</option>
-                <option value="Corrientes">Corrientes</option>
-                <option value="Entre Rios">Entre Ríos</option>
-                <option value="Formosa">Formosa</option>
-                <option value="Jujuy">Jujuy</option>
-                <option value="La Pampa">La Pampa</option>
-                <option value="La Rioja">La Rioja</option>
-                <option value="Mendoza">Mendoza</option>
-                <option value="Misiones">Misiones</option>
-                <option value="Neuquen">Neuquén</option>
-                <option value="Rio Negro">Río Negro</option>
-                <option value="Salta">Salta</option>
-                <option value="San Juan">San Juan</option>
-                <option value="San Luis">San Luis</option>
-                <option value="Santa Cruz">Santa Cruz</option>
-                <option value="Santa Fe">Santa Fe</option>
-                <option value="Santiago del Estero">Santiago del Estero</option>
-                <option value="Tierra del Fuego">
-                  Tierra del Fuego, Antártida e Islas del Atlántico Sur
-                </option>
-                <option value="Tucuman">Tucumán</option>
+                <option value="buenos aires">Buenos Aires</option>
+                <option value="cordoba">Córdoba</option>
+                <option value="corrientes">Corrientes</option>
+                <option value="entre rios">Entre Ríos</option>
+                <option value="santa fe">Santa Fe</option>
               </select>
               {formik.errors.city_receiver && formik.touched.city_receiver && (
                 <span className="text-red-600 font-semibold">
