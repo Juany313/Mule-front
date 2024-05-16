@@ -115,7 +115,3 @@ const Ordershipment = () => {
 }
 
 export default Ordershipment;
-
-
-
-

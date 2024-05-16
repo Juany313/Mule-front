@@ -3,21 +3,24 @@ import about from "../assets/about.jpg";
 
 const About = () => {
   return (
-    <div id="about" className="bg-p300 flex justify-end w-full h-[90vh] ">
+    <section
+      id="about"
+      className="bg-p300 flex justify-center items-center w-full h-screen overflow-hidden"
+    >
       <div
-        className="w-full bg-cover bg-center h-3/4 bg-no-repeat"
+        className="w-full h-full bg-cover bg-center bg-no-repeat flex justify-end items-center"
         style={{ backgroundImage: `url(${about})` }}
       >
-        <div className="w-1/3 h-56 m-12 p-8 border text-lg bg-s300 rounded-lg text-center shadow-md flex ml-auto justify-center">
-          <p className="w-4/5 text-center">
+        <div className="w-1/3 max-w-lg h-auto m-8 p-8 border text-lg bg-s300 rounded-lg text-center shadow-md flex justify-center items-center">
+          <p className="w-4/5">
             Somos el socio ideal para cualquier empresa que busque soluciones
             logísticas integrales para acompañar el desarrollo de su negocio. Lo
             hacemos con flexibilidad y eficiencia, impulsados por la tecnología
-            y la innovación continua al servicio de nuestros clientes
+            y la innovación continua al servicio de nuestros clientes.
           </p>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

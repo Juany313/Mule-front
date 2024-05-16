@@ -1,26 +1,27 @@
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-const Card = ({order}) =>{
-  const {id, city_receiver, city_transmiter, product_image} = order;
+const Card = ({ order }) => {
+  const { id, city_receiver, city_transmiter, product_image } = order;
 
-    return (
-      
-      <Link to={`/detail/${id}`} >
-          <div className='bg-white shadow-1-p rounded-lg rounded-tl-[90px] w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition gap-4'>
-            <img className='mb-8' src = {product_image} alt= "img" />
-            <div className='mb-4 flex gap-x-2 text-sm'>
-              <div className='flex justify-center gap-x-4 my-4'>
-            <div className='bg-s500 rounded-full font-semibold text-white px-6 mx-auto my-auto' >Origen {city_transmiter}</div>
-            <div className='bg-s500 rounded-full font-semibold text-white px-6 mx-auto my-auto'>Destino {city_receiver}</div>
-            </div >
+  return (
+    <Link to={`/header/ordershipment/detail/${id}`}>
+      <div className="bg-white shadow-1-p rounded-lg rounded-tl-[90px] w-full max-w-[352px] mx-auto cursor-pointer hover:shadow-2xl transition gap-4">
+        <img className="mb-8" src={product_image} alt="img" />
+        <div className="mb-4 flex gap-x-2 text-sm">
+          <div className="flex justify-center gap-x-4 my-4">
+            <div className="bg-s500 rounded-full font-semibold text-white px-6 mx-auto my-auto">
+              Origen {city_transmiter}
             </div>
+            <div className="bg-s500 rounded-full font-semibold text-white px-6 mx-auto my-auto">
+              Destino {city_receiver}
             </div>
-      </Link>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+};
 
-
-    );
-  }
-  
 export default Card;
 
 // return (
