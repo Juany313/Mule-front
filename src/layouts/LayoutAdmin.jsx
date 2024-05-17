@@ -1,18 +1,16 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import Header from '../components/Header';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Header from "../components/Header";
 
 const LayoutAdmin = () => {
   return (
-    <div className='min-h-screen  xl:bg-slate-500 '>
+    <div className="min-h-screen  xl:bg-slate-500 ">
       <div>
-        <Header/>
+        <Header />
       </div>
-          <Outlet/>
-        </div>
-      
-    
-  )
-}
+      <Outlet />
+    </div>
+  );
+};
 
 export default LayoutAdmin;

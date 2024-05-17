@@ -1,156 +1,151 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react';
-import { getAllOrders, allFilters} from '../redux/actions';
-import Pagination from '../components/Pagination';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllOrders, agregarPedido } from "../redux/actions";
+import Pagination from "../components/Pagination";
 
 const Ordershipment = () => {
   const dispatch = useDispatch();
-  const allOrders = useSelector ((state)=>state.allOrders)
-  const filters = useSelector ((state)=>state.filters)
+  const allOrders = useSelector((state) => state.allOrders);
+  const filtrados = useSelector((state) => state.filtrados);
 
-
-
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getAllOrders());
-  }, [dispatch])
+  }, [dispatch]);
 
-  const handlerFilter = (filters)=>{
-    const {city_receiver, city_transmiter, pay_method} = filters
-    const ordersFiltered= allOrders.filter(()=>{
-      order.city_receiver === city_receiver && order.city_transmiter === city_transmiter && order.pay_method === pay_method
-    })
-    dispatch(getAllOrders(ordersFiltered))   
-  }
+  const [estado, setEstado] = useState({
+    city_transmiter: "",
+    city_receiver: "",
+    declared_value: "",
+    pay_method: "",
+  });
 
-    const handleFilters = (e) =>{
-    e.preventDefault();
-    dispatch(allFilters(...filters, {city_receiver: e.target.value}, 
-      {city_transmiter: e.target.value}, {pay_method: e.target.value}))
-  }
+  const [filtrosActivos, setFiltrosActivos] = useState(false);
 
-  // const handleFilterCityReceiver = (e) =>{
-  //   e.preventDefault();
-  //   dispatch(filterCityReceiver(e.target.value))
-  // }
-//  console.log(allOrders)
- 
-//  const [options, setOptions] = useState([]);
+  const manejarCambio = (e) => {
+    const { name, value } = e.target;
+    setEstado((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
-//  const set = new Set();
+  const manejarFiltrarClick = () => {
+    console.log("FILTROS", estado);
+    const pedido = Object.keys(estado).reduce((acc, key) => {
+      if (estado[key] !== "") {
+        acc[key] = estado[key];
+      }
+      return acc;
+    }, {});
 
-//  useEffect(() => {
-//    const fetchData = async () => {
-//      try {
-//        const response = await fetch("http://localhost:3000/order_shipments");
+    if (Object.keys(pedido).length > 0) {
+      dispatch(agregarPedido(pedido));
+      setFiltrosActivos(true); // Activar los filtros
+    } else {
+      console.log("No hay propiedades para agregar al pedido.");
+    }
+  };
 
-//        const data = await response.json();
-
-//        data.map((elem) => set.add(elem.city_transmiter, elem.city_receiver, declared_value, pay_method));
-
-//        const optionsArr = [...set];
-
-//        setOptions(optionsArr);
-//      } catch (error) {
-//        console.log("error: ", error);
-//      }
-//    };
-
-//    fetchData();
-//  }, []);
-
-// const [selectedFilters, setSelectedFilters] = useState({});
-
-
-// const handleClickOrderDeclaredValue = (e) => {
-//   e.preventDefault();
-
-
-//   const fieldName = e.target.name;
-//   const fieldValue = e.target.value;
-
-
-//     // Actualizar el estado de los filtros seleccionados
-//     setSelectedFilters(prevState => ({
-//       ...prevState,
-//       [fieldName]: fieldValue
-//     }));
-
-//     dispatch(orderDeclaredValue(selectedFilters));
-
-// }
-
- //order
- const handleClickOrderDeclaredValue = (e) => {
-  e.preventDefault();
-
-  // Obtener los nombres de los campos (claves) de los <select>
-  const fieldNames = ["city_transmiter", "city_receiver", "declared_value", "pay_method"];
-
-  // Obtener los valores seleccionados de los <select>
-  const selectedValue = e.target.value;
-
-  // Crear un array de objetos donde cada objeto tiene una clave y su valor asociado
-  const selectedFields = fieldNames.map(fieldName => ({
-    [fieldName]: fieldName === e.target.name ? selectedValue : null
-  }));
-
-  // Llamar a dispatch con el array de objetos clave-valor
-  dispatch(orderDeclaredValue(selectedFields));
-};
+  const manejarSinFiltrosClick = () => {
+    // Establecer todas las propiedades del estado a cadenas vacías
+    dispatch(getAllOrders());
+    setFiltrosActivos(false); // Desactivar los filtros
+  };
 
   return (
     <>
-    <div id='ordershipment' className='min-h-screen bg-p300 flex flex-col items-center justify-start pt-[7rem] text-white' >
-      <h1 className='mb-[100px] font-bold text-4xl mb-2'>
-        Clientes que confían en nosotros
-      </h1>
-      <div>
-      <select className='text-g500' onChange={(e)=>{
-                handleFilters(e)
-              }}>
-                <option value="all">Ciudad origen</option>
-                {allOrders.map((elem)=>{
-                  return (
-                    <option value={elem.city_transmiter} key={elem.city_transmiter}>
-                      {elem.city_transmiter}
-                    </option>
-                  )
-                })}
-            </select>
-            <select className='text-g500' onChange={(e)=>{
-                handleFilters(e)
-              }}>
-                <option value="all">Ciudad destino</option>
-                {allOrders.map((elem)=>{
-                  return (
-                    <option value={elem.city_receiver} key={elem.city_receiver}>
-                      {elem.city_receiver}
-                    </option>
-                  )
-                })}
-            </select>
-            <select className='text-g500' onChange={(e)=>{
-                handleFilters(e)
-              }}>
-                <option value="all">Método de pago</option>
-                {allOrders.map((elem)=>{
-                  return (
-                    <option value={elem.pay_method} key={elem.pay_method}>
-                      {elem.pay_method}
-                    </option>
-                  )
-                })}
-            </select>
-      
-
-      </div>
-      <div>
-          <Pagination allOrders={allOrders}/>      
+      <div
+        id="orderShipment"
+        className="min-h-screen bg-p300 flex flex-col items-center justify-start pt-28 text-white"
+      >
+        <h1 className="font-bold text-4xl mb-16">
+          Clientes que confían en nosotros
+        </h1>
+        <div className="w-full max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <section>
+              <h2 className="font-bold text-lg mb-2">Ciudad origen</h2>
+              <select
+                className="w-full p-2 border border-gray-300 rounded-md text-gray-700"
+                name="city_transmiter"
+                value={estado.city_transmiter}
+                onChange={manejarCambio}
+              >
+                <option value="">Seleccionar</option>
+                <option value="santa fe">Santa Fe</option>
+                <option value="buenos aires">Buenos Aires</option>
+                <option value="cordoba">Cordoba</option>
+                <option value="entre rios">Entre Rios</option>
+                <option value="corrientes">Corrientes</option>
+              </select>
+            </section>
+            <section>
+              <h2 className="font-bold text-lg mb-2">Ciudad destino</h2>
+              <select
+                className="w-full p-2 border border-gray-300 rounded-md text-gray-700"
+                name="city_receiver"
+                value={estado.city_receiver}
+                onChange={manejarCambio}
+              >
+                <option value="">Seleccionar</option>
+                <option value="santa fe">Santa Fe</option>
+                <option value="buenos aires">Buenos Aires</option>
+                <option value="cordoba">Cordoba</option>
+                <option value="entre rios">Entre Rios</option>
+                <option value="corrientes">Corrientes</option>
+              </select>
+            </section>
+            <section>
+              <h2 className="font-bold text-lg mb-2">Valor Declarado</h2>
+              <select
+                className="w-full p-2 border border-gray-300 rounded-md text-gray-700"
+                name="declared_value"
+                value={estado.declared_value}
+                onChange={manejarCambio}
+              >
+                <option value="">Seleccionar</option>
+                <option value="10000">10000</option>
+                <option value="20000">20000</option>
+                <option value="30000">30000</option>
+                <option value="40000">40000</option>
+              </select>
+            </section>
+            <section>
+              <h2 className="font-bold text-lg mb-2">Método de pago</h2>
+              <select
+                className="w-full p-2 border border-gray-300 rounded-md text-gray-700"
+                name="pay_method"
+                value={estado.pay_method}
+                onChange={manejarCambio}
+              >
+                <option value="">Seleccionar</option>
+                <option value="Efectivo">Efectivo</option>
+                <option value="Credito">Tarjeta de crédito</option>
+                <option value="Debito">Tarjeta de débito</option>
+              </select>
+            </section>
+          </div>
+          <div className="flex justify-between">
+            <button
+              onClick={manejarFiltrarClick}
+              className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition"
+            >
+              Filtrar
+            </button>
+            <button
+              onClick={manejarSinFiltrosClick}
+              className="bg-gray-500 text-white py-2 px-6 rounded-md hover:bg-gray-600 transition"
+            >
+              Sin Filtros
+            </button>
+          </div>
         </div>
-    </div>
+        <div className="w-full mt-10">
+          <Pagination data={filtrosActivos ? filtrados : allOrders} />
+        </div>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Ordershipment
+export default Ordershipment;

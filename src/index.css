@@ -5,6 +5,6 @@
 
 /* Para que se vea más lindo el scroll como en mac */
 
-/* ::-webkit-scrollbar {
-    width: 0px;
-} */
+::-webkit-scrollbar {
+  width: 0px;
+}

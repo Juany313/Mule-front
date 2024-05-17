@@ -1,13 +1,4 @@
-import { 
-    GET_ALL_ORDERS, 
-    GET_ALL_USERS,
-    GET_ORDER_ID, 
-    // FILTER_VALUES, 
-    GET_USER_DETAIL,
-    // FILTER_CITY_RECEIVER,
-    // FILTER_CITY_TRANSMITER
- } from "../actions";
-
+import { GET_ALL_ORDERS, GET_ALL_USERS, GET_ORDER_ID, GET_USER_DETAIL, FILTER_VALUES, AGREGAR_PEDIDO } from "../actions";
 
 let initialState = {
     allUsers:[],
@@ -15,17 +6,29 @@ let initialState = {
     allOrders: [],
     allOrdersCopy: [],
     orderDetail: [],
-    filters: {city_transmiter: "", city_receiver: "", pay_method: ""},
-    filtersCopy:{},
-
+    filtrados: []
 }
 
-function rootReducer(state = initialState, action){
+function rootReducer(state = initialState, action) {
     switch (action.type) {
         case GET_ALL_USERS:
             return {
                 ...state,
                 allUsers: action.payload,
+            };
+
+        case AGREGAR_PEDIDO:
+            
+
+            return {
+                ...state,
+                filtrados: state.allOrders.reduce((acc, objeto) => {
+                    // Verificar si todos los campos y valores del pedido coinciden con el objeto actual
+                    if (Object.keys(action.payload).every(key => objeto[key] === action.payload[key])) {
+                        acc.push(objeto);
+                    }
+                    return acc;
+                }, [])
             };
 
         case GET_USER_DETAIL:
@@ -111,14 +114,14 @@ function rootReducer(state = initialState, action){
                 orderDetail: action.payload
             }; 
 
-        // case  FILTER_VALUES:
-        //     return {
-        //         ...state,
-        //         allOrders:action.payload
-        //     }
+        case FILTER_VALUES:
+            return {
+                ...state,
+                allOrders: action.payload
+            }
            
         default:
-            return {...state};
+            return state;
     }
 }
 
