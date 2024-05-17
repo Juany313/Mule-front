@@ -1,11 +1,24 @@
-import { GET_ALL_ORDERS, GET_ALL_USERS, GET_ORDER_ID, GET_USER_DETAIL, FILTER_VALUES, AGREGAR_PEDIDO } from "../actions";
+import { 
+    GET_ALL_ORDERS, 
+    GET_ALL_USERS, 
+    GET_ORDER_ID, 
+    GET_USER_DETAIL, 
+    FILTER_VALUES, 
+    AGREGAR_PEDIDO, 
+    GET_ALL_MEASURES,
+    GET_TYPES_SHIPMENTS,
+    GET_ALL_BRANCHES} from "../actions";
 
 let initialState = {
     allUsers:[],
     userDetail:[],
     allOrders: [],
+    allOrdersCopy: [],
     orderDetail: [],
-    filtrados: []
+    filtrados: [],
+    allMeasures: [],
+    allTypesShipments: [],
+    allBranches: []
 }
 
 function rootReducer(state = initialState, action) {
@@ -17,8 +30,6 @@ function rootReducer(state = initialState, action) {
             };
 
         case AGREGAR_PEDIDO:
-            
-
             return {
                 ...state,
                 filtrados: state.allOrders.reduce((acc, objeto) => {
@@ -40,7 +51,72 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 allOrders: action.payload,
+                allOrdersCopy: action.payload
             }; 
+
+        // case FILTER_VALUES:
+        //     return {
+        //         ...state,
+        //         filters: action.payload,
+        // }
+
+            // case FILTER_CITY_TRANSMITER:
+            //     const cityTransmiterFilter =
+            //         action.payload === "all"
+            //         ? state.allOrdersCopy
+            //         : state.allOrdersCopy.filter((e) => {
+            //             return e.city_transmiter?.includes(action.payload);
+            //             });
+            //     return {
+            //         ...state,
+            //         allOrders: action.payload === "all" ? state.allOrdersCopy : cityTransmiterFilter,
+            //     };
+
+            //     case FILTER_CITY_RECEIVER:
+            //         const cityFilterReceiver =
+            //             action.payload === "all"
+            //             ? state.allOrdersCopy
+            //             : state.allOrdersCopy.filter((e) => {
+            //                 return e.city_receiver?.includes(action.payload);
+                            
+            //                 });
+            //         return {
+            //             ...state,
+            //             allOrders: action.payload === "all" ? state.allOrdersCopy : cityFilterReceiver,
+            //         };
+
+
+//             case FILTER_CITY_TRANSMITER:
+//   let filteredByTransmitter = [];
+
+//   if (action.payload === "all") {
+//     filteredByTransmitter = state.allOrdersCopy;
+//   } else {
+//     filteredByTransmitter = state.allOrdersCopy.filter(order =>
+//       order.city_transmiter?.includes(action.payload)
+//     );
+//   }
+
+//   return {
+//     ...state,
+//     allOrders: filteredByTransmitter,
+//   };
+
+//   case FILTER_CITY_RECEIVER:
+//   let filteredByReceiver = [];
+
+//   if (action.payload === "all") {
+//     filteredByReceiver = state.allOrdersCopy;
+//   } else {
+//     filteredByReceiver = state.allOrdersCopy.filter(order =>
+//       order.city_receiver?.includes(action.payload)
+//     );
+//   }
+
+//   return {
+//     ...state,
+//     allOrders: filteredByReceiver,
+//   };
 
         case GET_ORDER_ID:
             return {
@@ -53,10 +129,30 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 allOrders: action.payload
             }
-           
+
+        case GET_ALL_MEASURES:
+            return {
+                ...state,
+                allMeasures: action.payload
+            }
+
+        case GET_TYPES_SHIPMENTS:
+            return {
+                ...state,
+                allTypesShipments: action.payload
+            }
+            
+        case GET_ALL_BRANCHES:
+            return {
+                ...state,
+                allBranches: action.payload
+            }       
+        
+
         default:
             return state;
     }
 }
+
 
 export default rootReducer;

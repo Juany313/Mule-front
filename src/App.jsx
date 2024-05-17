@@ -20,6 +20,8 @@ import ForgetPassword from "./views/auth/ForgetPassword";
 
 /* Pages admin */
 import Home from "./views/admin/Home";
+import Profile from "./views/profile/Profile";
+import Payment from "./components/Payment"
 
 function App() {
   return (
@@ -29,6 +31,7 @@ function App() {
           <Route index element={<Login />} />
           <Route path="registro" element={<Register />} />
           <Route path="olvide-password" element={<ForgetPassword />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
 
         <Route exact path="/" element={<Landing />} />
@@ -40,6 +43,7 @@ function App() {
           <Route path="ordershipment" element={<Ordershipment />} />
           <Route path="pedido" element={<OrderForm />} />
           <Route path="ordershipment/detail/:id" element={<Detail />} />
+          <Route path="payment" element={<Payment />} />
         </Route>
 
         <Route path="*" element={<LayoutError />} />
