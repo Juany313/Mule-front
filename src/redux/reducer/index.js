@@ -5,7 +5,6 @@ import {
     GET_USER_DETAIL, 
     FILTER_VALUES, 
     AGREGAR_PEDIDO, 
-    CREATE_PAYMENT_BUTTON, 
     GET_ALL_MEASURES,
     GET_TYPES_SHIPMENTS,
     GET_ALL_BRANCHES} from "../actions";
@@ -149,12 +148,7 @@ function rootReducer(state = initialState, action) {
                 allBranches: action.payload
             }       
         
-        case CREATE_PAYMENT_BUTTON:
-            return {
-                ...state,
-                orderDetail: action.payload
-            }
-           
+
         default:
             return state;
     }

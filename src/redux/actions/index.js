@@ -7,7 +7,6 @@ export const GET_ORDER_ID = "GET_ORDER_ID";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const CREATE_ORDER = "CREATE_ORDER";
 export const FILTER_VALUES = "FILTER_VALUES";
-export const CREATE_PAYMENT_BUTTON = "CREATE_PAYMENT_BUTTON";
 export const GET_ALL_MEASURES = "GET_ALL_MEASURES";
 export const GET_TYPES_SHIPMENTS = "GET_TYPES_SHIPMENTS";
 export const GET_ALL_BRANCHES = "GET_ALL_BRANCHES";
@@ -120,34 +119,7 @@ const createOrder = (userData) => {
   };
 };
 
-const createPaymentButton = (userData) => {
-  return async (dispatch) => {
-    try {
-      const { data } = await axios.post(
-        "http://localhost:3000/create_preferences",
-        userData // Envía los datos del formulario como parte de la solicitud POST
-      );
-      dispatch({
-        type: CREATE_PAYMENT_BUTTON,
-        payload: data,
-      });
-      Swal.fire({
-        title: "Redirigiendo!",
-        text: "La orden de pedido ha sido creada exitosamente",
-        icon: "success",
-        confirmButtonText: "Aceptar",
-      });
-      console.log("INFO:", data); // Mueve la impresión de la información dentro del bloque 'try'
-    } catch (error) {
-      Swal.fire({
-        title: "Error!",
-        text: "Error al crear el pedido",
-        icon: "Error",
-        confirmButtonText: "Aceptar",
-      });
-    }
-  };
-};
+
 
 
 const getUserDetail = (id) => {
@@ -232,5 +204,4 @@ export {
   getAllMeasures,
   getTypeShipments,
   getAllBranches,
-  createPaymentButton
 };
