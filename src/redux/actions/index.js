@@ -5,9 +5,7 @@ export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_ORDER_ID = "GET_ORDER_ID";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const CREATE_ORDER = "CREATE_ORDER";
-export const FILTER_VALUES = "FILTER_VALUES";
-// export const FILTER_CITY_TRANSMITER = "FILTER_CITY_TRANSMITER";
-// export const FILTER_CITY_RECEIVER = "FILTER_CITY_RECEIVER";
+export const ORDER = "ORDER";
 
 
 const URL_BASE = "http://localhost:3000";
@@ -27,42 +25,6 @@ const getAllUsers = () => {
   };
 };
 
-const allFilters = ()=>{
-  return async (dispatch)=>{
-    try {
-      const {data} = await axios.get ("http://localhost:3000/order_shipments")
-      return dispatch({
-        type: FILTER_VALUES,
-        payload: data
-      })
-    } catch (error) {
-      window.alert(error.message);
-    }
-  }
-}
-
-// const OrdersFilters = () =>{
-
-// }
-
-// const createOrder = () => {
-//   return async (dispatch) => {
-//     try {
-//       const { data } = await axios.post(
-//         "http://localhost:3000/order_shipments"
-//       );
-//       return dispatch(
-//         {
-//           type: CREATE_ORDER,
-//           payload: data,
-//         },
-//         console.log("INFO:", data)
-//       );
-//     } catch (error) {
-//       window.alert(error.message);
-//     }
-//   };
-// };
 
 const createOrder = (userData) => {
   return async (dispatch) => {
@@ -129,49 +91,7 @@ const getOrderById = (id) => {
     }
   };
 };
-// const filterCityTransmiter = (filter) => {
-//   return {
-//     type: FILTER_CITY_TRANSMITER,
-//     payload: filter,
-//   };
-// };
 
-// const filterCityReceiver = (filter) => {
-//   return {
-//     type: FILTER_CITY_RECEIVER,
-//     payload: filter,
-//   };
-// };
-
-// const orderDeclaredValue = (selectedFilters) => {
-//   return async (dispatch) => {
-//     try {
-//       // Construir la URL base
-//       let url = 'http://localhost:3000/order_shipments?';
-
-//       // Iterar sobre los filtros seleccionados y agregarlos a la URL
-//       Object.entries(selectedFilters).forEach(([key, value]) => {
-//         if (value) { // Solo agregar el filtro si tiene un valor seleccionado
-//           url += `${key}=${value}&&`;
-//         }
-//       });
-
-//       // Eliminar el último '&' de la URL si es necesario
-//       url = url.slice(0, -1);
-
-//       // Realizar la solicitud HTTP con la URL construida
-//       const { data } = await axios.get(url);
-
-//       // Despachar la acción con los datos obtenidos
-//       dispatch({
-//         type: FILTER_VALUES,
-//         payload: data
-//       });
-//     } catch (error) {
-//       window.alert(error.message);
-//     }
-//   };
-// };
 
 export { 
   getUserDetail, 
@@ -179,5 +99,5 @@ export {
   getOrderById, 
   getAllOrders, 
   createOrder,
-  allFilters 
+
   };

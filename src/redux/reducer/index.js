@@ -2,9 +2,10 @@ import {
     GET_ALL_ORDERS, 
     GET_ALL_USERS,
     GET_ORDER_ID, 
-    FILTER_VALUES, 
+    // FILTER_VALUES, 
     GET_USER_DETAIL,
-    FILTER_VALUES, 
+    // FILTER_CITY_RECEIVER,
+    // FILTER_CITY_TRANSMITER
  } from "../actions";
 
 
@@ -40,12 +41,11 @@ function rootReducer(state = initialState, action){
                 allOrdersCopy: action.payload
             }; 
 
-        case FILTER_VALUES:
-            return {
-                ...state,
-                filters: action.payload,
-               
-            }
+        // case FILTER_VALUES:
+        //     return {
+        //         ...state,
+        //         filters: action.payload,
+        // }
 
             // case FILTER_CITY_TRANSMITER:
             //     const cityTransmiterFilter =
@@ -84,26 +84,26 @@ function rootReducer(state = initialState, action){
 //     );
 //   }
 
-  return {
-    ...state,
-    allOrders: filteredByTransmitter,
-  };
+//   return {
+//     ...state,
+//     allOrders: filteredByTransmitter,
+//   };
 
-  case FILTER_CITY_RECEIVER:
-  let filteredByReceiver = [];
+//   case FILTER_CITY_RECEIVER:
+//   let filteredByReceiver = [];
 
-  if (action.payload === "all") {
-    filteredByReceiver = state.allOrdersCopy;
-  } else {
-    filteredByReceiver = state.allOrdersCopy.filter(order =>
-      order.city_receiver?.includes(action.payload)
-    );
-  }
+//   if (action.payload === "all") {
+//     filteredByReceiver = state.allOrdersCopy;
+//   } else {
+//     filteredByReceiver = state.allOrdersCopy.filter(order =>
+//       order.city_receiver?.includes(action.payload)
+//     );
+//   }
 
-  return {
-    ...state,
-    allOrders: filteredByReceiver,
-  };
+//   return {
+//     ...state,
+//     allOrders: filteredByReceiver,
+//   };
 
         case GET_ORDER_ID:
             return {
@@ -111,11 +111,11 @@ function rootReducer(state = initialState, action){
                 orderDetail: action.payload
             }; 
 
-        case  FILTER_VALUES:
-            return {
-                ...state,
-                allOrders:action.payload
-            }
+        // case  FILTER_VALUES:
+        //     return {
+        //         ...state,
+        //         allOrders:action.payload
+        //     }
            
         default:
             return {...state};

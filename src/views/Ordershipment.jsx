@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react';
-import { filterCityTransmiter, getAllOrders, filterCityReceiver, allFilters} from '../redux/actions';
+import { getAllOrders, allFilters} from '../redux/actions';
 import Pagination from '../components/Pagination';
 
 const Ordershipment = () => {
