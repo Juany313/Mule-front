@@ -1,4 +1,14 @@
-import { GET_ALL_ORDERS, GET_ALL_USERS, GET_ORDER_ID, GET_USER_DETAIL, FILTER_VALUES, AGREGAR_PEDIDO } from "../actions";
+import { 
+    GET_ALL_ORDERS, 
+    GET_ALL_USERS, 
+    GET_ORDER_ID, 
+    GET_USER_DETAIL, 
+    FILTER_VALUES, 
+    AGREGAR_PEDIDO, 
+    CREATE_PAYMENT_BUTTON, 
+    GET_ALL_MEASURES,
+    GET_TYPES_SHIPMENTS,
+    GET_ALL_BRANCHES} from "../actions";
 
 let initialState = {
     allUsers:[],
@@ -6,7 +16,10 @@ let initialState = {
     allOrders: [],
     allOrdersCopy: [],
     orderDetail: [],
-    filtrados: []
+    filtrados: [],
+    allMeasures: [],
+    allTypesShipments: [],
+    allBranches: []
 }
 
 function rootReducer(state = initialState, action) {
@@ -18,8 +31,6 @@ function rootReducer(state = initialState, action) {
             };
 
         case AGREGAR_PEDIDO:
-            
-
             return {
                 ...state,
                 filtrados: state.allOrders.reduce((acc, objeto) => {
@@ -119,10 +130,35 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 allOrders: action.payload
             }
+
+        case GET_ALL_MEASURES:
+            return {
+                ...state,
+                allMeasures: action.payload
+            }
+
+        case GET_TYPES_SHIPMENTS:
+            return {
+                ...state,
+                allTypesShipments: action.payload
+            }
+            
+        case GET_ALL_BRANCHES:
+            return {
+                ...state,
+                allBranches: action.payload
+            }       
+        
+        case CREATE_PAYMENT_BUTTON:
+            return {
+                ...state,
+                orderDetail: action.payload
+            }
            
         default:
             return state;
     }
 }
+
 
 export default rootReducer;
