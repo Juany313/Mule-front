@@ -21,7 +21,7 @@ import ForgetPassword from "./views/auth/ForgetPassword";
 /* Pages admin */
 import Home from "./views/admin/Home";
 import Profile from "./views/profile/Profile";
-import TypeShipments from "./components/TypeShipments";
+import Payment from "./components/Payment"
 
 function App() {
   return (
@@ -43,7 +43,7 @@ function App() {
           <Route path="ordershipment" element={<Ordershipment />} />
           <Route path="pedido" element={<OrderForm />} />
           <Route path="ordershipment/detail/:id" element={<Detail />} />
-          <Route path="typeshipments" element={<TypeShipments />} />
+          <Route path="payment" element={<Payment />} />
         </Route>
 
         <Route path="*" element={<LayoutError />} />
