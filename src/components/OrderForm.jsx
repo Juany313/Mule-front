@@ -367,7 +367,7 @@ const OrderForm = () => {
               type="submit"
               className="bg-s300 text-black uppercase font-bold text-sm w-full py-3 px-4 rounded-lg hover:text-gray-100 transition-colors"
             >
-              Ingresar
+              Pagar
             </button>
           </div>
         </form>

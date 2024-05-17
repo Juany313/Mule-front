@@ -7,6 +7,9 @@ export const GET_ORDER_ID = "GET_ORDER_ID";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const CREATE_ORDER = "CREATE_ORDER";
 export const FILTER_VALUES = "FILTER_VALUES";
+export const GET_ALL_MEASURES = "GET_ALL_MEASURES";
+export const GET_TYPES_SHIPMENTS = "GET_TYPES_SHIPMENTS";
+export const GET_ALL_BRANCHES = "GET_ALL_BRANCHES";
 
 /* Juanyyyy */
 export const AGREGAR_PEDIDO = "AGREGAR_PEDIDO";
@@ -41,6 +44,52 @@ const getAllUsers = () => {
   };
 };
 
+const getAllMeasures = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL_BASE}/measures`);
+      // console.log(data)
+      return dispatch({
+        type: GET_ALL_MEASURES,
+        payload: data,
+      });
+    } catch (error) {
+      window.alert(error.message);
+    }
+  };
+};
+
+const getTypeShipments = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL_BASE}/type_shipments`);
+      // console.log(data)
+      return dispatch({
+        type: GET_TYPES_SHIPMENTS,
+        payload: data,
+      });
+    } catch (error) {
+      window.alert(error.message);
+    }
+  };
+};
+
+const getAllBranches = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${URL_BASE}/branches`);
+      // console.log(data)
+      return dispatch({
+        type: GET_ALL_BRANCHES,
+        payload: data,
+      });
+    } catch (error) {
+      window.alert(error.message);
+    }
+  };
+};
+
+
 const createOrder = (userData) => {
   return async (dispatch) => {
     try {
@@ -69,6 +118,9 @@ const createOrder = (userData) => {
     }
   };
 };
+
+
+
 
 const getUserDetail = (id) => {
   return async (dispatch) => {
@@ -149,4 +201,7 @@ export {
   getAllOrders,
   createOrder,
   orderDeclaredValue,
+  getAllMeasures,
+  getTypeShipments,
+  getAllBranches,
 };
