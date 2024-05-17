@@ -12,16 +12,18 @@ import {Auth0Provider} from '@auth0/auth0-react';
 //! 12 MINUTOS DEL ARCHIVO DE fAZT CODE
 
 ReactDOM.createRoot(document.getElementById("root")).render(
+  <Provider store={store}>
   <Auth0Provider
     domain="dev-h0iezuyqkhhjz3e7.us.auth0.com"
     clientId="Yx41UTDIBR1mBOyoClCO8DFR8h0pMWKD"
     authorizationParams={{
       redirect_uri: window.location.origin
     }}
-    cacheLocation="localstorage" // Especifica el uso de localstorage
+    
   >
-      <Provider store={store}>
+      
         <App />
-      </Provider>
+      
   </Auth0Provider>
+  </Provider>
 );
