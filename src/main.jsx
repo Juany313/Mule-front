@@ -8,14 +8,18 @@ import { Provider } from "react-redux";
 /* authentication */
 import {Auth0Provider} from '@auth0/auth0-react';
 
-console.log(
-  process.env.REACT_APP_AUTH0_DOMAIN
-);
 
 //! 12 MINUTOS DEL ARCHIVO DE fAZT CODE
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Auth0Provider>
+  <Auth0Provider
+    domain="dev-h0iezuyqkhhjz3e7.us.auth0.com"
+    clientId="Yx41UTDIBR1mBOyoClCO8DFR8h0pMWKD"
+    authorizationParams={{
+      redirect_uri: window.location.origin
+    }}
+    cacheLocation="localstorage" // Especifica el uso de localstorage
+  >
       <Provider store={store}>
         <App />
       </Provider>
