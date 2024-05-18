@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 const LayoutAuth = () => {
   return (
-    <div className="min-h-screen bg-p300 flex items-center justify-center p-4">
+    <div className="">
       <Outlet />
     </div>
   );

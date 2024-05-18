@@ -1,78 +1,133 @@
 import {
-    Card,
-    Typography,
-    List,
-    ListItem,
-    ListItemPrefix,
-    ListItemSuffix,
-    Chip,
-  } from "@material-tailwind/react";
-  import {
-    PresentationChartBarIcon,
-    ShoppingBagIcon,
-    UserCircleIcon,
-    Cog6ToothIcon,
-    InboxIcon,
-    PowerIcon,
-  } from "@heroicons/react/24/solid";
-  import { IoHomeOutline } from "react-icons/io5";
-  import { BsBoxSeam } from "react-icons/bs";
-  import { LuPackageSearch } from "react-icons/lu";
-  import { TfiLocationPin } from "react-icons/tfi";
-   
-  export function NavProfile() {
+  Card,
+  Typography,
+  List,
+  ListItem,
+  ListItemPrefix,
+  ListItemSuffix,
+  Chip,
+} from "@material-tailwind/react";
+import { IoHomeOutline } from "react-icons/io5";
+import { BsBoxSeam } from "react-icons/bs";
+import { LiaShippingFastSolid } from "react-icons/lia";
+import { TfiLocationPin } from "react-icons/tfi";
+import { useAuth0 } from "@auth0/auth0-react";
+import "./Navprofile.css";
+import LOGO from "../../assets/LogoMule.png";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
-    const logout = () => {
-      localStorage.removeItem("signUp");
-      window.location.reload();
-      window.location.href = "/auth";
+const NavProfile = () => {
+  const { logout } = useAuth0();
+  const [isChecked, setIsChecked] = useState(false);
+  const navigate = useNavigate();
+
+  const handleCheck = () => {
+    setIsChecked(!isChecked);
+  };
+
+  const handleLogout = () => {
+    if (Cookies.get("token")) {
+      Cookies.remove("token");
+      navigate("/");
+    }else{
+      logout();
+      
     }
 
-    return (
-      <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-        <div className="mb-2 p-4">
-          <Typography variant="h5" color="blue-gray">
-            Perfil
-          </Typography>
+  };
+
+  return (
+    <div className="flex flex-col flex-wrap">
+      <nav className="fixed  bg-white w-full p-4 flex gap-4 items-center border-b-2  text-black z-50">
+        <label className="ml-10">
+          <div className=" w-9 h-10 cursor-pointer flex flex-col items-center justify-center">
+            <input
+              className="hidden peer"
+              type="checkbox"
+              checked={isChecked}
+              onChange={handleCheck}
+            />
+            <div className="w-[80%] h-[2px] bg-black rounded-sm transition-all duration-300 origin-left translate-y-[0.45rem] peer-checked:rotate-[-45deg]"></div>
+            <div className="w-[80%] h-[2px] bg-black rounded-md transition-all duration-300 origin-center peer-checked:hidden"></div>
+            <div className="w-[80%] h-[2px] bg-black rounded-md transition-all duration-300 origin-left -translate-y-[0.45rem] peer-checked:rotate-[45deg]"></div>
+          </div>
+        </label>
+        <img src={LOGO} alt="LOGO" className="w-20 h-20" />
+      </nav>
+
+      {isChecked && (
+        <div
+          className={`flex h-screen pt-16 overflow-hidden ${
+            isChecked ? "tabscreen-enter-active" : "tabscreen-enter"
+          }`}
+        >
+          <Card className="h-screen  bg-p100 w-[20rem] p-12 shadow-xl shadow-blue-gray-900/8 rounded-none ">
+            <div className="mb-2 p-4 flex flex-row items-center gap-6">
+              <Typography variant="h5" color="white">
+                Perfil
+              </Typography>
+              <button className="Btn" onClick={handleLogout}>
+                <div className="sign">
+                  <svg viewBox="0 0 512 512">
+                    <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
+                  </svg>
+                </div>
+                <div className="text">Logout</div>
+              </button>
+            </div>
+            <List className=" gap-8">
+              <ListItem className="gap-3 text-white">
+                <Link
+                  to="/auth/Dashboard/"
+                  className="flex items-center gap-3 w-full h-full"
+                >
+                  <ListItemPrefix>
+                    <IoHomeOutline className="h-8 w-8" />
+                  </ListItemPrefix>
+                  Inicio
+                </Link>
+              </ListItem>
+
+              <ListItem className=" gap-3  text-white">
+                <Link
+                  to="/auth/shipments"
+                  className="flex items-center gap-3 w-full h-full"
+                >
+                  <ListItemPrefix>
+                    <BsBoxSeam className="h-8 w-8" />
+                  </ListItemPrefix>
+                  Hacer un envío
+                </Link>
+              </ListItem>
+              <ListItem className=" gap-3 text-white">
+                <ListItemPrefix>
+                  <LiaShippingFastSolid className="h-8 w-8" />
+                </ListItemPrefix>
+                Ver mis envíos
+              </ListItem>
+              <ListItem className=" gap-3 text-white">
+                <ListItemPrefix>
+                  <TfiLocationPin className="h-8 w-8" />
+                </ListItemPrefix>
+                Sucursales
+                <ListItemSuffix>
+                  <Chip
+                    size="sm"
+                    variant="ghost"
+                    color="blue-gray"
+                    className="rounded-full"
+                  />
+                </ListItemSuffix>
+              </ListItem>
+            </List>
+          </Card>
         </div>
-        <List>
-            <ListItem>
-            <ListItemPrefix>
-              <IoHomeOutline className="h-5 w-5" />
-            </ListItemPrefix>
-            Inicio
-          </ListItem>
-          <ListItem>
-            <ListItemPrefix>
-              <BsBoxSeam className="h-5 w-5" />
-            </ListItemPrefix>
-            Hacer un envío
-          </ListItem>
-          <ListItem>
-            <ListItemPrefix>
-              <LuPackageSearch className="h-5 w-5" />
-            </ListItemPrefix>
-            Ver mis envíos
-          </ListItem>
-          <ListItem>
-            <ListItemPrefix>
-              <TfiLocationPin className="h-5 w-5" />
-            </ListItemPrefix>
-            Sucursales
-            <ListItemSuffix>
-              <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
-            </ListItemSuffix>
-          </ListItem>
-          
-          <ListItem>
-            <ListItemPrefix>
-              <PowerIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            <button onClick={logout} > 
-              Cerrar sesión
-            </button>
-          </ListItem>
-        </List>
-      </Card>
-    );
-  }
+      )}
+    </div>
+  );
+};
+
+export default NavProfile;
