@@ -17,6 +17,9 @@ export default {
         g400: "#4b4b4b",
         g500: "#323232",
       },
+      fontFamily: {
+        Racing: ["Racing Sans One", "sans-serif"],
+      },
     },
   },
   plugins: [],

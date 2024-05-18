@@ -1,17 +1,42 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {useAuth0} from '@auth0/auth0-react';
+import { useAuth0 } from "@auth0/auth0-react";
+import Cookies from "js-cookie";
 
 /* icons */
 import { RiMailLine, RiLock2Line } from "react-icons/ri";
+import { IoMdClose } from "react-icons/io";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-
-
-
+import { Checkbox } from "@material-tailwind/react";
+import loginUser from "../../services/auth/requestLogin";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, SetShowPassword] = useState(false);
-  const {loginWithRedirect} = useAuth0();
+  const { loginWithRedirect } = useAuth0();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleLoginSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const token = await loginUser(formData);
+      Cookies.set("token", token, { expiresIn: "24h" });
+      Swal.fire({
+        icon: "success",
+        title: "Inicio de sesión exitoso",
+        text: "Bienvenido a la plataforma",
+        showConfirmButton: true,
+      });
+      navigate("/auth/dashboard");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">
@@ -20,25 +45,31 @@ const Login = () => {
       </h1>
       <form className="mb-8">
         <button
-          className="flex items-center justify-center py-3 px-4 gap-4 bg-secondary-900 w-full rounded-full mb-8
-        text-gray-100"
-            onClick={() =>
-              loginWithRedirect()
-            }
+          className="flex items-center justify-center py-3 px-4 gap-4 bg-secondary-900 w-full rounded-full mb-8 text-gray-100"
+          onClick={() => loginWithRedirect()}
         >
           <img
             src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png"
+            alt="Google Logo"
             className="w-4 h-4"
-            
           />
-          Ingresa con google
+          Ingresa con Google
         </button>
+
         <div className="relative mb-4">
           <RiMailLine className="absolute top-1/2 -translate-y-1/2 left-2 text-primary" />
           <input
             type="email"
             className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
             placeholder="Correo electrónico"
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
+          />
+          <IoMdClose
+            className="absolute top-1/2 -translate-y-1/2 right-2 text-primary hover:cursor-pointer"
+            onClick={() => setFormData({ ...formData, email: "" })}
           />
         </div>
         <div className="relative mb-8">
@@ -47,6 +78,10 @@ const Login = () => {
             type={showPassword ? "text" : "password"}
             className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
             placeholder="Contraseña"
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
           />
           {showPassword ? (
             <LuEye
@@ -60,10 +95,12 @@ const Login = () => {
             />
           )}
         </div>
+
         <div>
           <button
             type="submit"
             className="bg-s300 text-black uppercase font-bold text-sm w-full py-3 px-4 rounded-lg hover:text-gray-100 transition-colors"
+            onClick={handleLoginSubmit}
           >
             Ingresar
           </button>

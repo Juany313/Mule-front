@@ -101,9 +101,11 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isAuthenticated, user } = useAuth0();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -196,6 +198,7 @@ const NavBar = () => {
             >
               Iniciar Pedido
             </NavLink>
+
             <NavLink
               to="/auth/"
               className="text-primary font-normal hover:text-white transition-colors p-2"

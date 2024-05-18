@@ -34,7 +34,7 @@ const Pagination = ({data}) => {
               Anterior
             </button>
             <button  className='bg-p300 hover:bg-p500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-            onClick={nextPage} disabled={indexOfLastCard >= data.length}>
+            onClick={nextPage} disabled={indexOfLastCard >= data?.length}>
               Siguiente
             </button>
         </div>
