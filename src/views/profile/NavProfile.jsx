@@ -4,21 +4,14 @@ import {
     List,
     ListItem,
     ListItemPrefix,
-    ListItemSuffix,
-    Chip,
   } from "@material-tailwind/react";
   import {
-    PresentationChartBarIcon,
-    ShoppingBagIcon,
-    UserCircleIcon,
-    Cog6ToothIcon,
-    InboxIcon,
     PowerIcon,
   } from "@heroicons/react/24/solid";
   import { IoHomeOutline } from "react-icons/io5";
   import { BsBoxSeam } from "react-icons/bs";
-  import { LuPackageSearch } from "react-icons/lu";
-  import { TfiLocationPin } from "react-icons/tfi";
+  import { AiOutlineShop } from "react-icons/ai";
+  import { LiaShippingFastSolid } from "react-icons/lia";
    
   export function NavProfile() {
     return (
@@ -31,35 +24,32 @@ import {
         <List>
             <ListItem>
             <ListItemPrefix>
-              <IoHomeOutline className="h-5 w-5" />
+              <IoHomeOutline className="h-5 w-5 -translate-x-1/2" />
             </ListItemPrefix>
             Inicio
           </ListItem>
           <ListItem>
             <ListItemPrefix>
-              <BsBoxSeam className="h-5 w-5" />
+              <BsBoxSeam className="h-4 w-4 -translate-x-1/2" />
             </ListItemPrefix>
             Hacer un envío
           </ListItem>
           <ListItem>
             <ListItemPrefix>
-              <LuPackageSearch className="h-5 w-5" />
+              <LiaShippingFastSolid className="h-5 w-5 -translate-x-1/2" />
             </ListItemPrefix>
             Ver mis envíos
           </ListItem>
           <ListItem>
             <ListItemPrefix>
-              <TfiLocationPin className="h-5 w-5" />
+              <AiOutlineShop className="h-5 w-5 -translate-x-1/2" />
             </ListItemPrefix>
             Sucursales
-            <ListItemSuffix>
-              <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
-            </ListItemSuffix>
           </ListItem>
           
           <ListItem>
             <ListItemPrefix>
-              <PowerIcon className="h-5 w-5" />
+              <PowerIcon className="h-4 w-4 -translate-x-1/2" />
             </ListItemPrefix>
             Cerrar sesión
           </ListItem>

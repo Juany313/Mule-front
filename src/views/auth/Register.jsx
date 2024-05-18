@@ -56,7 +56,7 @@ const Register = () => {
             name="name"
             value={userData.name}
             onChange={handleChange}
-            className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
+            className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary "
             placeholder="Nombre/s"
           />
         </div>
