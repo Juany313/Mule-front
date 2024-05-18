@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import {useAuth0} from '@auth0/auth0-react';
 
 /* icons */
 import { RiMailLine, RiLock2Line } from "react-icons/ri";
 import { LuEye, LuEyeOff } from "react-icons/lu";
+
+
 
 //! 2hs 02 minutos 43 segundos https://www.youtube.com/watch?v=m_0YupLc6Fo&list=PLVIqDRk3tnzwgIw2Rdz_yFlNhFAMJeGiT
 
@@ -11,29 +14,7 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 
 const Login = () => {
   const [showPassword, SetShowPassword] = useState(false);
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const [signUp, setSignUp] = useState(false);
-  const localsignUp = localStorage.getItem("signUp");
-
-  useEffect(() => {
-    setSignUp(localsignUp);
-  }
-  ,[]);
-
-  const handleSubmit = () => {
-    if(emailRef.current.value && passwordRef.current.value){
-      console.log(emailRef.current.value);
-      console.log(passwordRef.current.value);
-      localStorage.setItem("email", emailRef.current.value);
-      localStorage.setItem("password", passwordRef.current.value);
-      localStorage.setItem("signUp", emailRef.current.value);
-      }
-    else{
-      alert("Por favor llene todos los campos");
-    }
-    
-  }
+  const {loginWithRedirect} = useAuth0();
 
   return (
     <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">
@@ -44,10 +25,14 @@ const Login = () => {
         <button
           className="flex items-center justify-center py-3 px-4 gap-4 bg-secondary-900 w-full rounded-full mb-8
         text-gray-100"
+            onClick={() =>
+              loginWithRedirect()
+            }
         >
           <img
             src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png"
             className="w-4 h-4"
+            
           />
           Ingresa con google
         </button>

@@ -13,6 +13,7 @@ export const GET_ALL_BRANCHES = "GET_ALL_BRANCHES";
 
 /* Juanyyyy */
 export const AGREGAR_PEDIDO = "AGREGAR_PEDIDO";
+export const POST_USER = "POST_USER";
 
 const URL_BASE = "http://localhost:3000";
 
@@ -26,6 +27,21 @@ export const agregarPedido = (pedido) => {
     payload: pedido,
   };
 };
+
+export function postUser(data) {
+  return async function(dispatch) {
+      try {
+      const response = await axios.post('http://localhost:3000/register', data);
+
+      return dispatch({
+          type: POST_USER,
+          payload: response.data,
+      });
+      } catch (error) {
+      console.error(error);
+      }
+  };
+}
 
 /* Juanyyyyy */
 
