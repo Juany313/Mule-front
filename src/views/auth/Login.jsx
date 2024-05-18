@@ -15,6 +15,9 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, SetShowPassword] = useState(false);
+  const [showEmail, setShowEmail] = useState(false);
+  const [signUp, setSignUp] = useState(false);
+  
   const { loginWithRedirect } = useAuth0();
   const [formData, setFormData] = useState({
     email: "",
