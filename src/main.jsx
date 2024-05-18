@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     domain="dev-h0iezuyqkhhjz3e7.us.auth0.com"
     clientId="Yx41UTDIBR1mBOyoClCO8DFR8h0pMWKD"
     authorizationParams={{
-      redirect_uri: window.location.origin
+      redirect_uri: "http://localhost:3000/auth/profile"
     }}
     
   >

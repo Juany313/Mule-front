@@ -21,6 +21,13 @@ import {
   import { TfiLocationPin } from "react-icons/tfi";
    
   export function NavProfile() {
+
+    const logout = () => {
+      localStorage.removeItem("signUp");
+      window.location.reload();
+      window.location.href = "/auth";
+    }
+
     return (
       <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
         <div className="mb-2 p-4">
@@ -61,7 +68,9 @@ import {
             <ListItemPrefix>
               <PowerIcon className="h-5 w-5" />
             </ListItemPrefix>
-            Cerrar sesión
+            <button onClick={logout} > 
+              Cerrar sesión
+            </button>
           </ListItem>
         </List>
       </Card>
