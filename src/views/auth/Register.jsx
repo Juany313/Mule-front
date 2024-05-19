@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import validate from "../../utils"
+
 
 /* actions */
 import {postUser} from '../../redux/actions/index'
 
 /* icons */
-import { RiMailLine, RiLock2Line, RiUserLine } from "react-icons/ri";
+import { RiMailLine, RiLock2Line } from "react-icons/ri";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 
 /* hooks */
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 
 const Register = () => {
 
@@ -24,6 +26,7 @@ const Register = () => {
   });
   const [errors, setErrors] = useState({
     email: "",
+    password: "",
   });
 
   const handleChange = (event) => {
@@ -31,13 +34,37 @@ const Register = () => {
     const value = event.target.value;
 
     setUserData({ ...userData, [property]: value });
+
+    setErrors((prevErrors) => {
+      const newErrors = validate({
+        ...userData,
+        [property]: value, 
+      });
+  
+
+      return newErrors;
+      });
   };
 
-  const handleSubmit = (event) => {
+ /*  const handleSubmit = (event) => {
       event.preventDefault();
       dispatch(postUser(userData));
       alert("CONDUCTOR CREADO CON EXITO!!")
      
+    }; */
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      try {
+        // Despacha la acción de registro
+        const response = await dispatch(postUser(userData));
+        
+        // Muestra la respuesta del servidor en un alert
+        alert(response.data.message);
+      } catch (error) {
+        // Maneja el error si ocurre
+        console.error('Error registrando usuario:', error);
+        alert('Error registrando usuario');
+      }
     };
 
   return (
@@ -45,9 +72,9 @@ const Register = () => {
       <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-white mb-8">
         Crear <span className="text-primary">cuenta</span>
       </h1>
-      <form className="mb-8  text-white" onSubmit={handleSubmit}>
+      <form className="mb-8  " onSubmit={handleSubmit}>
         <button
-          className="flex items-center justify-center py-3 px-4 gap-4 bg-secondary-900 w-full rounded-full mb-8
+          className="flex items-center justify-center py-3 px-4 gap-4 bg-p300  w-full rounded-full mb-8
         text-gray-100"
         >
           <img
@@ -56,29 +83,44 @@ const Register = () => {
           />
           Registrate con google
         </button>
- 
-        <div className="relative mb-4">
-          
-          <input
-            type="email"
-            name="email"
-            value={userData.email}
-            onChange={handleChange}
-            className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
-            placeholder="Correo electrónico"
-          />
+
+        <div className="mb-4">
+            <div className="relative ">
+            <RiMailLine className="absolute top-1/2 -translate-y-1/2 left-2 text-black" />
+              <input
+                type="email"
+                name="email"
+                value={userData.email}
+                onChange={handleChange}
+                className="py-3 pl-8 pr-8  w-full outline-none rounded-lg focus:border focus:border-black"
+                placeholder="Correo electrónico"
+              />
+            </div>
+              {errors.email && <span className="text-red-700 mb-4">{errors.email}</span>}
         </div>
  
-        <div className="relative mb-4">
-          
+        <div className="relative mb-2">
+          <RiLock2Line className="absolute top-1/2 -translate-y-1/2 left-2 text-black" />
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             value={userData.password}
             onChange={handleChange}
-            className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
+            className="py-3 pl-8 pr-8  w-full outline-none rounded-lg focus:border focus:border-black"
             placeholder="Contraseña"
           />
+          {errors.password && <span className="text-red-700 mb-4">{errors.password}</span>}
+          {showPassword ? (
+            <LuEye
+              onClick={() => SetShowPassword(!showPassword)}
+              className="absolute top-1/2 -translate-y-1/2 right-2 hover:cursor-pointer text-black"
+            />
+          ) : (
+            <LuEyeOff
+              onClick={() => SetShowPassword(!showPassword)}
+              className="absolute top-1/2 -translate-y-1/2 right-2 hover:cursor-pointer text-black"
+            />
+          )}
         </div>
  
   

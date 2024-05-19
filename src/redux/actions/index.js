@@ -11,10 +11,8 @@ export const FILTER_VALUES = "FILTER_VALUES";
 export const GET_ALL_MEASURES = "GET_ALL_MEASURES";
 export const GET_TYPES_SHIPMENTS = "GET_TYPES_SHIPMENTS";
 export const GET_ALL_BRANCHES = "GET_ALL_BRANCHES";
-=======
-export const GET_ALL_BRANCHES = "GET_ALL_BRANCHES"; 
-export const GET_ALL_MEASURES = "GET_ALL_MEASURES";
-export const GET_TYPES_SHIPMENTS = "GET_TYPES_SHIPMENTS";
+
+
 
 
 /* Juanyyyy */
