@@ -7,9 +7,15 @@ export const GET_ORDER_ID = "GET_ORDER_ID";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const CREATE_ORDER = "CREATE_ORDER";
 export const FILTER_VALUES = "FILTER_VALUES";
+
 export const GET_ALL_MEASURES = "GET_ALL_MEASURES";
 export const GET_TYPES_SHIPMENTS = "GET_TYPES_SHIPMENTS";
 export const GET_ALL_BRANCHES = "GET_ALL_BRANCHES";
+=======
+export const GET_ALL_BRANCHES = "GET_ALL_BRANCHES"; 
+export const GET_ALL_MEASURES = "GET_ALL_MEASURES";
+export const GET_TYPES_SHIPMENTS = "GET_TYPES_SHIPMENTS";
+
 
 /* Juanyyyy */
 export const AGREGAR_PEDIDO = "AGREGAR_PEDIDO";

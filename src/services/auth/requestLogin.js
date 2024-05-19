@@ -1,10 +1,3 @@
-// export default async function loginUser(formData = {}) {
-//     console.log(formData);
-//   try {
-//     const response = await fetch("http://localhost:3000/users/login", {
-//       method: "POST",
-//       headers: {
-
 import axios from "axios";
 
 export default async function loginUser(formData) {
