@@ -33,20 +33,39 @@ export const agregarPedido = (pedido) => {
 };
 
 
-export function postUser(data) {
+/* export function postUser(data) {
   return async function(dispatch) {
       try {
-      const response = await axios.post('http://localhost:3000/register', data);
+      const response = await axios.post('http://localhost:3000/users/register', data);
 
       return dispatch({
           type: POST_USER,
           payload: response.data,
       });
       } catch (error) {
-      console.error(error);
+      console.error(error.message);
       }
   };
+} */
+
+export function postUser(data) {
+  return async function(dispatch) {
+    try {
+      const response = await axios.post('http://localhost:3000/users/register', data);
+      dispatch({
+        type: POST_USER,
+        payload: response.data,
+      });
+      // Devuelve un objeto de acción indicando que la solicitud se completó con éxito
+      return { success: true };
+    } catch (error) {
+      console.error("Error al crear conductor:", error.message);
+      // Devuelve un objeto de acción indicando que la solicitud falló
+      return { success: false };
+    }
+  };
 }
+
 
 /* Juanyyyyy */
 

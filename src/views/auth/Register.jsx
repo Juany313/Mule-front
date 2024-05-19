@@ -46,26 +46,18 @@ const Register = () => {
       });
   };
 
- /*  const handleSubmit = (event) => {
-      event.preventDefault();
-      dispatch(postUser(userData));
-      alert("CONDUCTOR CREADO CON EXITO!!")
-     
-    }; */
-    const handleSubmit = async (event) => {
-      event.preventDefault();
-      try {
-        // Despacha la acción de registro
-        const response = await dispatch(postUser(userData));
-        
-        // Muestra la respuesta del servidor en un alert
-        alert(response.data.message);
-      } catch (error) {
-        // Maneja el error si ocurre
-        console.error('Error registrando usuario:', error);
-        alert('Error registrando usuario');
-      }
-    };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const result = await dispatch(postUser(userData));
+    if (result.success) {
+      alert("CONDUCTOR CREADO CON EXITO!!");
+    } else {
+      alert("Ocurrió un error al crear el conductor");
+    }
+  };
+  
+  
+    
 
   return (
     <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">
