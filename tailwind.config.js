@@ -18,7 +18,9 @@ export default {
         g500: "#323232",
       },
       fontFamily: {
-        Racing: ["Racing Sans One", "sans-serif"],
+        Montserrat: ["Montserrat", "sans-serif"],
+        Merriweather: ["Merriweather", "sans-serif"],
+        ArchivoBlack: ["Archivo Black", "sans-serif"]
       },
     },
   },
