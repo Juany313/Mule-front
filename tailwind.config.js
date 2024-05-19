@@ -17,6 +17,11 @@ export default {
         g400: "#4b4b4b",
         g500: "#323232",
       },
+      fontFamily: {
+        Montserrat: ["Montserrat", "sans-serif"],
+        Merriweather: ["Merriweather", "sans-serif"],
+        ArchivoBlack: ["Archivo Black", "sans-serif"]
+      },
     },
   },
   plugins: [],

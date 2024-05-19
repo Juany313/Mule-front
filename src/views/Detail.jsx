@@ -14,25 +14,26 @@ const DetailOrder = () => {
   }, [dispatch, id]);
 
   return (
-    <div className="container mx-auto bg-white rounded-xl">
+  
+    <div className="container mx-auto my-24 border-2 rounded-xl bg-gradient-to-r from-p100 to-p500 shadow-md">
       <div className="m-5">
-        <p>PEDIDO: {id}</p>
+        <p className=" font-ArchivoBlack font-semibold text-2xl text-white text-center ">PEDIDO: {id}</p>
       </div>
       <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
         <div>
-          <div className="relative flex h-64 w-96 cursor-pointer flex-col overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 shadow-md transition-opacity hover:opacity-90 m-5">
+          <div className="relative flex h-64 w-96 flex-col overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 shadow-md transition-opacity hover:opacity-90 m-5">
             <img className="h-full w-full object-cover object-center" src={orderDetail?.product_image} alt="name" />
           </div>
         </div>
         <div className="m-5">
-          <div>
-          <h5> DATOS DEL USUARIO </h5>
-          <p>Nombre y apellido: {orderDetail?.name_claimant}</p>
+          <div className="flex-1 p-2 overflow-y-auto border-2 border-s300 rounded-xl shadow-md mb-2 bg-orange-300">
+          <h5 className=" font-semibold"> DATOS DEL USUARIO </h5>
+          <p >Nombre y apellido: {orderDetail?.name_claimant}</p>
           <p>Documento: {orderDetail?.cedula_claimant}</p>
           <p>Teléfono: {orderDetail?.cellphone_claimant}</p>
           </div>
-          <div>
-          <h5> DATOS DEL REMITENTE </h5>
+          <div className="flex-1 p-2 overflow-y-auto border-2 border-s300 rounded-xl shadow-md mb-2 bg-orange-300">
+          <h5 className=" font-semibold"> DATOS DEL REMITENTE </h5>
           <p>Nombre remitente: {orderDetail?.name_transmiter}</p>
           <p>Teléfono remitente: {orderDetail?.celphone_transmiter}</p>
           <p>Ciudad de origen: {orderDetail?.city_transmiter}</p>
@@ -40,14 +41,14 @@ const DetailOrder = () => {
           </div>
           </div>
           <div className="m-5">
-          <div>
-          <h5> DATOS DEL PAQUETE </h5>
+          <div className="flex-1 p-2 overflow-y-auto border-2 border-s300 rounded-xl shadow-md mb-2 bg-orange-300">
+          <h5 className=" font-semibold"> DATOS DEL PAQUETE </h5>
           <p>Peso paquete: {orderDetail?.weight}</p>
           <p>Valor declarado: {orderDetail?.declared_value}</p>
           <p>Método de pago: {orderDetail?.pay_method}</p>
           </div>
-            <div>
-          <h5> DATOS DEL DESTINATARIO </h5>
+            <div className="flex-1 p-2 overflow-y-auto border-2 border-s300 rounded-xl shadow-md mb-2 bg-orange-300">
+          <h5 className=" font-semibold"> DATOS DEL DESTINATARIO </h5>
           <p>Nombre destinatario: {orderDetail?.name_receiver}</p>
           <p>Teléfono destinatario: {orderDetail?.celphone_receiver}</p>
           <p>Ciudad de destino: {orderDetail?.city_receiver}</p>

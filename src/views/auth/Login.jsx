@@ -1,38 +1,85 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import Cookies from "js-cookie";
 
 /* icons */
 import { RiMailLine, RiLock2Line } from "react-icons/ri";
+import { IoMdClose } from "react-icons/io";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-
-//! 2hs 02 minutos 43 segundos https://www.youtube.com/watch?v=m_0YupLc6Fo&list=PLVIqDRk3tnzwgIw2Rdz_yFlNhFAMJeGiT
+import { Checkbox } from "@material-tailwind/react";
+import loginUser from "../../services/auth/requestLogin";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, SetShowPassword] = useState(false);
+  const { loginWithRedirect } = useAuth0();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleLoginSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const token = await loginUser(formData);
+      Cookies.set("token", token, { expiresIn: "24h" });
+      Swal.fire({
+        icon: "success",
+        title: "Inicio de sesión exitoso",
+        text: "Bienvenido a la plataforma",
+        showConfirmButton: true,
+      });
+      navigate("/auth/dashboard");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
-    <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">
+    <div>
+      {signUp ? <Profile />: <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">
       <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-white mb-8">
         Iniciar <span className="text-primary">sesión</span>
       </h1>
-      <form className="mb-8">
         <button
-          className="flex items-center justify-center py-3 px-4 gap-4 bg-secondary-900 w-full rounded-full mb-8
-        text-gray-100"
+          className="flex items-center justify-center py-3 px-4 gap-4 bg-secondary-900 w-full rounded-full mb-8 text-gray-100"
+          onClick={() => loginWithRedirect()}
         >
           <img
             src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png"
+            alt="Google Logo"
             className="w-4 h-4"
           />
-          Ingresa con google
+          Ingresa con Google
         </button>
+
         <div className="relative mb-4">
           <RiMailLine className="absolute top-1/2 -translate-y-1/2 left-2 text-primary" />
           <input
             type="email"
             className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
             placeholder="Correo electrónico"
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
           />
+          <IoMdClose
+            className="absolute top-1/2 -translate-y-1/2 right-2 text-primary hover:cursor-pointer"
+            onClick={() => setFormData({ ...formData, email: "" })}
+          />
+          
+          {showEmail ? (
+            <button
+              onClick={handleDeleteEmail}
+              className="absolute top-1/2 -translate-y-1/2 right-2 hover:cursor-pointer text-primary"
+            >
+              <IoCloseCircleOutline />
+            </button>
+          ) : null}
         </div>
         <div className="relative mb-8">
           <RiLock2Line className="absolute top-1/2 -translate-y-1/2 left-2 text-primary" />
@@ -40,6 +87,10 @@ const Login = () => {
             type={showPassword ? "text" : "password"}
             className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
             placeholder="Contraseña"
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
           />
           {showPassword ? (
             <LuEye
@@ -53,15 +104,16 @@ const Login = () => {
             />
           )}
         </div>
+
         <div>
-          <button
+        <button
             type="submit"
             className="bg-s300 text-black uppercase font-bold text-sm w-full py-3 px-4 rounded-lg hover:text-gray-100 transition-colors"
+            onClick={handleLoginSubmit}
           >
             Ingresar
           </button>
         </div>
-      </form>
       <div className="flex flex-col flex-gap-4 items-center ">
         <Link
           to="/auth/olvide-password"
@@ -79,7 +131,9 @@ const Login = () => {
           </Link>
         </span>
       </div>
+    </div> }
     </div>
+    
   );
 };
 
