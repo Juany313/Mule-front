@@ -9,6 +9,7 @@ import {postUser} from '../../redux/actions/index'
 /* icons */
 import { RiMailLine, RiLock2Line } from "react-icons/ri";
 import { LuEye, LuEyeOff } from "react-icons/lu";
+import { TbUserSquare } from "react-icons/tb";
 
 /* hooks */
 import {useDispatch} from "react-redux";
@@ -21,10 +22,12 @@ const Register = () => {
   /* Estados locales */
   const [showPassword, SetShowPassword] = useState(false);
   const [userData, setUserData] = useState({
+    name: "",
     email: "",
     password: "",
   });
   const [errors, setErrors] = useState({
+    name: "",
     email: "",
     password: "",
   });
@@ -78,6 +81,21 @@ const Register = () => {
 
         <div className="mb-4">
             <div className="relative ">
+            <TbUserSquare className="absolute top-1/2 -translate-y-1/2 left-2 text-black" />
+              <input
+                type="text"
+                name="name"
+                value={userData.name}
+                onChange={handleChange}
+                className="py-3 pl-8 pr-8  w-full outline-none rounded-lg focus:border focus:border-black"
+                placeholder="Nombre"
+              />
+            </div>
+              {errors.name && <span className="text-red-800 mb-4">{errors.name}</span>}
+        </div>
+
+        <div className="mb-4">
+            <div className="relative ">
             <RiMailLine className="absolute top-1/2 -translate-y-1/2 left-2 text-black" />
               <input
                 type="email"
@@ -88,7 +106,7 @@ const Register = () => {
                 placeholder="Correo electrónico"
               />
             </div>
-              {errors.email && <span className="text-red-700 mb-4">{errors.email}</span>}
+              {errors.email && <span className="text-red-800 mb-4">{errors.email}</span>}
         </div>
  
         <div className="relative mb-2">
@@ -101,7 +119,7 @@ const Register = () => {
             className="py-3 pl-8 pr-8  w-full outline-none rounded-lg focus:border focus:border-black"
             placeholder="Contraseña"
           />
-          {errors.password && <span className="text-red-700 mb-4">{errors.password}</span>}
+          {errors.password && <span className="text-red-800 mb-4">{errors.password}</span>}
           {showPassword ? (
             <LuEye
               onClick={() => SetShowPassword(!showPassword)}

@@ -2,6 +2,10 @@ const validate = (userData) => {
   let errors = {};
 
   // Validación de campos requeridos
+  if (!userData.name) {
+    errors.name = "Completar Campo!";
+  } 
+
   if (!userData.email) {
     errors.email = "Completar Campo!";
   } else {
