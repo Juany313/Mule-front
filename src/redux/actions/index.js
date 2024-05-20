@@ -11,7 +11,7 @@ export const FILTER_VALUES = "FILTER_VALUES";
 export const GET_ALL_MEASURES = "GET_ALL_MEASURES";
 export const GET_TYPES_SHIPMENTS = "GET_TYPES_SHIPMENTS";
 export const GET_ALL_BRANCHES = "GET_ALL_BRANCHES";
-
+export const GET_ORDERS_BY_CLIENT = "GET_ORDERS_BY_CLIENT"
 
 
 
@@ -59,7 +59,7 @@ export function postUser(data) {
       // Devuelve un objeto de acción indicando que la solicitud se completó con éxito
       return { success: true };
     } catch (error) {
-      console.error("Error al crear conductor:", error.message);
+      console.error("Error al crear el usuario:", error.message);
       // Devuelve un objeto de acción indicando que la solicitud falló
       return { success: false };
     }
@@ -182,6 +182,29 @@ const getUserDetail = (id) => {
   };
 };
 
+const getOrdersByClient = () =>{
+  return async (dispatch)=>{
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) {
+        throw new Error('No token found');
+      };
+      const response = await axios.get ("http://localhost:3000/order_shipments", {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      return dispatch ({
+        type: GET_ORDERS_BY_CLIENT,
+        payload: response.data
+      })
+    }catch (error) {
+      window.alert(error.message);
+    }
+  }
+
+}
+
 const getAllOrders = () => {
   return async (dispatch) => {
     try {
@@ -248,4 +271,5 @@ export {
   getAllMeasures,
   getTypeShipments,
   getAllBranches,
+  getOrdersByClient
 };

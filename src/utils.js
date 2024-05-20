@@ -24,7 +24,7 @@ const validate = (userData) => {
     //!CORREGIR REGEX
 
     
-    const passwordRegex = /^(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    const passwordRegex = /(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/;
     if (!passwordRegex.test(userData.password)) {
       errors.password = "La contraseña debe tener al menos 8 caracteres, un carácter especial o mayúscula";
     } else {

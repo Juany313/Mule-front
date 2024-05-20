@@ -53,9 +53,9 @@ const Register = () => {
     event.preventDefault();
     const result = await dispatch(postUser(userData));
     if (result.success) {
-      alert("CONDUCTOR CREADO CON EXITO!!");
+      alert("USUARIO CREADO CON EXITO!!");
     } else {
-      alert("Ocurrió un error al crear el conductor");
+      alert("Ocurrió un error al crear el usuario");
     }
   };
   
