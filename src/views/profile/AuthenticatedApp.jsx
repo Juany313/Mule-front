@@ -16,4 +16,3 @@ function AuthenticatedApp() {
 }
 
 export default AuthenticatedApp;
-

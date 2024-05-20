@@ -59,7 +59,7 @@ export function postUser(data) {
       // Devuelve un objeto de acción indicando que la solicitud se completó con éxito
       return { success: true };
     } catch (error) {
-      console.error("Error al crear conductor:", error.message);
+      console.error("Error al crear el usuario:", error.message);
       // Devuelve un objeto de acción indicando que la solicitud falló
       return { success: false };
     }
