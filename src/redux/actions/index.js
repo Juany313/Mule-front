@@ -161,7 +161,15 @@ const createOrder = (userData) => {
 const getUserDetail = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/users/${id}`);
+      const response = await fetch(`http://localhost:3000/users/${id}`,{
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+    });
+
+    const data = await response.json();
+
       //    const data=users.find(usuario => usuario.id === 4)
       console.log(data);
       return dispatch({

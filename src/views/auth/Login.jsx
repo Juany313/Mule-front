@@ -11,12 +11,13 @@ import { Checkbox } from "@material-tailwind/react";
 import loginUser from "../../services/auth/requestLogin";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import Dashboard from "./Dashboard";
 
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, SetShowPassword] = useState(false);
   const [showEmail, setShowEmail] = useState(false);
-  const [signUp, setSignUp] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
   
   const { loginWithRedirect } = useAuth0();
   const [formData, setFormData] = useState({
@@ -24,26 +25,56 @@ const Login = () => {
     password: "",
   });
 
+  useEffect(() => {
+    if (localStorage.getItem("token") && isAuth === true) {
+      setIsAuth(parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now());
+    }
+  }, [isAuth]);
+
+  const parseJwt = (token) => {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  };
+
+
+
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
     try {
       const token = await loginUser(formData);
-      Cookies.set("token", token, { expiresIn: "24h" });
+      localStorage.setItem("token", token);
+      //Cookies.set("token", token, { expiresIn: "24h" });
       Swal.fire({
         icon: "success",
         title: "Inicio de sesión exitoso",
         text: "Bienvenido a la plataforma",
         showConfirmButton: true,
       });
-      navigate("/auth/dashboard");
+      //navigate("/auth/dashboard");
+      localStorage.setItem("token", token);
+      setIsAuth(parseJwt(localStorage.getItem("token")).exp*1000 > Date.now());
     } catch (error) {
-      console.error(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Correo o contraseña incorrectos",
+        showConfirmButton: true,
+      });
     }
   };
 
+  const infoUser = parseJwt(localStorage.getItem("token"));
+
   return (
     <div>
-      {signUp ? <Profile />: <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">
+      {isAuth ? <Dashboard isAuth={isAuth} infoUser={infoUser} setIsAuth={setIsAuth} />: <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">
       <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-white mb-8">
         Iniciar <span className="text-primary">sesión</span>
       </h1>
