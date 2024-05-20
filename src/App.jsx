@@ -27,6 +27,7 @@ import Payment from "./components/Payment";
 import Dashboard from "./views/auth/Dashboard";
 import AuthenticatedApp from "./views/profile/AuthenticatedApp";
 import Shipments from "./views/auth/Shipments";
+import History from "./views/auth/History";
 
 function App() {
   return (
@@ -41,6 +42,8 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="shipments" element={<Shipments />} />
+          <Route path="history" element={<History />} />
+
         </Route>
         <Route path="/" element={<Landing />} />
         <Route path="/header" element={<LayoutAdmin />}>

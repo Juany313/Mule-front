@@ -7,7 +7,8 @@ import {
     AGREGAR_PEDIDO, 
     GET_ALL_MEASURES,
     GET_TYPES_SHIPMENTS,
-    GET_ALL_BRANCHES} from "../actions";
+    GET_ALL_BRANCHES,
+    GET_ORDERS_BY_CLIENT} from "../actions";
 
 let initialState = {
     allUsers:[],
@@ -46,6 +47,12 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 userDetail: action.payload,
             };
+
+        case GET_ORDERS_BY_CLIENT:
+            return {
+                ...state,
+                allOrders: action.payload
+            }
 
         case GET_ALL_ORDERS:
             return {

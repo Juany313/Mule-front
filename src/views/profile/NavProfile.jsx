@@ -83,7 +83,7 @@ const NavProfile = ({setIsAuth}) => {
             <List className=" gap-8">
               <ListItem className="gap-3 text-white">
                 <Link
-                  to="/auth/Dashboard/"
+                  to="/auth/"
                   className="flex items-center gap-3 w-full h-full"
                 >
                   <ListItemPrefix>
@@ -95,7 +95,7 @@ const NavProfile = ({setIsAuth}) => {
 
               <ListItem className=" gap-3  text-white">
                 <Link
-                  to="/auth/shipments"
+                  to="/header/pedido"
                   className="flex items-center gap-3 w-full h-full"
                 >
                   <ListItemPrefix>
@@ -104,11 +104,17 @@ const NavProfile = ({setIsAuth}) => {
                   Hacer un envío
                 </Link>
               </ListItem>
+
               <ListItem className=" gap-3 text-white">
+              <Link
+                  to="/auth/history"
+                  className="flex items-center gap-3 w-full h-full"
+                >
                 <ListItemPrefix>
                   <LiaShippingFastSolid className="h-8 w-8" />
                 </ListItemPrefix>
                 Ver mis envíos
+                </Link>
               </ListItem>
               <ListItem className=" gap-3 text-white">
                 <ListItemPrefix>
