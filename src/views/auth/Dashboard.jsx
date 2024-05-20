@@ -1,11 +1,24 @@
 import React from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import UserLayout from "../profile/UserLayout";
 import Header from "../../assets/Header.png";
 import { FaBox, FaSearch, FaPaperPlane } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { getUserDetail } from "../../redux/actions";
+import { useEffect } from "react";
+//import { useSelect } from "@material-tailwind/react";
 
-const Dashboard = () => {
-  const navigate = useNavigate(); // Hook para la navegación
+const Dashboard = ({setIsAuth, infoUser}) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); 
+  const userDetail = useSelector((state) => state.userDetail); 
+  const idUser = infoUser.id
+    console.log('loggggg',infoUser)
+
+    useEffect(()=>{
+        dispatch(getUserDetail(idUser))
+    }, [dispatch, idUser])
+
 
   // Funciones para manejar los clics en cada tarjeta
   const handleQuote = () => {
@@ -17,12 +30,15 @@ const Dashboard = () => {
   };
 
   const handleSend = () => {
-    navigate("/enviar-paquete");
+    navigate("/header/pedido");
   };
 
+
+
   return (
-    <UserLayout>
+    <UserLayout infoUser={infoUser} setIsAuth={setIsAuth}>
       <div className="flex flex-col h-screen pt-28">
+      
         <header className="bg-#efefef shadow-md w-full py-0 px-0 text-center">
           <img
             className="  bg-cover h-full w-full"

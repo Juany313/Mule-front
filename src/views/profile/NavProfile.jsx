@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
-const NavProfile = () => {
+const NavProfile = ({setIsAuth}) => {
   const { logout } = useAuth0();
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
@@ -29,13 +29,15 @@ const NavProfile = () => {
   };
 
   const handleLogout = () => {
-    if (Cookies.get("token")) {
+    /*if (Cookies.get("token")) {
       Cookies.remove("token");
-      navigate("/");
+      setIsAuth(false);
+      navigate("/auth/login");
     }else{
       logout();
       
-    }
+    }*/
+    setIsAuth(false);
 
   };
 
