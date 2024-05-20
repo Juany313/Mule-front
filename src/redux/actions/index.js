@@ -7,11 +7,12 @@ export const GET_ORDER_ID = "GET_ORDER_ID";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const CREATE_ORDER = "CREATE_ORDER";
 export const FILTER_VALUES = "FILTER_VALUES";
-
 export const GET_ALL_MEASURES = "GET_ALL_MEASURES";
 export const GET_TYPES_SHIPMENTS = "GET_TYPES_SHIPMENTS";
 export const GET_ALL_BRANCHES = "GET_ALL_BRANCHES";
-export const GET_ORDERS_BY_CLIENT = "GET_ORDERS_BY_CLIENT"
+export const GET_ORDERS_BY_CLIENT = "GET_ORDERS_BY_CLIENT";
+export const FILTER_BY_CITY = "FILTER_BY_CITY";
+export const ORDER_BY_DATE = "ORDER_BY_DATE"
 
 
 
@@ -261,6 +262,21 @@ const orderDeclaredValue = (selectedValues) => {
   };
 };
 
+const filterCity = (cities)=>{
+  return {
+    type: FILTER_BY_CITY,
+    payload: cities
+  }
+}
+
+const orderDate = (date)=>{
+  return {
+    type: ORDER_BY_DATE,
+    payload: date
+  }
+
+}
+
 export {
   getUserDetail,
   getAllUsers,
@@ -271,5 +287,7 @@ export {
   getAllMeasures,
   getTypeShipments,
   getAllBranches,
-  getOrdersByClient
+  getOrdersByClient,
+  filterCity,
+  orderDate
 };
