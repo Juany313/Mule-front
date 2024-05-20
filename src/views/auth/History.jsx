@@ -7,26 +7,69 @@ import { getOrdersByClient } from '../../redux/actions';
 const History = () => {
   const dispatch = useDispatch();
   const allOrders = useSelector((state) => state.allOrders)
-  const [currentPage, setCurrentPage] = useState (1)
-  const ordersPerPage =4;
+  const [currentPage, setCurrentPage] = useState(1)
+  const ordersPerPage = 4;
+
+  const filtrados = useSelector((state) => state.filtrados);
 
   useEffect(() => {
     dispatch(getOrdersByClient())
   }, [dispatch])
+
+  const [estado, setEstado] = useState({
+    city_transmiter: "",
+    city_receiver: "",
+    declared_value: "",
+    pay_method: "",
+  });
+
+  const [filtrosActivos, setFiltrosActivos] = useState(false);
+
+  const manejarCambio = (e) => {
+    const { name, value } = e.target;
+    setEstado((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const manejarFiltrarClick = () => {
+    console.log("FILTROS", estado);
+    const pedido = Object.keys(estado).reduce((acc, key) => {
+      if (estado[key] !== "") {
+        acc[key] = estado[key];
+      }
+      return acc;
+    }, {});
+
+    if (Object.keys(pedido).length > 0) {
+      dispatch(agregarPedido(pedido));
+      setFiltrosActivos(true); // Activar los filtros
+    } else {
+      console.log("No hay propiedades para agregar al pedido.");
+    }
+  };
+
+  const manejarSinFiltrosClick = () => {
+    // Establecer todas las propiedades del estado a cadenas vacías
+    dispatch(getOrdersByClient());
+    setFiltrosActivos(false); // Desactivar los filtros
+  };
+
 
   // Calcular el índice inicial y final de los usuarios en la página actual
   const indexOfLastUser = currentPage * ordersPerPage;
   const indexOfFirstUser = indexOfLastUser - ordersPerPage;
   const currentOrders = allOrders.slice(indexOfFirstUser, indexOfLastUser);
 
-    // Cambiar a la página siguiente
-    const nextPage = () => {
-      setCurrentPage(currentPage + 1);
+  // Cambiar a la página siguiente
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
   };
 
   // Cambiar a la página anterior
   const prevPage = () => {
-      setCurrentPage(currentPage - 1);
+    setCurrentPage(currentPage - 1);
   };
 
 
@@ -34,6 +77,8 @@ const History = () => {
   //mapeo todos los pedidos del usuario y filtro
 
   //filtros (de forma local)
+
+
   return (
     <UserLayout>
       <body className="antialiased font-sans bg-gray-200 mt-24">
@@ -46,16 +91,22 @@ const History = () => {
             <div className="my-2 flex sm:flex-row flex-col">
               <div className="flex flex-row mb-1 sm:mb-0">
                 <div className="relative">
-                  <select className="h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                    <option>5</option>
-                    <option>10</option>
-                    <option>20</option>
+                  <select className="h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="city_transmiter"
+                    value={estado.city_transmiter}
+                    onChange={manejarCambio}>
+                    <option value=""> Ciudad de origen</option>
+                    <option value="santa fe">Santa Fe</option>
+                    <option value="buenos aires">Buenos Aires</option>
+                    <option value="cordoba">Cordoba</option>
+                    <option value="entre rios">Entre Rios</option>
+                    <option value="corrientes">Corrientes</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                       <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                     </svg>
                   </div>
+                  
                 </div>
                 <div className="relative">
                   <select className="h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
@@ -153,7 +204,7 @@ const History = () => {
                   </tbody>
                 </table>
                 <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
-                  
+
                   <div className="inline-flex mt-2 xs:mt-0">
                     <button className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l" onClick={prevPage} disabled={currentPage === 1}>
                       Prev
