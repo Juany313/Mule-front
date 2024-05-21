@@ -476,7 +476,7 @@ const OrderForm = () => {
     validationSchema,
     onSubmit: (values) => {
       dispatch(createOrder(values));
-      window.location.href = "http://localhost:4000/header/payment"; // Redirige al endpoint
+      window.location.href = "/header/payment"; // Redirige al endpoint
     },
   });
 

@@ -12,15 +12,13 @@ export const GET_TYPES_SHIPMENTS = "GET_TYPES_SHIPMENTS";
 export const GET_ALL_BRANCHES = "GET_ALL_BRANCHES";
 export const GET_ORDERS_BY_CLIENT = "GET_ORDERS_BY_CLIENT";
 export const FILTER_BY_CITY = "FILTER_BY_CITY";
-export const ORDER_BY_DATE = "ORDER_BY_DATE"
-
-
+export const ORDER_BY_DATE = "ORDER_BY_DATE";
 
 /* Juanyyyy */
 export const AGREGAR_PEDIDO = "AGREGAR_PEDIDO";
 export const POST_USER = "AGREGAR_PEDIDO";
 
-const URL_BASE = "http://localhost:3000";
+// const URL_BASE = "http://localhost:3000";
 
 /* Juanyyyyy */
 
@@ -32,7 +30,6 @@ export const agregarPedido = (pedido) => {
     payload: pedido,
   };
 };
-
 
 /* export function postUser(data) {
   return async function(dispatch) {
@@ -50,9 +47,9 @@ export const agregarPedido = (pedido) => {
 } */
 
 export function postUser(data) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
-      const response = await axios.post('http://localhost:3000/users/register', data);
+      const response = await axios.post("/users/register", data);
       dispatch({
         type: POST_USER,
         payload: response.data,
@@ -67,13 +64,12 @@ export function postUser(data) {
   };
 }
 
-
 /* Juanyyyyy */
 
 const getAllUsers = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${URL_BASE}/users`);
+      const { data } = await axios.get(`/users`);
       // console.log(data)
       return dispatch({
         type: GET_ALL_USERS,
@@ -88,7 +84,7 @@ const getAllUsers = () => {
 const getAllMeasures = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${URL_BASE}/measures`);
+      const { data } = await axios.get(`/measures`);
       // console.log(data)
       return dispatch({
         type: GET_ALL_MEASURES,
@@ -103,7 +99,7 @@ const getAllMeasures = () => {
 const getTypeShipments = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${URL_BASE}/type_shipments`);
+      const { data } = await axios.get(`/type_shipments`);
       // console.log(data)
       return dispatch({
         type: GET_TYPES_SHIPMENTS,
@@ -118,7 +114,7 @@ const getTypeShipments = () => {
 const getAllBranches = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${URL_BASE}/branches`);
+      const { data } = await axios.get(`/branches`);
       // console.log(data)
       return dispatch({
         type: GET_ALL_BRANCHES,
@@ -134,7 +130,7 @@ const createOrder = (userData) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/order_shipments",
+        "/order_shipments",
         userData // Envía los datos del formulario como parte de la solicitud POST
       );
       dispatch({
@@ -162,14 +158,14 @@ const createOrder = (userData) => {
 const getUserDetail = (id) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/users/${id}`,{
+      const response = await fetch(`/users/${id}`, {
         method: "GET",
         headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-    });
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
       //    const data=users.find(usuario => usuario.id === 4)
       console.log(data);
@@ -183,33 +179,32 @@ const getUserDetail = (id) => {
   };
 };
 
-const getOrdersByClient = () =>{
-  return async (dispatch)=>{
+const getOrdersByClient = () => {
+  return async (dispatch) => {
     try {
-      const token = localStorage.getItem('token')
+      const token = localStorage.getItem("token");
       if (!token) {
-        throw new Error('No token found');
-      };
-      const response = await axios.get ("http://localhost:3000/order_shipments", {
+        throw new Error("No token found");
+      }
+      const response = await axios.get("/order_shipments", {
         headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      })
-      return dispatch ({
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return dispatch({
         type: GET_ORDERS_BY_CLIENT,
-        payload: response.data
-      })
-    }catch (error) {
+        payload: response.data,
+      });
+    } catch (error) {
       window.alert(error.message);
     }
-  }
-
-}
+  };
+};
 
 const getAllOrders = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("http://localhost:3000/order_shipments");
+      const { data } = await axios.get("/order_shipments");
       console.log(data);
       return dispatch({
         type: GET_ALL_ORDERS,
@@ -224,9 +219,7 @@ const getAllOrders = () => {
 const getOrderById = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:3000/order_shipments/${id}`
-      );
+      const { data } = await axios.get(`/order_shipments/${id}`);
       // const data=orders.find(order => order.id === id)
       return dispatch({
         type: GET_ORDER_ID,
@@ -246,7 +239,7 @@ const orderDeclaredValue = (selectedValues) => {
         .map((field) => `${Object.keys(field)[0]}=${Object.values(field)[0]}`)
         .join("&");
       // Agregar la cadena de parámetros de consulta a la URL base
-      const url = `http://localhost:3000/order_shipments?${queryParams}`;
+      const url = `/order_shipments?${queryParams}`;
 
       // Realizar la solicitud GET con la URL construida
       const { data } = await axios.get(url);
@@ -262,20 +255,19 @@ const orderDeclaredValue = (selectedValues) => {
   };
 };
 
-const filterCity = (cities)=>{
+const filterCity = (cities) => {
   return {
     type: FILTER_BY_CITY,
-    payload: cities
-  }
-}
+    payload: cities,
+  };
+};
 
-const orderDate = (date)=>{
+const orderDate = (date) => {
   return {
     type: ORDER_BY_DATE,
-    payload: date
-  }
-
-}
+    payload: date,
+  };
+};
 
 export {
   getUserDetail,
@@ -289,5 +281,5 @@ export {
   getAllBranches,
   getOrdersByClient,
   filterCity,
-  orderDate
+  orderDate,
 };

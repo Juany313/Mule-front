@@ -29,7 +29,6 @@
 //         setCurrentPage(currentPage - 1);
 //     };
 
-
 //   return(
 //     <div className="lg:flex justify-center gap-4 items-stretch">
 //     <div className="bg-white md:p-2 p-6 rounded-lg border border-gray-200 mb-4 lg:mb-0 shadow-md lg:w-[85%]">
@@ -53,7 +52,7 @@
 //                     <p>Categoría: {user.category}</p>
 //                     <p>Rol: {user.role}</p>
 //                     <hr />
-//                 </div>  
+//                 </div>
 //             ))}
 //             </table>
 //             <div>
@@ -70,13 +69,8 @@
 //                 </div>
 //             </div>
 //         </div>
-        
-
 
 //   )
 // }
 
 // export default Users;
-
-
-

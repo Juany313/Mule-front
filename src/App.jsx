@@ -29,6 +29,8 @@ import AuthenticatedApp from "./views/profile/AuthenticatedApp";
 import Shipments from "./views/auth/Shipments";
 import History from "./views/auth/History";
 
+axios.defaults.baseURL = "https://mule-server.onrender.com";
+
 function App() {
   return (
     <Router>
@@ -43,7 +45,6 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="shipments" element={<Shipments />} />
           <Route path="history" element={<History />} />
-
         </Route>
         <Route path="/" element={<Landing />} />
         <Route path="/header" element={<LayoutAdmin />}>
