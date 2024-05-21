@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
-const NavProfile = ({setIsAuth}) => {
+const NavProfile = ({ setIsAuth }) => {
   const { logout } = useAuth0();
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
@@ -38,7 +38,6 @@ const NavProfile = ({setIsAuth}) => {
       
     }*/
     setIsAuth(false);
-
   };
 
   return (
@@ -106,14 +105,14 @@ const NavProfile = ({setIsAuth}) => {
               </ListItem>
 
               <ListItem className=" gap-3 text-white">
-              <Link
+                <Link
                   to="/auth/history"
                   className="flex items-center gap-3 w-full h-full"
                 >
-                <ListItemPrefix>
-                  <LiaShippingFastSolid className="h-8 w-8" />
-                </ListItemPrefix>
-                Ver mis envíos
+                  <ListItemPrefix>
+                    <LiaShippingFastSolid className="h-8 w-8" />
+                  </ListItemPrefix>
+                  Ver mis envíos
                 </Link>
               </ListItem>
               <ListItem className=" gap-3 text-white">

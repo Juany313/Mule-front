@@ -41,21 +41,16 @@ const Payment = () => {
   });
 
   const handlePay = async (id, title, quantity, unit_price) => {
-
     try {
-      const response = await axios.post(
-        "http://localhost:3000/payments/",
-        {
-          id: id,
-          title: title,
-          quantity: quantity,
-          unit_price: unit_price,
-        }
-      );
-      console.log('voy',response.data)
-      const preference = response.data;
-      setPreferenceId(preference);
-      console.log('preference', preferenceId);
+      const response = await axios.post("/payments/", {
+        id: id,
+        title: title,
+        quantity: quantity,
+        unit_price: unit_price,
+      });
+      const iDpreference = response.data.id;
+      setPreferenceId(iDpreference);
+
     } catch (error) {
       console.log(error);
     }
@@ -69,7 +64,9 @@ const Payment = () => {
             key={index}
             className="bg-white rounded-xl shadow-lg p-4 transform hover:scale-105 transition-transform duration-300"
           >
-            <h1 className="font-bold text-lg">Tipo de envío: {elem.type_shipments}</h1>
+            <h1 className="font-bold text-lg">
+              Tipo de envío: {elem.type_shipments}
+            </h1>
             <h2 className="text-md">Tamaño: {elem.measure}</h2>
             <label className="block mt-2">Remitente:</label>
             <h4 className="text-sm">{elem.city_transmiter}</h4>
@@ -95,11 +92,11 @@ const Payment = () => {
         ))}
       </div>
       <div id="wallet_container">
-      {preferenceId && (
-        <div className="mt-8">
-          <Wallet initialization={{ preferenceId: preferenceId }} />
-        </div>
-      )}
+        {preferenceId && (
+          <div className="mt-8">
+            <Wallet initialization={{ preferenceId: preferenceId }} />
+          </div>
+        )}
       </div>
     </div>
   );

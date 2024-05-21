@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+
 import validate from "../../utils"
 import Swal from "sweetalert2";
 
 
+
 /* actions */
-import {postUser} from '../../redux/actions/index'
+import { postUser } from "../../redux/actions/index";
 
 /* icons */
 import { RiMailLine, RiLock2Line } from "react-icons/ri";
@@ -13,10 +15,9 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 import { TbUserSquare } from "react-icons/tb";
 
 /* hooks */
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Register = () => {
-
   /* Estado global */
   const dispatch = useDispatch();
 
@@ -42,12 +43,11 @@ const Register = () => {
     setErrors((prevErrors) => {
       const newErrors = validate({
         ...userData,
-        [property]: value, 
+        [property]: value,
       });
-  
 
       return newErrors;
-      });
+    });
   };
 
   const handleSubmit = async (event) => {
@@ -67,9 +67,6 @@ const Register = () => {
       });
     }
   };
-  
-  
-    
 
   return (
     <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">
@@ -89,35 +86,39 @@ const Register = () => {
         </button>
 
         <div className="mb-4">
-            <div className="relative ">
+          <div className="relative ">
             <TbUserSquare className="absolute top-1/2 -translate-y-1/2 left-2 text-black" />
-              <input
-                type="text"
-                name="name"
-                value={userData.name}
-                onChange={handleChange}
-                className="py-3 pl-8 pr-8  w-full outline-none rounded-lg focus:border focus:border-black"
-                placeholder="Nombre"
-              />
-            </div>
-              {errors.name && <span className="text-red-800 mb-4">{errors.name}</span>}
+            <input
+              type="text"
+              name="name"
+              value={userData.name}
+              onChange={handleChange}
+              className="py-3 pl-8 pr-8  w-full outline-none rounded-lg focus:border focus:border-black"
+              placeholder="Nombre"
+            />
+          </div>
+          {errors.name && (
+            <span className="text-red-800 mb-4">{errors.name}</span>
+          )}
         </div>
 
         <div className="mb-4">
-            <div className="relative ">
+          <div className="relative ">
             <RiMailLine className="absolute top-1/2 -translate-y-1/2 left-2 text-black" />
-              <input
-                type="email"
-                name="email"
-                value={userData.email}
-                onChange={handleChange}
-                className="py-3 pl-8 pr-8  w-full outline-none rounded-lg focus:border focus:border-black"
-                placeholder="Correo electrónico"
-              />
-            </div>
-              {errors.email && <span className="text-red-800 mb-4">{errors.email}</span>}
+            <input
+              type="email"
+              name="email"
+              value={userData.email}
+              onChange={handleChange}
+              className="py-3 pl-8 pr-8  w-full outline-none rounded-lg focus:border focus:border-black"
+              placeholder="Correo electrónico"
+            />
+          </div>
+          {errors.email && (
+            <span className="text-red-800 mb-4">{errors.email}</span>
+          )}
         </div>
- 
+
         <div className="relative mb-2">
           <RiLock2Line className="absolute top-1/2 -translate-y-1/2 left-2 text-black" />
           <input
@@ -128,7 +129,9 @@ const Register = () => {
             className="py-3 pl-8 pr-8  w-full outline-none rounded-lg focus:border focus:border-black"
             placeholder="Contraseña"
           />
-          {errors.password && <span className="text-red-800 mb-4">{errors.password}</span>}
+          {errors.password && (
+            <span className="text-red-800 mb-4">{errors.password}</span>
+          )}
           {showPassword ? (
             <LuEye
               onClick={() => SetShowPassword(!showPassword)}
@@ -141,8 +144,7 @@ const Register = () => {
             />
           )}
         </div>
- 
-  
+
         <div>
           <button
             type="submit"
