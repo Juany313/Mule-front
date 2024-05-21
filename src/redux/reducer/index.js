@@ -97,24 +97,28 @@ function rootReducer(state = initialState, action) {
             }
 
         case FILTER_BY_CITY:
-            
+            const { originCity, destinationCity } = action.payload;
+            const filteredOrders = state.allOrders.filter(order => {
+                return order.origin === originCity && order.destination === destinationCity;
+            });
+
             return {
                 ...state,
-                allOrders: action.payload
-            }
+                filteredOrders: filteredOrders
+            };
 
         case ORDER_BY_DATE:
             const sortedOrders = [...state.filteredOrders].sort((a, b) => {
                 if (action.payload === 'asc') {
-                  return new Date(a.created_at) - new Date(b.created_at);
+                    return new Date(a.created_at) - new Date(b.created_at);
                 } else {
-                  return new Date(b.created_at) - new Date(a.created_at);
+                    return new Date(b.created_at) - new Date(a.created_at);
                 }
-              });
-              return {
+            });
+            return {
                 ...state,
                 filteredOrders: sortedOrders,
-              };
+            };
 
 
         default:
