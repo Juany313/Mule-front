@@ -28,6 +28,7 @@ import Dashboard from "./views/auth/Dashboard";
 import AuthenticatedApp from "./views/profile/AuthenticatedApp";
 import Shipments from "./views/auth/Shipments";
 import History from "./views/auth/History";
+import axios from "axios";
 
 axios.defaults.baseURL = "https://mule-server.onrender.com";
 
