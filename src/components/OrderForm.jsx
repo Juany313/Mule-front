@@ -476,7 +476,7 @@ const OrderForm = () => {
     validationSchema,
     onSubmit: (values) => {
       dispatch(createOrder(values));
-      window.location.href = "/header/payment"; // Redirige al endpoint
+      window.location.href = "https://mule-front.onrender.com/header/payment"; // Redirige al endpoint
     },
   });
 
