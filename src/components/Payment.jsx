@@ -50,6 +50,7 @@ const Payment = () => {
       });
       const iDpreference = response.data.id;
       setPreferenceId(iDpreference);
+
     } catch (error) {
       console.log(error);
     }

@@ -89,9 +89,11 @@ const Login = () => {
     }
   };
 
+
   const infoUser =
     localStorage.getItem("token") && parseJwt(localStorage.getItem("token"));
   // console.log(infoUser)
+
 
   return (
     <div>

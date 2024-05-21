@@ -284,6 +284,7 @@ const History = () => {
   const ordersPerPage = 4;
   const filteredOrders = useSelector((state) => state.filteredOrders);
 
+
   const token = localStorage.getItem("token");
   console.log(token);
 
@@ -295,6 +296,7 @@ const History = () => {
   // });
 
   useEffect(() => {
+
     dispatch(getOrdersByClient(token));
   }, [dispatch]);
 
@@ -310,6 +312,7 @@ const History = () => {
   // const handleCityFilter = () => {
   //   const originCity = document.getElementById('city_transmiter').value;
   //   const destinationCity = document.getElementById('city_receiver').value;
+
 
   //   dispatch(filterCity({ originCity, destinationCity }));
   // };
@@ -345,6 +348,8 @@ const History = () => {
             {/* FILTROS */}
             <div className="my-2 flex sm:flex-row flex-col">
               <div className="flex flex-row mb-1 sm:mb-0">
+
+
                 {/* <div className="relative">
                   <select  id="city_transmiter" className="h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="city_transmiter"
                     value={city_transmiter}

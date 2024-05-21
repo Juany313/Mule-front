@@ -187,6 +187,7 @@ const getOrdersByClient = () => {
         throw new Error("No token found");
       }
       const response = await axios.get("/order_shipments", {
+
         headers: {
           Authorization: `Bearer ${token}`,
         },
