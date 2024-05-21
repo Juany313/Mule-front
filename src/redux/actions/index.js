@@ -132,29 +132,18 @@ const getAllBranches = () => {
 
 const createOrder = (userData) => {
   return async (dispatch) => {
-    
     try {
-      const token = localStorage.getItem('token'); // Obtener el token de localStorage
-      const config = {
-        headers: {
-          'Authorization': `Bearer ${token}`, // Pasar el token en el encabezado 'Authorization'
-        },
-      };
-   
       const { data } = await axios.post(
         "http://localhost:3000/order_shipments",
-        userData,
-        config // Pasar la configuración con el encabezado 'Authorization'
+        userData // Envía los datos del formulario como parte de la solicitud POST
       );
-    
-      
       dispatch({
         type: CREATE_ORDER,
         payload: data,
       });
       Swal.fire({
         title: "Orden de pedido creada!",
-        text: "La orden de pedido ha sido creada exitosamente",
+        text: "Redirigiendo a método de pago...",
         icon: "success",
         confirmButtonText: "Aceptar",
       });
