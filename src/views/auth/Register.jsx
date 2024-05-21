@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import validate from "../../utils"
+import Swal from "sweetalert2";
 
 
 /* actions */
@@ -53,9 +54,17 @@ const Register = () => {
     event.preventDefault();
     const result = await dispatch(postUser(userData));
     if (result.success) {
-      alert("USUARIO CREADO CON EXITO!!");
+      Swal.fire({
+        icon: "success",
+        title: "Usuario creado",
+        text: result.message,
+      });
     } else {
-      alert("Ocurrió un error al crear el usuario");
+      Swal.fire({
+        icon: "error",
+        title: "Usuario ya existe",
+        text: result.message,
+      });
     }
   };
   
