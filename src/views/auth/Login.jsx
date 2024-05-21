@@ -24,6 +24,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const {getIdTokenClaims} = useAuth0();  
 
   useEffect(() => {
     if (localStorage.getItem("token") && isAuth === true) {
@@ -32,6 +33,17 @@ const Login = () => {
       );
     }
   }, [isAuth]);
+
+  /*const getToken = async () => {
+    const gettoken = await getIdTokenClaims();
+    const tokengoogle = gettoken.__raw;
+    localStorage.setItem("token", tokengoogle);
+    setIsAuth(
+      parseJwt(localStorage.getItem("token")).exp * 100
+    );
+  };*/
+
+    
 
   const parseJwt = (token) => {
     const base64Url = token.split(".")[1];
@@ -47,6 +59,7 @@ const Login = () => {
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
+    if (formData.email && formData.password ) {
     try {
       const token = await loginUser(formData);
       localStorage.setItem("token", token);
@@ -69,10 +82,18 @@ const Login = () => {
         text: "Correo o contraseña incorrectos",
         showConfirmButton: true,
       });
+    }} 
+    else {
+      const gettoken = await getIdTokenClaims();
+      const tokengoogle = gettoken.__raw;
+      localStorage.setItem("token", tokengoogle);
+      setIsAuth(
+        parseJwt(localStorage.getItem("token")).exp * 100
+      );
     }
   };
 
-  const infoUser = parseJwt(localStorage.getItem("token"));
+  const infoUser = localStorage.getItem("token") && parseJwt(localStorage.getItem("token"));
   // console.log(infoUser)
   
 
