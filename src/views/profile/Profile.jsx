@@ -16,14 +16,14 @@ const Profile = () => {
 
   return (
     <UserLayout>
-      <div class="bg-white overflow-hidden shadow rounded-lg border">
+      <div class="bg-white overflow-hidden shadow rounded-lg border mt-28">
     <div class="px-4 py-5 sm:px-6">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
-            User Profile
+            Mi perfil
         </h3>
-        <p class="mt-1 max-w-2xl text-sm text-gray-500">
+        {/* <p class="mt-1 max-w-2xl text-sm text-gray-500">
             This is some information about the user.
-        </p>
+        </p> */}
     </div>
     <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
         <dl class="sm:divide-y sm:divide-gray-200">
