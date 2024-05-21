@@ -2,65 +2,47 @@ import React from 'react'
 import UserLayout from '../profile/UserLayout'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getOrdersByClient } from '../../redux/actions';
-//probando
+import { getOrdersByClient, orderDate, filterCity } from '../../redux/actions';
+
 const History = () => {
   const dispatch = useDispatch();
   const allOrders = useSelector((state) => state.allOrders)
   const [currentPage, setCurrentPage] = useState(1)
   const ordersPerPage = 4;
+  const filteredOrders = useSelector((state) => state.filteredOrders);
 
-  const filtrados = useSelector((state) => state.filtrados);
+  // const [estado, setEstado] = useState({
+  //   city_transmiter: "",
+  //   city_receiver: "",
+  //   declared_value: "",
+  //   pay_method: "",
+  // });
 
   useEffect(() => {
     dispatch(getOrdersByClient())
   }, [dispatch])
 
-  const [estado, setEstado] = useState({
-    city_transmiter: "",
-    city_receiver: "",
-    declared_value: "",
-    pay_method: "",
-  });
+  // useEffect(() => {
+  //   orderDate(allOrders);
+  // }, [allOrders]);
 
-  const [filtrosActivos, setFiltrosActivos] = useState(false);
-
-  const manejarCambio = (e) => {
-    const { name, value } = e.target;
-    setEstado((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+  const handleSortChange = (e) => {
+    const order = e.target.value;
+    dispatch(orderDate(order));
   };
 
-  const manejarFiltrarClick = () => {
-    console.log("FILTROS", estado);
-    const pedido = Object.keys(estado).reduce((acc, key) => {
-      if (estado[key] !== "") {
-        acc[key] = estado[key];
-      }
-      return acc;
-    }, {});
-
-    if (Object.keys(pedido).length > 0) {
-      dispatch(agregarPedido(pedido));
-      setFiltrosActivos(true); // Activar los filtros
-    } else {
-      console.log("No hay propiedades para agregar al pedido.");
-    }
-  };
-
-  const manejarSinFiltrosClick = () => {
-    // Establecer todas las propiedades del estado a cadenas vacías
-    dispatch(getOrdersByClient());
-    setFiltrosActivos(false); // Desactivar los filtros
+  const handleCityFilter = () => {
+    const originCity = document.getElementById('city_transmiter').value;
+    const destinationCity = document.getElementById('city_receiver').value;
+  
+    dispatch(filterCity({ originCity, destinationCity }));
   };
 
 
   // Calcular el índice inicial y final de los usuarios en la página actual
   const indexOfLastUser = currentPage * ordersPerPage;
   const indexOfFirstUser = indexOfLastUser - ordersPerPage;
-  const currentOrders = allOrders.slice(indexOfFirstUser, indexOfLastUser);
+  const currentOrders = filteredOrders.slice(indexOfFirstUser, indexOfLastUser);
 
   // Cambiar a la página siguiente
   const nextPage = () => {
@@ -90,10 +72,11 @@ const History = () => {
             {/* FILTROS */}
             <div className="my-2 flex sm:flex-row flex-col">
               <div className="flex flex-row mb-1 sm:mb-0">
+
                 <div className="relative">
-                  <select className="h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="city_transmiter"
-                    value={estado.city_transmiter}
-                    onChange={manejarCambio}>
+                  <select  id="city_transmiter" className="h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="city_transmiter"
+                    value={city_transmiter}
+                    onChange={handleCityFilter}>
                     <option value=""> Ciudad de origen</option>
                     <option value="santa fe">Santa Fe</option>
                     <option value="buenos aires">Buenos Aires</option>
@@ -106,13 +89,32 @@ const History = () => {
                       <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                     </svg>
                   </div>
-                  
                 </div>
+
                 <div className="relative">
-                  <select className="h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                    <option>All</option>
-                    <option>Active</option>
-                    <option>Inactive</option>
+                  <select id= "city_receiver" className="h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="city_transmiter"
+                    value={city_receiver}
+                    onChange={handleCityFilter}>
+                    <option value=""> Ciudad de origen</option>
+                    <option value="santa fe">Santa Fe</option>
+                    <option value="buenos aires">Buenos Aires</option>
+                    <option value="cordoba">Cordoba</option>
+                    <option value="entre rios">Entre Rios</option>
+                    <option value="corrientes">Corrientes</option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <select className="h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500"
+                    onChange={handleSortChange}>
+                    <option value="">Ordenar por fecha</option>
+                    <option value="asc">Orden Ascendente</option>
+                    <option value="desc">Orden Descendente</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
