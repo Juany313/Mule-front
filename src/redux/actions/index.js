@@ -139,7 +139,7 @@ const createOrder = (userData) => {
       });
       Swal.fire({
         title: "Orden de pedido creada!",
-        text: "La orden de pedido ha sido creada exitosamente",
+        text: "Redirigiendo a método de pago...",
         icon: "success",
         confirmButtonText: "Aceptar",
       });
