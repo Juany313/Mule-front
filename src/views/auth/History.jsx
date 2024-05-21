@@ -11,6 +11,9 @@ const History = () => {
   const ordersPerPage = 4;
   const filteredOrders = useSelector((state) => state.filteredOrders);
 
+  const token = localStorage.getItem('token') 
+  console.log (token)
+
   // const [estado, setEstado] = useState({
   //   city_transmiter: "",
   //   city_receiver: "",
@@ -19,7 +22,7 @@ const History = () => {
   // });
 
   useEffect(() => {
-    dispatch(getOrdersByClient())
+    dispatch(getOrdersByClient(token))
   }, [dispatch])
 
   // useEffect(() => {

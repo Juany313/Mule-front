@@ -132,11 +132,22 @@ const getAllBranches = () => {
 
 const createOrder = (userData) => {
   return async (dispatch) => {
+    
     try {
+      const token = localStorage.getItem('token'); // Obtener el token de localStorage
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`, // Pasar el token en el encabezado 'Authorization'
+        },
+      };
+   
       const { data } = await axios.post(
         "http://localhost:3000/order_shipments",
-        userData // Envía los datos del formulario como parte de la solicitud POST
+        userData,
+        config // Pasar la configuración con el encabezado 'Authorization'
       );
+    
+      
       dispatch({
         type: CREATE_ORDER,
         payload: data,
@@ -183,14 +194,15 @@ const getUserDetail = (id) => {
   };
 };
 
-const getOrdersByClient = () =>{
+const getOrdersByClient = (token) =>{
   return async (dispatch)=>{
     try {
-      const token = localStorage.getItem('token')
+      // const token = localStorage.getItem('token')
       if (!token) {
         throw new Error('No token found');
       };
-      const response = await axios.get ("http://localhost:3000/order_shipments", {
+      //CAMBIAR EL ENDPOINT POR EL NUEVO QUE HAY QUE CREAR
+      const response = await axios.get ("http://localhost:3000/orderUser", {
         headers: {
           "Authorization": `Bearer ${token}`
         }

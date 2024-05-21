@@ -44,7 +44,7 @@ const Payment = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/create_preference/",
+        "http://localhost:3000/payments/",
         {
           id: id,
           title: title,
