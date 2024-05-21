@@ -42,16 +42,14 @@ const Payment = () => {
 
   const handlePay = async (id, title, quantity, unit_price) => {
     try {
-      const response = await axios.post("/create_preference/", {
+      const response = await axios.post("/payments/", {
         id: id,
         title: title,
         quantity: quantity,
         unit_price: unit_price,
       });
-      console.log("voy", response.data);
-      const preference = response.data;
-      setPreferenceId(preference);
-      console.log("preference", preferenceId);
+      const iDpreference = response.data.id;
+      setPreferenceId(iDpreference);
     } catch (error) {
       console.log(error);
     }
