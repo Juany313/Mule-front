@@ -62,7 +62,7 @@ const Register = () => {
     } else {
       Swal.fire({
         icon: "error",
-        title: "Usuario ya existe",
+        title: "Error al crear usuario",
         text: result.message,
       });
     }

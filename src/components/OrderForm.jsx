@@ -40,6 +40,8 @@ const OrderForm = () => {
     pay_method: Yup.string().required("Método de pago es requerido"),
   });
 
+
+
   const formik = useFormik({
     initialValues: {
       name_claimant: "",
@@ -61,10 +63,12 @@ const OrderForm = () => {
     validationSchema,
     onSubmit: (values) => {
       dispatch(createOrder(values));
-      // window.location.href = "https://mule-front.onrender.com/header/payment"; // Redirige al endpoint
       navigate("/header/payment");
     },
   });
+
+
+
 
   const handleKeyPress = (event) => {
     const charCode = event.charCode;
@@ -84,7 +88,7 @@ const OrderForm = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
               <div className="relative mb-2">
                 <input
-                  type="text"
+                  //type="text"
                   name="name_claimant"
                   value={formik.values.name_claimant}
                   onChange={formik.handleChange}
@@ -100,7 +104,7 @@ const OrderForm = () => {
               </div>
               <div className="relative mb-4">
                 <input
-                  type="text"
+                  //type="text"
                   name="cedula_claimant"
                   value={formik.values.cedula_claimant}
                   onChange={formik.handleChange}
@@ -118,7 +122,7 @@ const OrderForm = () => {
               </div>
               <div className="relative mb-4">
                 <input
-                  type="text"
+                  //type="text"
                   name="cellphone_claimant"
                   value={formik.values.cellphone_claimant}
                   onChange={formik.handleChange}
@@ -146,7 +150,7 @@ const OrderForm = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div className="relative mb-4">
                 <input
-                  type="text"
+                  //type="text"
                   name="name_transmiter"
                   value={formik.values.name_transmiter}
                   onChange={formik.handleChange}
@@ -162,7 +166,7 @@ const OrderForm = () => {
               </div>
               <div className="relative mb-4">
                 <input
-                  type="text"
+                  //type="text"
                   name="celphone_transmiter"
                   value={formik.values.celphone_transmiter}
                   onChange={formik.handleChange}
@@ -200,7 +204,7 @@ const OrderForm = () => {
               </div>
               <div className="relative mb-4">
                 <input
-                  type="text"
+                  //type="text"
                   name="address_transmiter"
                   value={formik.values.address_transmiter}
                   onChange={formik.handleChange}
@@ -226,7 +230,7 @@ const OrderForm = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div className="relative mb-4">
                 <input
-                  type="text"
+                  //type="text"
                   name="name_receiver"
                   value={formik.values.name_receiver}
                   onChange={formik.handleChange}
@@ -242,7 +246,7 @@ const OrderForm = () => {
               </div>
               <div className="relative mb-4">
                 <input
-                  type="number"
+                  //type="number"
                   name="celphone_receiver"
                   value={formik.values.celphone_receiver}
                   onChange={formik.handleChange}
@@ -280,7 +284,7 @@ const OrderForm = () => {
               </div>
               <div className="relative mb-4">
                 <input
-                  type="text"
+                  //type="text"
                   name="address_receiver"
                   value={formik.values.address_receiver}
                   onChange={formik.handleChange}

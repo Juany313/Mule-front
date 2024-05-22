@@ -13,7 +13,7 @@ export const GET_ALL_BRANCHES = "GET_ALL_BRANCHES";
 export const GET_ORDERS_BY_CLIENT = "GET_ORDERS_BY_CLIENT";
 export const FILTER_BY_CITY = "FILTER_BY_CITY";
 export const ORDER_BY_DATE = "ORDER_BY_DATE";
-
+export const IS_LOGGED = "IS_LOGGED";
 /* Juanyyyy */
 export const AGREGAR_PEDIDO = "AGREGAR_PEDIDO";
 export const POST_USER = "AGREGAR_PEDIDO";
@@ -270,6 +270,13 @@ const orderDate = (date) => {
   };
 };
 
+const setIsLogged = (isLogged) => {
+  return {
+    type: "IS_LOGGED",
+    payload: isLogged,
+  };
+}
+
 export {
   getUserDetail,
   getAllUsers,
@@ -283,4 +290,5 @@ export {
   getOrdersByClient,
   filterCity,
   orderDate,
+  setIsLogged
 };

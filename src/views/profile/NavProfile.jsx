@@ -18,10 +18,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import {setIsLogged} from "../../redux/actions/index";
+import {useSelector, useDispatch} from "react-redux";
 
 const NavProfile = ({ setIsAuth }) => {
+  const dispatch = useDispatch();
   const { logout } = useAuth0();
   const [isChecked, setIsChecked] = useState(false);
+  const isLogged = useSelector((state) => state.isLogged);
   const navigate = useNavigate();
 
   const handleCheck = () => {
@@ -37,7 +41,9 @@ const NavProfile = ({ setIsAuth }) => {
       logout();
       
     }*/
-    setIsAuth(false);
+    //setIsAuth(false);
+    dispatch(setIsLogged(false));
+
   };
 
   return (

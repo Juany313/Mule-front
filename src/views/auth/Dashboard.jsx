@@ -8,6 +8,7 @@ import { getUserDetail } from "../../redux/actions";
 import { useEffect } from "react";
 //import { useSelect } from "@material-tailwind/react";
 import Login from "../auth/Login";
+import { setIsLogged } from "../../redux/actions";
 
 
 const Dashboard = ({ setIsAuth, infoUser, isAuth }) => {
@@ -15,6 +16,7 @@ const Dashboard = ({ setIsAuth, infoUser, isAuth }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userDetail = useSelector((state) => state.userDetail);
+  const isLogged = useSelector((state) => state.isLogged);
   const idUser = infoUser.id;
   console.log("loggggg", infoUser);
 
@@ -22,14 +24,28 @@ const Dashboard = ({ setIsAuth, infoUser, isAuth }) => {
     dispatch(getUserDetail(idUser));
   }, [dispatch, idUser]);
 
-  // Funciones para manejar los clics en cada tarjeta
-  // const handleQuote = () => {
-  //   navigate("/cotizar-paquete");
-  // };
+  useEffect(() => {
+    
+      dispatch(
+        setIsLogged(
+          parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
+        )
+      );
+  }, []);
 
-  // const handleTrack = () => {
-  //   navigate("/rastrear-pedido");
-  // };
+  const parseJwt = (token) => {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  };
+
+
   const ActionButton = ({ icon, title, onClick }) => {
     return (
       <div
@@ -48,7 +64,7 @@ const Dashboard = ({ setIsAuth, infoUser, isAuth }) => {
 
   return (
     <>
-      {isAuth ? (
+      {isLogged ? (
         <UserLayout infoUser={infoUser} setIsAuth={setIsAuth} isAuth={isAuth}>
           <div className="flex flex-col h-screen pt-28">
             <header className="bg-#efefef shadow-md w-full py-0 px-0 text-center">

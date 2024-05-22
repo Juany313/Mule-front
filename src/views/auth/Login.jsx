@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import Cookies from "js-cookie";
+import {useSelector, useDispatch} from "react-redux";
 
 /* icons */
 import { RiMailLine, RiLock2Line } from "react-icons/ri";
@@ -12,27 +13,38 @@ import loginUser from "../../services/auth/requestLogin";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Dashboard from "./Dashboard";
+import {setIsLogged} from "../../redux/actions/index";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showPassword, SetShowPassword] = useState(false);
   const [showEmail, setShowEmail] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
-
+  const isLogged = useSelector((state) => state.isLogged);
   const { loginWithRedirect } = useAuth0();
+  const { getIdTokenClaims } = useAuth0();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const { getIdTokenClaims } = useAuth0();
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (localStorage.getItem("token") && isAuth === true) {
       setIsAuth(
         parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
       );
     }
-  }, [isAuth]);
+  }, [isAuth]);*/
+
+  useEffect(() => {
+    if (localStorage.getItem("token") ) {
+      dispatch(setIsLogged(
+        parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
+      ));
+    }
+  }, []);
+
 
   /*const getToken = async () => {
     const gettoken = await getIdTokenClaims();
@@ -57,6 +69,7 @@ const Login = () => {
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
+    
     if (formData.email && formData.password) {
       try {
         const token = await loginUser(formData);
@@ -70,9 +83,14 @@ const Login = () => {
         });
         //navigate("/auth/dashboard");
         localStorage.setItem("token", token);
-        setIsAuth(
+        /*setIsAuth(
           parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
-        );
+        );*/
+        dispatch(setIsLogged(
+          //parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
+          true
+        ));
+        console.log(isLogged);
       } catch (error) {
         Swal.fire({
           icon: "error",
@@ -85,7 +103,10 @@ const Login = () => {
       const gettoken = await getIdTokenClaims();
       const tokengoogle = gettoken.__raw;
       localStorage.setItem("token", tokengoogle);
-      setIsAuth(parseJwt(localStorage.getItem("token")).exp * 100);
+      dispatch(setIsLogged(
+        parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
+      ));
+      //setIsAuth(parseJwt(localStorage.getItem("token")).exp * 100);
     }
   };
 
@@ -94,10 +115,11 @@ const Login = () => {
     localStorage.getItem("token") && parseJwt(localStorage.getItem("token"));
   // console.log(infoUser)
 
+  
 
   return (
     <div>
-      {isAuth ? (
+      {isLogged ? (
         <Dashboard isAuth={isAuth} infoUser={infoUser} setIsAuth={setIsAuth} />
       ) : (
         <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">

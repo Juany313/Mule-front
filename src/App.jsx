@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
+
 // Importación de layouts y componentes
 import LayoutAuth from "./layouts/LayoutAuth";
 import LayoutAdmin from "./layouts/LayoutAdmin";
@@ -30,7 +31,9 @@ import Shipments from "./views/auth/Shipments";
 import History from "./views/auth/History";
 import axios from "axios";
 
-axios.defaults.baseURL = "https://mule-server.onrender.com";
+
+axios.defaults.baseURL = "http://localhost:3000";
+
 
 function App() {
   return (

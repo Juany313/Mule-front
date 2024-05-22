@@ -11,6 +11,7 @@ import {
   GET_ORDERS_BY_CLIENT,
   ORDER_BY_DATE,
   FILTER_BY_CITY,
+  IS_LOGGED,
 } from "../actions";
 
 let initialState = {
@@ -24,6 +25,7 @@ let initialState = {
   allMeasures: [],
   allTypesShipments: [],
   allBranches: [],
+  isLogged: false,
 };
 
 function rootReducer(state = initialState, action) {
@@ -124,6 +126,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         filteredOrders: sortedOrders,
+      };
+
+      case IS_LOGGED:
+      return {
+        ...state,
+        isLogged: action.payload,
       };
 
     default:
