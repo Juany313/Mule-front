@@ -32,7 +32,7 @@ import History from "./views/auth/History";
 function App() {
   return (
     <Router>
-      <Navigation />
+      
       <Routes>
         <Route path="/auth/profile//*" element={<AuthenticatedApp />}></Route>
         <Route path="/auth" element={<LayoutAuth />}>
@@ -61,26 +61,6 @@ function App() {
   );
 }
 
-function Navigation() {
-  const navigate = useNavigate();
-  const { isAuthenticated } = useAuth0();
-  const [authenticated, setAuthenticated] = React.useState(false);
-
-  useEffect(() => {
-    const token = Cookies.get("token");
-    if (token) {
-      setAuthenticated(true);
-      navigate("/auth/dashboard");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/auth/profile");
-    }
-  }, [isAuthenticated, navigate]);
-
-  return null; // This component does not render anything
-}
 
 export default App;
+
