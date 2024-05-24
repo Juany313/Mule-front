@@ -12,9 +12,7 @@ export const GET_TYPES_SHIPMENTS = "GET_TYPES_SHIPMENTS";
 export const GET_ALL_BRANCHES = "GET_ALL_BRANCHES";
 export const GET_ORDERS_BY_CLIENT = "GET_ORDERS_BY_CLIENT";
 export const FILTER_BY_CITY = "FILTER_BY_CITY";
-export const ORDER_BY_DATE = "ORDER_BY_DATE"
-
-
+export const ORDER_BY_DATE = "ORDER_BY_DATE";
 
 /* Juanyyyy */
 export const AGREGAR_PEDIDO = "AGREGAR_PEDIDO";
@@ -33,7 +31,6 @@ export const agregarPedido = (pedido) => {
   };
 };
 
-
 /* export function postUser(data) {
   return async function(dispatch) {
       try {
@@ -50,9 +47,12 @@ export const agregarPedido = (pedido) => {
 } */
 
 export function postUser(data) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
-      const response = await axios.post('http://localhost:3000/users/register', data);
+      const response = await axios.post(
+        "http://localhost:3000/users/register",
+        data
+      );
       dispatch({
         type: POST_USER,
         payload: response.data,
@@ -66,7 +66,6 @@ export function postUser(data) {
     }
   };
 }
-
 
 /* Juanyyyyy */
 
@@ -131,6 +130,7 @@ const getAllBranches = () => {
 };
 
 const createOrder = (userData) => {
+  console.log("DATOS DEL FORM:", userData);
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
@@ -162,17 +162,16 @@ const createOrder = (userData) => {
 const getUserDetail = (id) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/users/${id}`,{
+      const response = await fetch(`http://localhost:3000/users/${id}`, {
         method: "GET",
         headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-    });
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
       //    const data=users.find(usuario => usuario.id === 4)
-      console.log(data);
       return dispatch({
         type: GET_USER_DETAIL,
         payload: data,
@@ -183,34 +182,35 @@ const getUserDetail = (id) => {
   };
 };
 
-const getOrdersByClient = () =>{
-  return async (dispatch)=>{
+const getOrdersByClient = () => {
+  return async (dispatch) => {
     try {
-      const token = localStorage.getItem('token')
+      const token = localStorage.getItem("token");
       if (!token) {
-        throw new Error('No token found');
-      };
-      const response = await axios.get ("http://localhost:3000/order_shipments", {
-        headers: {
-          "Authorization": `Bearer ${token}`
+        throw new Error("No token found");
+      }
+      const response = await axios.get(
+        "http://localhost:3000/order_shipments",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      })
-      return dispatch ({
+      );
+      return dispatch({
         type: GET_ORDERS_BY_CLIENT,
-        payload: response.data
-      })
-    }catch (error) {
+        payload: response.data,
+      });
+    } catch (error) {
       window.alert(error.message);
     }
-  }
-
-}
+  };
+};
 
 const getAllOrders = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get("http://localhost:3000/order_shipments");
-      console.log(data);
       return dispatch({
         type: GET_ALL_ORDERS,
         payload: data,
@@ -262,20 +262,19 @@ const orderDeclaredValue = (selectedValues) => {
   };
 };
 
-const filterCity = (cities)=>{
+const filterCity = (cities) => {
   return {
     type: FILTER_BY_CITY,
-    payload: cities
-  }
-}
+    payload: cities,
+  };
+};
 
-const orderDate = (date)=>{
+const orderDate = (date) => {
   return {
     type: ORDER_BY_DATE,
-    payload: date
-  }
-
-}
+    payload: date,
+  };
+};
 
 export {
   getUserDetail,
@@ -289,5 +288,5 @@ export {
   getAllBranches,
   getOrdersByClient,
   filterCity,
-  orderDate
+  orderDate,
 };
