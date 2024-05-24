@@ -12,6 +12,8 @@ import {
   ORDER_BY_DATE,
   FILTER_BY_CITY,
   IS_LOGGED,
+  INFO_USER_LOGGED,
+  SET_ORDER_TYPE,
 } from "../actions";
 
 let initialState = {
@@ -26,6 +28,8 @@ let initialState = {
   allTypesShipments: [],
   allBranches: [],
   isLogged: false,
+  infoUserLogged: {},
+  orderType: "",
 };
 
 function rootReducer(state = initialState, action) {
@@ -134,6 +138,17 @@ function rootReducer(state = initialState, action) {
         isLogged: action.payload,
       };
 
+      case INFO_USER_LOGGED:
+      return {
+        ...state,
+        infoUserLogged: action.payload,
+      };
+
+      case SET_ORDER_TYPE:
+      return {
+        ...state,
+        orderType: action.payload,
+      };
     default:
       return state;
   }

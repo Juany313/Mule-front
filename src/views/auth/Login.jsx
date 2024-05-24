@@ -14,20 +14,26 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import {setIsLogged} from "../../redux/actions/index";
+import { setInfoUserLogged } from "../../redux/actions/index";
 
 const Login = () => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [showPassword, SetShowPassword] = useState(false);
-  const [showEmail, setShowEmail] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
-  const isLogged = useSelector((state) => state.isLogged);
   const { loginWithRedirect } = useAuth0();
   const { getIdTokenClaims } = useAuth0();
+  const isLogged = useSelector((state) => state.isLogged);
+  const [showPassword, SetShowPassword] = useState(false);
+  const [showEmail, setShowEmail] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const decodedToken = () => dispatch(setInfoUserLogged(
+    localStorage.getItem("token") && parseJwt(localStorage.getItem("token"))
+  ));
+
+
+  
 
   /*useEffect(() => {
     if (localStorage.getItem("token") && isAuth === true) {
@@ -38,11 +44,23 @@ const Login = () => {
   }, [isAuth]);*/
 
   useEffect(() => {
-    if (localStorage.getItem("token") ) {
-      dispatch(setIsLogged(
-        parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
-      ));
-    }
+    const checkToken = () => {
+      console.log('Logueado ?',isLogged);
+      if (localStorage.getItem("token")) {
+        dispatch(setIsLogged(
+          parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
+        ));
+      }
+    };
+  
+    // Verificar la validez del token inmediatamente
+    checkToken();
+  
+    // Verificar la validez del token cada minuto
+    const intervalId = setInterval(checkToken, 60000);
+  
+    // Limpiar el intervalo cuando el componente se desmonte
+    return () => clearInterval(intervalId);
   }, []);
 
 
@@ -69,33 +87,35 @@ const Login = () => {
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
-    
+
+    //
     if (formData.email && formData.password) {
       try {
+        //Obtiene el token de inicio de sesión
         const token = await loginUser(formData);
+        // Almacena el token en el almacenamiento local
         localStorage.setItem("token", token);
-        //Cookies.set("token", token, { expiresIn: "24h" });
+        // Asigna Id a la sesión de usuario
+        dispatch(setInfoUserLogged(
+          localStorage.getItem("token") && parseJwt(localStorage.getItem("token"))
+        ));
         Swal.fire({
           icon: "success",
           title: "Inicio de sesión exitoso",
           text: "Bienvenido a la plataforma",
           showConfirmButton: true,
         });
-        //navigate("/auth/dashboard");
         localStorage.setItem("token", token);
-        /*setIsAuth(
+         dispatch(setIsLogged(
           parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
-        );*/
-        dispatch(setIsLogged(
-          //parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
-          true
+
         ));
-        console.log(isLogged);
+        
       } catch (error) {
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: "Correo o contraseña incorrectos",
+          text: "Error al iniciar sesión, verifique sus credenciales",
           showConfirmButton: true,
         });
       }
@@ -110,17 +130,19 @@ const Login = () => {
     }
   };
 
+ 
+
 
   const infoUser =
     localStorage.getItem("token") && parseJwt(localStorage.getItem("token"));
-  // console.log(infoUser)
+   console.log("Información del token para el back",infoUser)
 
   
 
   return (
     <div>
       {isLogged ? (
-        <Dashboard isAuth={isAuth} infoUser={infoUser} setIsAuth={setIsAuth} />
+        <Dashboard  infoUser={infoUser} setIsAuth={setIsAuth} />
       ) : (
         <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">
           <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-white mb-8">

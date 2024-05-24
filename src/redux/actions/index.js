@@ -14,15 +14,26 @@ export const GET_ORDERS_BY_CLIENT = "GET_ORDERS_BY_CLIENT";
 export const FILTER_BY_CITY = "FILTER_BY_CITY";
 export const ORDER_BY_DATE = "ORDER_BY_DATE";
 export const IS_LOGGED = "IS_LOGGED";
+export const INFO_USER_LOGGED = "INFO_USER_LOGGED";
+export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
+export const SET_ORDER_TYPE = "SET_ORDER_TYPE";
 /* Juanyyyy */
 export const AGREGAR_PEDIDO = "AGREGAR_PEDIDO";
 export const POST_USER = "AGREGAR_PEDIDO";
 
+
 // const URL_BASE = "http://localhost:3000";
 
-/* Juanyyyyy */
 
 // actions.js
+
+
+export const setOrderType = (orderType) => {
+  return {
+    type: SET_ORDER_TYPE,
+    payload: orderType,
+  };
+};
 
 export const agregarPedido = (pedido) => {
   return {
@@ -31,21 +42,7 @@ export const agregarPedido = (pedido) => {
   };
 };
 
-/* export function postUser(data) {
-  return async function(dispatch) {
-      try {
-      const response = await axios.post('http://localhost:3000/users/register', data);
-
-      return dispatch({
-          type: POST_USER,
-          payload: response.data,
-      });
-      } catch (error) {
-      console.error(error.message);
-      }
-  };
-} */
-
+// formulario de registro
 export function postUser(data) {
   return async function (dispatch) {
     try {
@@ -66,6 +63,8 @@ export function postUser(data) {
 
 /* Juanyyyyy */
 
+
+//Permiso provisorio para que el usuario pueda ver los usuarios
 const getAllUsers = () => {
   return async (dispatch) => {
     try {
@@ -76,7 +75,23 @@ const getAllUsers = () => {
         payload: data,
       });
     } catch (error) {
-      window.alert(error.message);
+      //window.alert(error.message);
+    }
+  };
+};
+
+
+const getTypeShipments = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`/type_shipments`);
+      // console.log(data)
+      return dispatch({
+        type: GET_TYPES_SHIPMENTS,
+        payload: data,
+      });
+    } catch (error) {
+      //window.alert(error.message);
     }
   };
 };
@@ -91,26 +106,10 @@ const getAllMeasures = () => {
         payload: data,
       });
     } catch (error) {
-      window.alert(error.message);
+      //window.alert(error.message);
     }
   };
 };
-
-const getTypeShipments = () => {
-  return async (dispatch) => {
-    try {
-      const { data } = await axios.get(`/type_shipments`);
-      // console.log(data)
-      return dispatch({
-        type: GET_TYPES_SHIPMENTS,
-        payload: data,
-      });
-    } catch (error) {
-      window.alert(error.message);
-    }
-  };
-};
-
 const getAllBranches = () => {
   return async (dispatch) => {
     try {
@@ -121,7 +120,7 @@ const getAllBranches = () => {
         payload: data,
       });
     } catch (error) {
-      window.alert(error.message);
+      //window.alert(error.message);
     }
   };
 };
@@ -155,6 +154,7 @@ const createOrder = (userData) => {
   };
 };
 
+//Bien de Seguridad, incluye el token, bearer configurado en back ?
 const getUserDetail = (id) => {
   return async (dispatch) => {
     try {
@@ -174,20 +174,19 @@ const getUserDetail = (id) => {
         payload: data,
       });
     } catch (error) {
-      window.alert(error.message);
+      //window.alert(error.message);
     }
   };
 };
-
-const getOrdersByClient = () => {
+//Bien de Seguridad, incluye el token, bearer configurado en back ?
+const getOrdersByClient = (id) => {
   return async (dispatch) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("No token found");
       }
-      const response = await axios.get("/order_shipments", {
-
+      const response = await axios.get(`/order_shipments/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -197,11 +196,12 @@ const getOrdersByClient = () => {
         payload: response.data,
       });
     } catch (error) {
-      window.alert(error.message);
+      //window.alert(error.message);
     }
   };
 };
 
+// Falla de seguridad?
 const getAllOrders = () => {
   return async (dispatch) => {
     try {
@@ -212,26 +212,28 @@ const getAllOrders = () => {
         payload: data,
       });
     } catch (error) {
-      window.alert(error.message);
+      //window.alert(error.message);
     }
   };
 };
 
+/* Falla de seguridad */
 const getOrderById = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/order_shipments/${id}`);
+      const response = await axios.get(`/order_shipments/${id}`);
       // const data=orders.find(order => order.id === id)
       return dispatch({
         type: GET_ORDER_ID,
-        payload: data,
+        payload: response.data,
       });
     } catch (error) {
-      window.alert("No existe una orden de pedido con ese número");
+      //window.alert("No existe una orden de pedido con ese número");
     }
   };
 };
 
+// Falla de seguridad
 const orderDeclaredValue = (selectedValues) => {
   return async (dispatch) => {
     try {
@@ -251,10 +253,11 @@ const orderDeclaredValue = (selectedValues) => {
         payload: data,
       });
     } catch (error) {
-      window.alert(error.message);
+      //window.alert(error.message);
     }
   };
 };
+
 
 const filterCity = (cities) => {
   return {
@@ -277,6 +280,14 @@ const setIsLogged = (isLogged) => {
   };
 }
 
+
+const setInfoUserLogged = (user) => {
+  return {
+    type: INFO_USER_LOGGED,
+    payload: user,
+  };
+}
+
 export {
   getUserDetail,
   getAllUsers,
@@ -290,5 +301,7 @@ export {
   getOrdersByClient,
   filterCity,
   orderDate,
-  setIsLogged
+  setIsLogged,
+  setInfoUserLogged,
+  setOrderType,
 };
