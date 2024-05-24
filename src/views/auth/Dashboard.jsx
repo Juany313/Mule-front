@@ -25,13 +25,16 @@ const Dashboard = ({ setIsAuth, infoUser, isAuth }) => {
   }, [dispatch, idUser]);
 
   useEffect(() => {
-    
+    if (localStorage.getItem("token") && isLogged === true){
       dispatch(
         setIsLogged(
-          parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
+          true
         )
       );
-  }, []);
+    }
+  }
+  , []);
+      
 
   const parseJwt = (token) => {
     const base64Url = token.split(".")[1];

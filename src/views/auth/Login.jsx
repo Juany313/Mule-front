@@ -46,9 +46,19 @@ const Login = () => {
   useEffect(() => {
     const checkToken = () => {
       console.log('Logueado ?',isLogged);
-      if (localStorage.getItem("token")) {
+      if (localStorage.getItem("token") && isLogged === true)  {
         dispatch(setIsLogged(
           parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
+        ));
+      }
+      if (localStorage.getItem("token") && isLogged === false) {
+        dispatch(setIsLogged(
+          false
+        ));
+      }
+      else {
+        dispatch(setIsLogged(
+          false
         ));
       }
     };
@@ -142,7 +152,7 @@ const Login = () => {
   return (
     <div>
       {isLogged ? (
-        <Dashboard  infoUser={infoUser} setIsAuth={setIsAuth} />
+        <Dashboard  infoUser={infoUser}  />
       ) : (
         <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">
           <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-white mb-8">
