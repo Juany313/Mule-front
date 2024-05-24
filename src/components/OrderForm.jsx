@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { createOrder } from "../redux/actions/index";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const OrderForm = () => {
   const [step, setStep] = useState(1);
@@ -36,7 +37,18 @@ const OrderForm = () => {
     address_receiver: Yup.string().required("Dirección es requerida"),
     weight: Yup.string().required("Peso es requerido"),
     declared_value: Yup.string().required("Valor declarado es requerido"),
-    product_image: Yup.string().required("Imagen es requerida"),
+    product_image: Yup.mixed()
+      .required("Imagen es requerida")
+      .test(
+        "FILE_SIZE",
+        "El archivo es muy grande!",
+        (value) => value && value.size < 1024 * 1024
+      )
+      .test(
+        "FILE_TYPE",
+        "Formato inválido!",
+        (value) => value && ["image/jpg", "image/png"].includes(value.type)
+      ),
     pay_method: Yup.string().required("Método de pago es requerido"),
   });
 
@@ -55,14 +67,24 @@ const OrderForm = () => {
       address_receiver: "",
       weight: "",
       declared_value: "",
-      product_image: "",
+      product_image: null,
       pay_method: "",
     },
     validationSchema,
-    onSubmit: (values) => {
-      dispatch(createOrder(values));
-      // window.location.href = "https://mule-front.onrender.com/header/payment"; // Redirige al endpoint
-      navigate("/header/payment");
+    onSubmit: async (values) => {
+      const formData = new FormData();
+      try {
+        formData.append("file", values.product_image);
+        formData.append("upload_preset", "rdybvtpg");
+        const res = await axios.post(
+          "https://api.cloudinary.com/v1_1/deotitxt8/image/upload",
+          formData
+        );
+        dispatch(createOrder(values));
+        navigate("/header/payment");
+      } catch (error) {
+        console.log(error.message);
+      }
     },
   });
 
@@ -337,10 +359,11 @@ const OrderForm = () => {
               </div>
               <div className="relative mb-4">
                 <input
-                  type="text"
+                  type="file"
                   name="product_image"
-                  value={formik.values.product_image}
-                  onChange={formik.handleChange}
+                  onChange={(e) =>
+                    formik.setFieldValue("product_image", e.target.files[0])
+                  }
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                   placeholder="Imagen del pedido"
                 />
