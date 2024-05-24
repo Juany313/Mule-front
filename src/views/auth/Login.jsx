@@ -9,24 +9,40 @@ import { IoMdClose } from "react-icons/io";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import { Checkbox } from "@material-tailwind/react";
 import loginUser from "../../services/auth/requestLogin";
+
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Dashboard from "./Dashboard";
 
 const Login = () => {
+
+  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth0, setIsAuth0] = useState(false);
+
+  const { isAuthenticated, user } = useAuth0();
+  console.log("aca email auth", emailAuth);
+  if(isAuthenticated){
+    console.log(isAuthenticated);
+    var emailAuth = user.email;
+    setIsAuth(true)
+  }
+
   const navigate = useNavigate();
   const [showPassword, SetShowPassword] = useState(false);
   const [showEmail, setShowEmail] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
+  
 
   const { loginWithRedirect } = useAuth0();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const {getIdTokenClaims} = useAuth0();  
+  
+
+
 
   useEffect(() => {
+    
     if (localStorage.getItem("token") && isAuth === true) {
       setIsAuth(
         parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
@@ -34,18 +50,10 @@ const Login = () => {
     }
   }, [isAuth]);
 
-  /*const getToken = async () => {
-    const gettoken = await getIdTokenClaims();
-    const tokengoogle = gettoken.__raw;
-    localStorage.setItem("token", tokengoogle);
-    setIsAuth(
-      parseJwt(localStorage.getItem("token")).exp * 100
-    );
-  };*/
-
-    
-
   const parseJwt = (token) => {
+    if (!token) {
+      return null;
+    }
     const base64Url = token.split(".")[1];
     const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
     const jsonPayload = decodeURIComponent(
@@ -59,7 +67,6 @@ const Login = () => {
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
-    if (formData.email && formData.password ) {
     try {
       const token = await loginUser(formData);
       localStorage.setItem("token", token);
@@ -82,25 +89,20 @@ const Login = () => {
         text: "Correo o contraseña incorrectos",
         showConfirmButton: true,
       });
-    }} 
-    else {
-      const gettoken = await getIdTokenClaims();
-      const tokengoogle = gettoken.__raw;
-      localStorage.setItem("token", tokengoogle);
-      setIsAuth(
-        parseJwt(localStorage.getItem("token")).exp * 100
-      );
     }
   };
 
-  const infoUser = localStorage.getItem("token") && parseJwt(localStorage.getItem("token"));
+  
+  
+
+  const infoUser = parseJwt(localStorage.getItem("token"));
   // console.log(infoUser)
   
 
   return (
     <div>
-      {isAuth ? (
-        <Dashboard isAuth={isAuth} infoUser={infoUser} setIsAuth={setIsAuth} />
+      {(isAuth || isAuth0) ? (
+        <Dashboard isAuth={isAuth} isAuth0={isAuth0} infoUser={infoUser} setIsAuth={setIsAuth} />
       ) : (
         <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">
           <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-white mb-8">
