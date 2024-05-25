@@ -28,7 +28,7 @@ export const POST_USER = "AGREGAR_PEDIDO";
 // actions.js
 
 
-export const setOrderType = (orderType) => {
+const setOrderType = (orderType) => {
   return {
     type: SET_ORDER_TYPE,
     payload: orderType,
@@ -42,11 +42,28 @@ export const agregarPedido = (pedido) => {
   };
 };
 
-// formulario de registro
+/* export function postUser(data) {
+  return async function(dispatch) {
+      try {
+      const response = await axios.post('http://localhost:3000/users/register', data);
+
+      return dispatch({
+          type: POST_USER,
+          payload: response.data,
+      });
+      } catch (error) {
+      console.error(error.message);
+      }
+  };
+} */
+
 export function postUser(data) {
   return async function (dispatch) {
     try {
-      const response = await axios.post("/users/register", data);
+      const response = await axios.post(
+        "http://localhost:3000/users/register",
+        data
+      );
       dispatch({
         type: POST_USER,
         payload: response.data,
@@ -126,6 +143,7 @@ const getAllBranches = () => {
 };
 
 const createOrder = (userData) => {
+  console.log("DATOS DEL FORM:", userData);
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
@@ -158,7 +176,7 @@ const createOrder = (userData) => {
 const getUserDetail = (id) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`/users/${id}`, {
+      const response = await fetch(`http://localhost:3000/users/${id}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -168,7 +186,6 @@ const getUserDetail = (id) => {
       const data = await response.json();
 
       //    const data=users.find(usuario => usuario.id === 4)
-      console.log(data);
       return dispatch({
         type: GET_USER_DETAIL,
         payload: data,
@@ -186,27 +203,28 @@ const getOrdersByClient = (id) => {
       if (!token) {
         throw new Error("No token found");
       }
-      const response = await axios.get(`/order_shipments/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        "http://localhost:3000/order_shipments",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       return dispatch({
         type: GET_ORDERS_BY_CLIENT,
         payload: response.data,
       });
     } catch (error) {
-      //window.alert(error.message);
+      window.alert(error.message);
     }
   };
 };
 
-// Falla de seguridad?
 const getAllOrders = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("/order_shipments");
-      console.log(data);
+      const { data } = await axios.get("http://localhost:3000/order_shipments");
       return dispatch({
         type: GET_ALL_ORDERS,
         payload: data,
@@ -257,7 +275,6 @@ const orderDeclaredValue = (selectedValues) => {
     }
   };
 };
-
 
 const filterCity = (cities) => {
   return {

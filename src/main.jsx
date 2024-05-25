@@ -9,7 +9,7 @@ import { store } from "./redux/store";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <React.StrictMode>
+  
     <Provider store={store}>
       <Auth0Provider
         domain="dev-h0iezuyqkhhjz3e7.us.auth0.com"
@@ -19,5 +19,5 @@ root.render(
         <App />
       </Auth0Provider>
     </Provider>
-  </React.StrictMode>
+  
 );
