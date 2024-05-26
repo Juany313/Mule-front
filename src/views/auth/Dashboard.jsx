@@ -52,8 +52,10 @@ const Dashboard = () => {
     if (isAuthenticated) {
       handleLoginSubmitAuth();
     } 
-  }, []);
+  }, [isAuthenticated]);
 
+  
+  
 
     useEffect(()=>{
         dispatch(getUserDetail(idUser))
