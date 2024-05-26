@@ -10,7 +10,10 @@ import {
     GET_ALL_BRANCHES,
     GET_ORDERS_BY_CLIENT,
     ORDER_BY_DATE,
-    FILTER_BY_CITY
+    FILTER_BY_CITY,
+    IS_LOGGED,
+    INFO_USER_LOGGED,
+    SET_ORDER_TYPE,
 } from "../actions";
 
 let initialState = {
@@ -23,7 +26,10 @@ let initialState = {
     filtrados: [],
     allMeasures: [],
     allTypesShipments: [],
-    allBranches: []
+    allBranches: [],
+    isLogged: false,
+    infoUserLogged: {},
+    orderType: "",
 }
 
 function rootReducer(state = initialState, action) {
@@ -119,7 +125,23 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 filteredOrders: sortedOrders,
             };
+        case IS_LOGGED:
+            return {
+                ...state,
+                isLogged: action.payload,
+            };
 
+        case INFO_USER_LOGGED:
+            return {
+                ...state,
+                infoUserLogged: action.payload,
+            };
+
+        case SET_ORDER_TYPE:
+            return {
+                ...state,
+                orderType: action.payload,
+            };
 
         default:
             return state;

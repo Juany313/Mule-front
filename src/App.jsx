@@ -32,7 +32,6 @@ import History from "./views/auth/History";
 function App() {
   return (
     <Router>
-      
       <Routes>
         <Route path="/auth/profile//*" element={<AuthenticatedApp />}></Route>
         <Route path="/auth" element={<LayoutAuth />}>
