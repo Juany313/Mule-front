@@ -52,7 +52,7 @@ const Dashboard = () => {
     if (isAuthenticated) {
       handleLoginSubmitAuth();
     } 
-  }, []);
+  }, [isAuthenticated]);
 
 
     useEffect(()=>{
