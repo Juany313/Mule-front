@@ -16,30 +16,24 @@ import "./Navprofile.css";
 import LOGO from "../../assets/LogoMule.png";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setIsLogged } from "../../redux/actions";
 
-const NavProfile = ({setIsAuth}) => {
+const NavProfile = () => {
+  const dispatch = useDispatch();
   const { logout } = useAuth0();
   const [isChecked, setIsChecked] = useState(false);
-  const navigate = useNavigate();
 
   const handleCheck = () => {
     setIsChecked(!isChecked);
   };
 
   const handleLogout = () => {
-    /*if (Cookies.get("token")) {
-      Cookies.remove("token");
-      setIsAuth(false);
-      navigate("/auth/login");
-    }else{
-      logout();
-      
-    }*/
      logout({ logoutParams: { returnTo: "http://localhost:4000/header" } })
-    setIsAuth(false);
-
+     dispatch(
+      setIsLogged(false)
+    )
+    localStorage.removeItem("token");
   };
 
   return (

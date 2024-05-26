@@ -10,33 +10,17 @@ import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Swal from "sweetalert2";
 import loginUserAuth from "../../services/auth/requestAuthLogin";
-
-const parseJwt = (token) => {
-  if (!token) {
-    return null;
-  }
-  const base64Url = token.split(".")[1];
-  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-  const jsonPayload = decodeURIComponent(
-    atob(base64)
-      .split("")
-      .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-      .join("")
-  );
-  return JSON.parse(jsonPayload);
-};
+import parseJwt from "../../helpers/parseJwt";
 
 
-const Dashboard = ({setIsAuth, infoUser}) => {
+const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); 
+  const infoUserLogged = useSelector((state) => state.infoUserLogged);
   const userDetail = useSelector((state) => state.userDetail); 
-  const idUser = infoUser?.id
-    console.log('loggggg',infoUser)
-
-
-    const { isAuthenticated, user } = useAuth0();
-  const infoUserr = parseJwt(localStorage.getItem("token"));
+  const { isAuthenticated, user } = useAuth0();
+  const idUser = infoUserLogged?.id
+    console.log('loggggg',infoUserLogged)
 
   if (isAuthenticated) {
     var emailAuth = user.email;
@@ -45,7 +29,6 @@ const Dashboard = ({setIsAuth, infoUser}) => {
   }
 
   const handleLoginSubmitAuth = async () => {
-    
     try {
       const token = await loginUserAuth(emailAuth);
       localStorage.setItem("token", token);
@@ -93,7 +76,7 @@ const Dashboard = ({setIsAuth, infoUser}) => {
 
 
   return (
-    <UserLayout infoUser={isAuthenticated?infoUserr: infoUser} setIsAuth={setIsAuth}>
+    <UserLayout >
       <div className="flex flex-col h-screen pt-28">
       
         <header className="bg-#efefef shadow-md w-full py-0 px-0 text-center">
