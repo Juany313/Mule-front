@@ -551,7 +551,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { createOrder } from "../redux/actions/index";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -560,6 +560,7 @@ const OrderForm = () => {
   const [step, setStep] = useState(1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const infoUserLogged = useSelector((state) => state.infoUserLogged);
 
   const validationSchema = Yup.object().shape({
     name_claimant: Yup.string().required("Nombre es requerido"),
@@ -622,6 +623,7 @@ const OrderForm = () => {
       declared_value: "",
       product_image: null,
       pay_method: "",
+      user_id:null,
     },
     validationSchema,
     onSubmit: async ({
@@ -642,9 +644,10 @@ const OrderForm = () => {
       product_image,
       pay_method,
       typeShipmentId,
-      measureId,
+      measureId
     }) => {
       const formData = new FormData();
+      console.log("form data", formData)
       try {
         formData.append("file", product_image);
         formData.append("upload_preset", "rdybvtpg");
@@ -653,6 +656,7 @@ const OrderForm = () => {
           formData
         );
         const { url } = res.data;
+        console.log("URL:", url);
         const orderData = {
           name_claimant,
           cedula_claimant,
@@ -672,6 +676,7 @@ const OrderForm = () => {
           pay_method,
           typeShipmentId: Number(typeShipmentId),
           measureId: Number(measureId),
+          user_id: infoUserLogged.id ,
         };
         dispatch(
           createOrder({
@@ -693,6 +698,7 @@ const OrderForm = () => {
             pay_method,
             typeShipmentId: Number(typeShipmentId),
             measureId: Number(measureId),
+            user_id: infoUserLogged.id,
           })
         );
         navigate("/header/payment", { state: { orderData } });
