@@ -37,16 +37,11 @@ const Login = () => {
 
   useEffect(() => {
     const checkToken = () => {
-      console.log('Logueado ?',isLogged);
       if (localStorage.getItem("token") && (isLogged === true || isAuthenticated === true))  {
         dispatch(setIsLogged(
           parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
         ));
-        console.log("googleAuth", isAuthenticated);
         const emailAuth = infoUserLogged.email;
-        console.log("Este Email se acaba de loguear", emailAuth);
-        console.log("Este es el token", localStorage.getItem("token"));
-        console.log("Este es el token decodificado", infoUserLogged);
         navigate("dashboard");
       }
       if (localStorage.getItem("token") && isLogged === false) {
