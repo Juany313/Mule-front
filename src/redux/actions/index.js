@@ -13,6 +13,10 @@ export const GET_ALL_BRANCHES = "GET_ALL_BRANCHES";
 export const GET_ORDERS_BY_CLIENT = "GET_ORDERS_BY_CLIENT";
 export const FILTER_BY_CITY = "FILTER_BY_CITY";
 export const ORDER_BY_DATE = "ORDER_BY_DATE";
+export const IS_LOGGED = "IS_LOGGED";
+export const INFO_USER_LOGGED = "INFO_USER_LOGGED";
+export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
+export const SET_ORDER_TYPE = "SET_ORDER_TYPE";
 
 /* Juanyyyy */
 export const AGREGAR_PEDIDO = "AGREGAR_PEDIDO";
@@ -129,6 +133,7 @@ const getAllBranches = () => {
   };
 };
 
+//Falla de seguridad
 const createOrder = (userData) => {
   console.log("DATOS DEL FORM:", userData);
   return async (dispatch) => {
@@ -276,6 +281,29 @@ const orderDate = (date) => {
   };
 };
 
+const setOrderType = (orderType) => {
+  return {
+    type: SET_ORDER_TYPE,
+    payload: orderType,
+  };
+};
+
+const setIsLogged = (isLogged) => {
+  return {
+    type: "IS_LOGGED",
+    payload: isLogged,
+  };
+}
+
+
+const setInfoUserLogged = (user) => {
+  return {
+    type: INFO_USER_LOGGED,
+    payload: user,
+  };
+}
+
+
 export {
   getUserDetail,
   getAllUsers,
@@ -289,4 +317,7 @@ export {
   getOrdersByClient,
   filterCity,
   orderDate,
+  setIsLogged,
+  setInfoUserLogged,
+  setOrderType,
 };

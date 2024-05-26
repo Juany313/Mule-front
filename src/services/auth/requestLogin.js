@@ -11,7 +11,6 @@ export default async function loginUser(formData) {
 
     if (response.data && response.data.token) {
       const token = response.data.token;
-      console.log("Token:", token);
       return token;
     } else {
       throw new Error("El servidor no devolvió un token de autenticación.");
