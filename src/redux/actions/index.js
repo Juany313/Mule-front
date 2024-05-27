@@ -135,7 +135,6 @@ const getAllBranches = () => {
 
 //Falla de seguridad
 const createOrder = (userData) => {
-  console.log("DATOS DEL FORM:", userData);
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
@@ -152,7 +151,6 @@ const createOrder = (userData) => {
         icon: "success",
         confirmButtonText: "Aceptar",
       });
-      console.log("INFO:", data); // Mueve la impresión de la información dentro del bloque 'try'
     } catch (error) {
       Swal.fire({
         title: "Error!",
