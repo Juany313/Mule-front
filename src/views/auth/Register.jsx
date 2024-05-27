@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import validate from "../../utils"
@@ -60,13 +61,14 @@ const Register = () => {
       return; // No se envía la solicitud si hay errores presentes
     }
     const result = await dispatch(postUser(userData));
+    console.log("result.success", result);
     if (result.success) {
       localStorage.setItem("email", userData.email);
       navigate("/auth/");
       Swal.fire({
         icon: "success",
         title: "Usuario creado con éxito",
-        text: "Hemos enviado un correo de confirmación a tu dirección de correo electrónico",
+        text: "Hemos enviado un correo de confirmación",
         showConfirmButton: true,
       });
 

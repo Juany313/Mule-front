@@ -8,7 +8,7 @@ const Payment = () => {
   const location = useLocation();
   const { orderData } = location.state;
 
-  initMercadoPago("TEST-fba43614-ef7f-45c0-8443-fc699301ff2c", {
+  initMercadoPago("APP_USR-8441c4d2-2057-46ca-8e1b-9a3328ed76bb", {
     locale: "es-AR",
   });
 
@@ -112,7 +112,7 @@ const Payment = () => {
       )}
       <div className="p-4">
         <button
-          onClick={() => handlePay(1, "Pieza", 1, 10)}
+          onClick={() => handlePay()}
           className="bg-s300 text-black uppercase font-bold text-sm w-full py-3 px-4 rounded-lg hover:text-gray-100 transition-colors"
         >
           Pagar
