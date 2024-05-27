@@ -44,12 +44,12 @@ const Dashboard = () => {
       const token = await loginUserAuth(emailAuth, nameAuth);
       localStorage.setItem("token", token);
       dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
-      Swal.fire({
-        icon: "success",
-        title: "Inicio de sesión exitoso",
-        text: "Bienvenido a la plataforma",
-        showConfirmButton: true,
-      });
+      // Swal.fire({
+      //   icon: "success",
+      //   title: "Inicio de sesión exitoso",
+      //   text: "Bienvenido a la plataforma",
+      //   showConfirmButton: true,
+      // });
       dispatch(setIsLogged(true));
     } catch (error) {
       Swal.fire({
