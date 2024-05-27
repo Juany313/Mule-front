@@ -68,13 +68,13 @@ const Dashboard = () => {
 
 
   // Funciones para manejar los clics en cada tarjeta
-  // const handleQuote = () => {
-  //   navigate("/cotizar-paquete");
-  // };
+   const handleQuote = () => {
+     navigate("/cotizar-paquete");
+   };
 
-  // const handleTrack = () => {
-  //   navigate("/rastrear-pedido");
-  // };
+   const handleTrack = () => {
+     navigate("/rastrear-pedido");
+  };
 
   const handleSend = () => {
     navigate("/header/pedido");
@@ -97,7 +97,7 @@ const Dashboard = () => {
           <h2 className="text-xl font-semibold text-gray-800"></h2>
 
           <div className="p-0 grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* <ActionButton
+             <ActionButton
               icon={<FaBox size="3rem" />}
               title="Cotizar Paquete"
               onClick={handleQuote}
@@ -106,7 +106,7 @@ const Dashboard = () => {
               icon={<FaSearch size="3rem" />}
               title="Rastrear Pedido"
               onClick={handleTrack}
-            /> */}
+            /> 
             <ActionButton
               icon={<FaPaperPlane size="3rem" />}
               title="Enviar Paquete"

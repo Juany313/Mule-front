@@ -89,6 +89,16 @@ const Register = () => {
         Crear <span className="text-primary">cuenta</span>
       </h1>
       <form className="mb-8  " onSubmit={handleSubmit}>
+        <button
+          className="flex items-center justify-center py-3 px-4 gap-4 bg-p300  w-full rounded-full mb-8
+        text-gray-100"
+        >
+          <img
+            src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png"
+            className="w-4 h-4"
+          />
+          Registrate con google
+        </button>
 
         <div className="mb-4">
             <div className="relative ">
