@@ -77,7 +77,6 @@ const getAllUsers = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL_BASE}/users`);
-      // console.log(data)
       return dispatch({
         type: GET_ALL_USERS,
         payload: data,
@@ -92,7 +91,6 @@ const getAllMeasures = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL_BASE}/measures`);
-      // console.log(data)
       return dispatch({
         type: GET_ALL_MEASURES,
         payload: data,
@@ -107,7 +105,6 @@ const getTypeShipments = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL_BASE}/type_shipments`);
-      // console.log(data)
       return dispatch({
         type: GET_TYPES_SHIPMENTS,
         payload: data,
@@ -122,7 +119,6 @@ const getAllBranches = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL_BASE}/branches`);
-      // console.log(data)
       return dispatch({
         type: GET_ALL_BRANCHES,
         payload: data,
@@ -135,7 +131,6 @@ const getAllBranches = () => {
 
 //Falla de seguridad
 const createOrder = (userData) => {
-  console.log("DATOS DEL FORM:", userData);
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
@@ -152,8 +147,7 @@ const createOrder = (userData) => {
         icon: "success",
         confirmButtonText: "Aceptar",
       });
-      console.log("INFO:", data); // Mueve la impresión de la información dentro del bloque 'try'
-    } catch (error) {
+      } catch (error) {
       Swal.fire({
         title: "Error!",
         text: "Error al crear el pedido",
@@ -255,7 +249,6 @@ const orderDeclaredValue = (selectedValues) => {
 
       // Realizar la solicitud GET con la URL construida
       const { data } = await axios.get(url);
-      console.log("estoy en action", data);
       // Despachar la acción con los datos obtenidos
       return dispatch({
         type: FILTER_VALUES,

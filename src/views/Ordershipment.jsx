@@ -30,7 +30,6 @@ const Ordershipment = () => {
   };
 
   const manejarFiltrarClick = () => {
-    console.log("FILTROS", estado);
     const pedido = Object.keys(estado).reduce((acc, key) => {
       if (estado[key] !== "") {
         acc[key] = estado[key];
@@ -42,7 +41,7 @@ const Ordershipment = () => {
       dispatch(agregarPedido(pedido));
       setFiltrosActivos(true); // Activar los filtros
     } else {
-      console.log("No hay propiedades para agregar al pedido.");
+      console.error("No hay propiedades para agregar al pedido.");
     }
   };
 

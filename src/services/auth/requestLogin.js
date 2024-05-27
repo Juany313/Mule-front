@@ -1,13 +1,11 @@
 import axios from "axios";
 
 export default async function loginUser(formData) {
-  console.log("Form data:", formData);
   try {
     const response = await axios.post(
       "http://localhost:3000/users/login",
       formData
     );
-    console.log("Response data:", response.data);
 
     if (response.data && response.data.token) {
       const token = response.data.token;
