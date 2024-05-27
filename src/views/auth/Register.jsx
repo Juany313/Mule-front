@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import validate from "../../utils"
@@ -60,13 +61,14 @@ const Register = () => {
       return; // No se envía la solicitud si hay errores presentes
     }
     const result = await dispatch(postUser(userData));
+    console.log("result.success", result);
     if (result.success) {
       localStorage.setItem("email", userData.email);
       navigate("/auth/");
       Swal.fire({
         icon: "success",
         title: "Usuario creado con éxito",
-        text: "Hemos enviado un correo de confirmación a tu dirección de correo electrónico",
+        text: "Hemos enviado un correo de confirmación",
         showConfirmButton: true,
       });
 
@@ -89,16 +91,6 @@ const Register = () => {
         Crear <span className="text-primary">cuenta</span>
       </h1>
       <form className="mb-8  " onSubmit={handleSubmit}>
-        <button
-          className="flex items-center justify-center py-3 px-4 gap-4 bg-p300  w-full rounded-full mb-8
-        text-gray-100"
-        >
-          <img
-            src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png"
-            className="w-4 h-4"
-          />
-          Registrate con google
-        </button>
 
         <div className="mb-4">
             <div className="relative ">
