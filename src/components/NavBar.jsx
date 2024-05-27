@@ -120,7 +120,6 @@ const NavBar = () => {
   };
 
   return (
-
     <nav
       className={`bg-p300 py-4 pl-4 pr-8 ${
         isOpen ? "fixed top-0 left-0 w-full" : ""
@@ -197,7 +196,7 @@ const NavBar = () => {
               </Link>
             </span>}
             { isLogged && <NavLink
-              to="auth/dashboard/"
+              to="../auth/dashboard"
               className="text-white hover:text-s300 p-2"
               activeClassName="text-blue-500"
               onClick={closeMenu}
