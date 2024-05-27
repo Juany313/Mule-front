@@ -7,7 +7,6 @@ const Payment = () => {
   const [preferenceId, setPreferenceId] = useState(null);
   const location = useLocation();
   const { orderData } = location.state;
-  console.log("DATA:", orderData);
 
   initMercadoPago("TEST-fba43614-ef7f-45c0-8443-fc699301ff2c", {
     locale: "es-AR",
@@ -28,7 +27,7 @@ const Payment = () => {
             ? "Puerta a Puerta"
             : null,
         quantity: 1,
-        unit_price: 30000,
+        unit_price: orderData.cost,
         // orderData.measureId === 1
         //   ? 15000
         //   : orderData.measureId === 2
