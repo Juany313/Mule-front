@@ -2,11 +2,15 @@ import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLogged } from "../redux/actions/index";
 import { useNavigate } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 const Logout = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { logout } = useAuth0();
     const logoutSuccess = () => {
+        localStorage.removeItem("token");
         console.log("Logout success");
         dispatch(setIsLogged(false));
         navigate("/header");

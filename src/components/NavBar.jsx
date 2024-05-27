@@ -196,14 +196,14 @@ const NavBar = () => {
                 Pedidos
               </Link>
             </span>
-            <NavLink
+            { isLogged && <NavLink
               to="pedido"
               className="text-white hover:text-s300 p-2"
               activeClassName="text-blue-500"
               onClick={closeMenu}
             >
               Iniciar Pedido
-            </NavLink>
+            </NavLink>}
 
             {!isLogged ? <NavLink
               to="/auth/"
