@@ -20,6 +20,7 @@ const Register = () => {
   const dispatch = useDispatch();
 
   /* Estados locales */
+  const [submitButtonClicked, setSubmitButtonClicked] = useState(false);
   const [showPassword, SetShowPassword] = useState(false);
   const [userData, setUserData] = useState({
     name: "",
@@ -51,7 +52,12 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setSubmitButtonClicked(true);
+    if (errors.name || errors.email || errors.password) {
+      return; // No se envía la solicitud si hay errores presentes
+    }
     const result = await dispatch(postUser(userData));
+    console.log("result.success", result);
     if (result.success) {
       alert("USUARIO CREADO CON EXITO!!");
     } else {
@@ -81,7 +87,7 @@ const Register = () => {
                 placeholder="Nombre"
               />
             </div>
-              {errors.name && <span className="text-red-800 mb-4">{errors.name}</span>}
+              {submitButtonClicked && errors.name && <span className="text-red-800 mb-4">{errors.name}</span>}
         </div>
 
         <div className="mb-4">
@@ -96,33 +102,34 @@ const Register = () => {
                 placeholder="Correo electrónico"
               />
             </div>
-              {errors.email && <span className="text-red-800 mb-4">{errors.email}</span>}
+              {submitButtonClicked && errors.email && <span className="text-red-800 mb-4">{errors.email}</span>}
         </div>
- 
-        <div className="relative mb-2">
-          <RiLock2Line className="absolute top-1/2 -translate-y-1/2 left-2 text-black" />
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            value={userData.password}
-            onChange={handleChange}
-            className="py-3 pl-8 pr-8  w-full outline-none rounded-lg focus:border focus:border-black"
-            placeholder="Contraseña"
-          />
-          {errors.password && <span className="text-red-800 mb-4">{errors.password}</span>}
-          {showPassword ? (
-            <LuEye
-              onClick={() => SetShowPassword(!showPassword)}
-              className="absolute top-1/2 -translate-y-1/2 right-2 hover:cursor-pointer text-black"
+        <div className=" mb-2">
+          <div className="relative">
+            <RiLock2Line className="absolute top-1/2 -translate-y-1/2 left-2 text-black" />
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={userData.password}
+              onChange={handleChange}
+              className="py-3 pl-8 pr-8  w-full outline-none rounded-lg focus:border focus:border-black"
+              placeholder="Contraseña"
             />
-          ) : (
-            <LuEyeOff
-              onClick={() => SetShowPassword(!showPassword)}
-              className="absolute top-1/2 -translate-y-1/2 right-2 hover:cursor-pointer text-black"
-            />
-          )}
+            
+            {showPassword ? (
+              <LuEye
+                onClick={() => SetShowPassword(!showPassword)}
+                className="absolute top-1/2 -translate-y-1/2 right-2 hover:cursor-pointer text-black"
+              />
+            ) : (
+              <LuEyeOff
+                onClick={() => SetShowPassword(!showPassword)}
+                className="absolute top-1/2 -translate-y-1/2 right-2 hover:cursor-pointer text-black"
+              />
+            )}
+          </div>
+          {submitButtonClicked && errors.password && <span className="text-red-800 mb-4">{errors.password}</span>}
         </div>
- 
   
         <div>
           <button
