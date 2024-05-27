@@ -24,12 +24,15 @@ const Dashboard = () => {
 
   if (isAuthenticated) {
     var emailAuth = user.email;
+    var nameAuth = user.nickname;
     console.log("aca emaaaill",emailAuth);
+    console.log("aca emaaaill",nameAuth);
     console.log(isAuthenticated);
   }
 
   const handleLoginSubmitAuth = async () => {
     try {
+      // modificar para utilizar nameAuth
       const token = await loginUserAuth(emailAuth);
       localStorage.setItem("token", token);
       Swal.fire({
@@ -52,8 +55,10 @@ const Dashboard = () => {
     if (isAuthenticated) {
       handleLoginSubmitAuth();
     } 
-  }, []);
+  }, [isAuthenticated]);
 
+  
+  
 
     useEffect(()=>{
         dispatch(getUserDetail(idUser))
