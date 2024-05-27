@@ -2,41 +2,52 @@ import React from 'react'
 import UserLayout from '../profile/UserLayout'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getOrdersByClient, orderDate, filterCity } from '../../redux/actions';
+import { getOrdersByClient, orderDate, filterCity, getAllOrders, getOrderById } from '../../redux/actions';
+import { setInfoUserLogged } from '../../redux/actions'
 
 const History = () => {
   const dispatch = useDispatch();
   const allOrders = useSelector((state) => state.allOrders)
+  const orderDetail = useSelector((state) => state.orderDetail);
+  // const userId = userDetail.id
   const [currentPage, setCurrentPage] = useState(1)
   const ordersPerPage = 4;
-  const filteredOrders = useSelector((state) => state.filteredOrders);
+  // const filteredOrders = useSelector((state) => state.filteredOrders);
+  const infoUserLogged = useSelector((state) => state.infoUserLogged)
 
-  // const [estado, setEstado] = useState({
-  //   city_transmiter: "",
-  //   city_receiver: "",
-  //   declared_value: "",
-  //   pay_method: "",
-  // });
+  console.log('history', orderDetail)
+
+
+  const [filters, setFilters] = useState({
+    city_transmiter: '',
+    city_receiver: '',
+  })
+
 
   useEffect(() => {
-    dispatch(getOrdersByClient())
+    dispatch(getAllOrders())
   }, [dispatch])
 
-  // useEffect(() => {
-  //   orderDate(allOrders);
-  // }, [allOrders]);
+  //orden por fecha
+  // const handleSortChange = (e) => {
+  //   const order = e.target.value;
+  //   dispatch(orderDate(order));
+  // };
 
-  const handleSortChange = (e) => {
-    const order = e.target.value;
-    dispatch(orderDate(order));
+  //filtro por ciudad
+  const handleCityFilter = (e) => {
+    const { name, value } = e.target;
+    setFilters({
+      ...filters,
+      [name]: value,
+    });
   };
 
-  const handleCityFilter = () => {
-    const originCity = document.getElementById('city_transmiter').value;
-    const destinationCity = document.getElementById('city_receiver').value;
-  
-    dispatch(filterCity({ originCity, destinationCity }));
-  };
+  const filteredOrders = allOrders.filter((order) => {
+    const filterByTransmiter = filters.city_transmiter ? order.city_transmiter === filters.city_transmiter : true;
+    const filterByReceiver = filters.city_receiver ? order.city_receiver === filters.city_receiver : true;
+    return filterByTransmiter && filterByReceiver;
+  });
 
 
   // Calcular el índice inicial y final de los usuarios en la página actual
@@ -57,7 +68,6 @@ const History = () => {
 
   //ordershipments del usuario (el id del usuario está en el token)
   //mapeo todos los pedidos del usuario y filtro
-
   //filtros (de forma local)
 
 
@@ -73,9 +83,11 @@ const History = () => {
             <div className="my-2 flex sm:flex-row flex-col">
               <div className="flex flex-row mb-1 sm:mb-0">
 
+
                 <div className="relative">
-                  <select  id="city_transmiter" className="h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="city_transmiter"
-                    value={city_transmiter}
+                  <select id="city_transmiter" className="h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    name="city_transmiter"
+                    value={filters.city_transmiter}
                     onChange={handleCityFilter}>
                     <option value=""> Ciudad de origen</option>
                     <option value="santa fe">Santa Fe</option>
@@ -92,8 +104,9 @@ const History = () => {
                 </div>
 
                 <div className="relative">
-                  <select id= "city_receiver" className="h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="city_transmiter"
-                    value={city_receiver}
+                  <select id="city_receiver" className="h-full rounded-r border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    name="city_receiver"
+                    value={filters.city_receiver}
                     onChange={handleCityFilter}>
                     <option value=""> Ciudad de origen</option>
                     <option value="santa fe">Santa Fe</option>
@@ -109,13 +122,15 @@ const History = () => {
                   </div>
                 </div>
 
+
+
                 <div className="relative">
-                  <select className="h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500"
+                  {/* <select className="h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500"
                     onChange={handleSortChange}>
                     <option value="">Ordenar por fecha</option>
                     <option value="asc">Orden Ascendente</option>
                     <option value="desc">Orden Descendente</option>
-                  </select>
+                  </select> */}
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                       <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import validate from "../../utils"
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 
 /* actions */
@@ -15,6 +17,7 @@ import { TbUserSquare } from "react-icons/tb";
 import {useDispatch} from "react-redux";
 
 const Register = () => {
+  const navigate = useNavigate();
 
   /* Estado global */
   const dispatch = useDispatch();
@@ -57,11 +60,23 @@ const Register = () => {
       return; // No se envía la solicitud si hay errores presentes
     }
     const result = await dispatch(postUser(userData));
-    console.log("result.success", result);
     if (result.success) {
-      alert("USUARIO CREADO CON EXITO!!");
+      localStorage.setItem("email", userData.email);
+      navigate("/auth/");
+      Swal.fire({
+        icon: "success",
+        title: "Usuario creado con éxito",
+        text: "Hemos enviado un correo de confirmación a tu dirección de correo electrónico",
+        showConfirmButton: true,
+      });
+
     } else {
-      alert("Ocurrió un error al crear el usuario");
+      Swal.fire({
+        icon: "error",
+        title: "Error al crear usuario",
+        text: "Por favor, intenta nuevamente",
+        showConfirmButton: true,
+      });
     }
   };
   
@@ -74,6 +89,16 @@ const Register = () => {
         Crear <span className="text-primary">cuenta</span>
       </h1>
       <form className="mb-8  " onSubmit={handleSubmit}>
+        <button
+          className="flex items-center justify-center py-3 px-4 gap-4 bg-p300  w-full rounded-full mb-8
+        text-gray-100"
+        >
+          <img
+            src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png"
+            className="w-4 h-4"
+          />
+          Registrate con google
+        </button>
 
         <div className="mb-4">
             <div className="relative ">
