@@ -24,24 +24,23 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLogged = useSelector((state) => state.isLogged);
-  const infoUserLogged = useSelector((state) => state.infoUserLogged);
-  const [isAuth0, setIsAuth0] = useState(false);
   const [showPassword, SetShowPassword] = useState(false);
   const [showEmail, setShowEmail] = useState(false);
   const { isAuthenticated, user } = useAuth0();
+  const { getIdTokenClaims } = useAuth0();
   const { loginWithRedirect } = useAuth0();
   const [formData, setFormData] = useState({
     email: localStorage.getItem("email") || "",
     password: "",
   });
 
-
+  // Función que verifica y cambia el estado de la sesión
   const checkToken = () => {
     if (localStorage.getItem("token") && (isLogged === true || isAuthenticated === true))  {
       dispatch(setIsLogged(
         parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
       ));
-      const emailAuth = infoUserLogged.email;
+      //const emailAuth = infoUserLogged.email;
       navigate("dashboard");
     }
     if (localStorage.getItem("token") && isLogged === false) {
@@ -51,7 +50,12 @@ const Login = () => {
     }
   };
 
+
+
+
+  //Función que escucha el cambio del estado autenticación
   useEffect(() => {
+    
     // Verificar la validez del token inmediatamente
     checkToken();
     // Verificar la validez del token cada minuto
@@ -60,6 +64,8 @@ const Login = () => {
     return () => clearInterval(intervalId);
   }, [isLogged, isAuthenticated]);
 
+
+  // Submit de inicio de sesión
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -68,17 +74,18 @@ const Login = () => {
       dispatch(setInfoUserLogged(
         localStorage.getItem("token") && parseJwt(localStorage.getItem("token"))
       ));
-      Swal.fire({
-        icon: "success",
-        title: "Inicio de sesión exitoso",
-        text: "Bienvenido a la plataforma",
-        showConfirmButton: true,
-      });
-      
+        Swal.fire({
+          icon: "success",
+          title: "Inicio de sesión exitoso",
+          text: "Bienvenido a la plataforma",
+          showConfirmButton: true,
+        });
+        
       dispatch(setIsLogged(
         parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
       ));
     } catch (error) {
+      console.error("Error al iniciar sesión:", error);
       Swal.fire({
         icon: "error",
         title: "Error",

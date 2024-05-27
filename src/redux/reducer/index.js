@@ -14,6 +14,7 @@ import {
     IS_LOGGED,
     INFO_USER_LOGGED,
     SET_ORDER_TYPE,
+    UPDATE_USER_DETAIL
 } from "../actions";
 
 let initialState = {
@@ -125,6 +126,7 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 filteredOrders: sortedOrders,
             };
+
         case IS_LOGGED:
             return {
                 ...state,
@@ -142,6 +144,13 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 orderType: action.payload,
             };
+
+        case UPDATE_USER_DETAIL:
+            return {
+                ...state,
+                userDetail: action.payload
+            }
+
 
         default:
             return state;
