@@ -17,16 +17,21 @@ export const IS_LOGGED = "IS_LOGGED";
 export const INFO_USER_LOGGED = "INFO_USER_LOGGED";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
 export const SET_ORDER_TYPE = "SET_ORDER_TYPE";
-
+export const UPDATE_USER_DETAIL = "UPDATE_USER_DETAIL"
 /* Juanyyyy */
 export const AGREGAR_PEDIDO = "AGREGAR_PEDIDO";
 export const POST_USER = "AGREGAR_PEDIDO";
 
-const URL_BASE = "http://localhost:3000";
-
-/* Juanyyyyy */
+// const URL_BASE = "http://localhost:3000";
 
 // actions.js
+
+export const setOrderType = (orderType) => {
+  return {
+    type: SET_ORDER_TYPE,
+    payload: orderType,
+  };
+};
 
 export const agregarPedido = (pedido) => {
   return {
@@ -34,6 +39,7 @@ export const agregarPedido = (pedido) => {
     payload: pedido,
   };
 };
+
 
 /* export function postUser(data) {
   return async function(dispatch) {
@@ -50,13 +56,11 @@ export const agregarPedido = (pedido) => {
   };
 } */
 
+//formulario de registro
 export function postUser(data) {
-  return async function (dispatch) {
+  return async function(dispatch) {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/users/register",
-        data
-      );
+      const response = await axios.post('http://localhost:3000/users/register', data);
       dispatch({
         type: POST_USER,
         payload: response.data,
@@ -71,8 +75,8 @@ export function postUser(data) {
   };
 }
 
-/* Juanyyyyy */
 
+//Permiso provisorio para que el usuario pueda ver los usuarios
 const getAllUsers = () => {
   return async (dispatch) => {
     try {
@@ -83,7 +87,7 @@ const getAllUsers = () => {
         payload: data,
       });
     } catch (error) {
-      window.alert(error.message);
+      // window.alert(error.message);
     }
   };
 };
@@ -98,7 +102,7 @@ const getAllMeasures = () => {
         payload: data,
       });
     } catch (error) {
-      window.alert(error.message);
+      // window.alert(error.message);
     }
   };
 };
@@ -113,7 +117,7 @@ const getTypeShipments = () => {
         payload: data,
       });
     } catch (error) {
-      window.alert(error.message);
+      // window.alert(error.message);
     }
   };
 };
@@ -128,14 +132,12 @@ const getAllBranches = () => {
         payload: data,
       });
     } catch (error) {
-      window.alert(error.message);
+      // window.alert(error.message);
     }
   };
 };
 
-//Falla de seguridad
 const createOrder = (userData) => {
-  console.log("DATOS DEL FORM:", userData);
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
@@ -164,68 +166,75 @@ const createOrder = (userData) => {
   };
 };
 
+//Bien de Seguridad, incluye el token, bearer configurado en back ?
 const getUserDetail = (id) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/users/${id}`, {
+      const response = await fetch(`http://localhost:3000/users/${id}`,{
         method: "GET",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
-      });
+    });
 
-      const data = await response.json();
+    const data = await response.json();
 
       //    const data=users.find(usuario => usuario.id === 4)
+      console.log(data);
       return dispatch({
         type: GET_USER_DETAIL,
         payload: data,
       });
     } catch (error) {
-      window.alert(error.message);
+      // window.alert(error.message);
     }
   };
 };
 
-const getOrdersByClient = () => {
-  return async (dispatch) => {
+//Bien de Seguridad, incluye el token, bearer configurado en back ?
+const getOrdersByClient = (id) =>{
+  return async (dispatch)=>{
     try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        throw new Error("No token found");
-      }
-      const response = await axios.get(
-        "http://localhost:3000/order_shipments",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      return dispatch({
+      // const token = localStorage.getItem('token')
+      // if (!token) {
+      //   throw new Error('No token found');
+      // };
+      const response = await axios.get (`http://localhost:3000/order_shipments/${id}`
+      // , {
+      //   headers: {
+      //     "Authorization": `Bearer ${token}`
+      //   }
+      // }
+    )
+      return dispatch ({
         type: GET_ORDERS_BY_CLIENT,
-        payload: response.data,
-      });
-    } catch (error) {
-      window.alert(error.message);
+        payload: response.data
+      })
+    }catch (error) {
+      // window.alert(error.message);
     }
-  };
-};
+  }
 
+}
+
+// Falla de seguridad?
 const getAllOrders = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get("http://localhost:3000/order_shipments");
+      console.log('X', data);
       return dispatch({
         type: GET_ALL_ORDERS,
         payload: data,
       });
     } catch (error) {
-      window.alert(error.message);
+      // window.alert(error.message);
     }
   };
 };
 
+
+/* Falla de seguridad */
 const getOrderById = (id) => {
   return async (dispatch) => {
     try {
@@ -238,11 +247,12 @@ const getOrderById = (id) => {
         payload: data,
       });
     } catch (error) {
-      window.alert("No existe una orden de pedido con ese número");
+      // window.alert("No existe una orden de pedido con ese número");
     }
   };
 };
 
+// Falla de seguridad
 const orderDeclaredValue = (selectedValues) => {
   return async (dispatch) => {
     try {
@@ -267,34 +277,26 @@ const orderDeclaredValue = (selectedValues) => {
   };
 };
 
-const filterCity = (cities) => {
+const filterCity = (cities)=>{
   return {
     type: FILTER_BY_CITY,
-    payload: cities,
-  };
-};
+    payload: cities
+  }
+}
 
-const orderDate = (date) => {
+const orderDate = (date)=>{
   return {
     type: ORDER_BY_DATE,
-    payload: date,
-  };
-};
-
-const setOrderType = (orderType) => {
-  return {
-    type: SET_ORDER_TYPE,
-    payload: orderType,
-  };
-};
+    payload: date
+  }
+}
 
 const setIsLogged = (isLogged) => {
   return {
-    type: "IS_LOGGED",
+    type: IS_LOGGED,
     payload: isLogged,
   };
 }
-
 
 const setInfoUserLogged = (user) => {
   return {
@@ -303,6 +305,21 @@ const setInfoUserLogged = (user) => {
   };
 }
 
+const updateUserDetail = (id, infoUser)=>{
+  return async (dispatch)=>{
+    try {
+      const { data } = await axios.put(`http://localhost:3000/users/profile/${id}`, infoUser
+      );
+      return dispatch({
+        type: UPDATE_USER_DETAIL,
+        payload: data,
+      });
+      
+    } catch (error) {
+      
+    }
+  }
+}
 
 export {
   getUserDetail,
@@ -319,5 +336,5 @@ export {
   orderDate,
   setIsLogged,
   setInfoUserLogged,
-  setOrderType,
+  updateUserDetail
 };
