@@ -98,14 +98,18 @@
 // export default NavBar;
 
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
+import Logout from "./Logout";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, user } = useAuth0();
+  const isLogged = useSelector((state) => state.isLogged);
+  console.log(isLogged);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -201,13 +205,13 @@ const NavBar = () => {
               Iniciar Pedido
             </NavLink>
 
-            <NavLink
+            {!isLogged ? <NavLink
               to="/auth/"
               className="text-primary font-normal hover:text-white transition-colors p-2"
               onClick={closeMenu}
             >
-              <button className="bg-s300 py-2 px-4 rounded">Ingresar</button>
-            </NavLink>
+              <button className="bg-s300 py-2 px-4 rounded">Iniciar Sesion</button>
+            </NavLink>: <Logout />}
           </div>
         </div>
       </div>
