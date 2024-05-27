@@ -31,25 +31,27 @@ const Login = () => {
   const { isAuthenticated, user } = useAuth0();
   const { loginWithRedirect } = useAuth0();
   const [formData, setFormData] = useState({
-    email: "",
+    email: localStorage.getItem("email") || "",
     password: "",
   });
 
+
+  const checkToken = () => {
+    if (localStorage.getItem("token") && (isLogged === true || isAuthenticated === true))  {
+      dispatch(setIsLogged(
+        parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
+      ));
+      const emailAuth = infoUserLogged.email;
+      navigate("dashboard");
+    }
+    if (localStorage.getItem("token") && isLogged === false) {
+      dispatch(setIsLogged(
+        false
+      ));
+    }
+  };
+
   useEffect(() => {
-    const checkToken = () => {
-      if (localStorage.getItem("token") && (isLogged === true || isAuthenticated === true))  {
-        dispatch(setIsLogged(
-          parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
-        ));
-        const emailAuth = infoUserLogged.email;
-        navigate("dashboard");
-      }
-      if (localStorage.getItem("token") && isLogged === false) {
-        dispatch(setIsLogged(
-          false
-        ));
-      }
-    };
     // Verificar la validez del token inmediatamente
     checkToken();
     // Verificar la validez del token cada minuto
@@ -75,7 +77,6 @@ const Login = () => {
       
       dispatch(setIsLogged(
         parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
-
       ));
     } catch (error) {
       Swal.fire({
