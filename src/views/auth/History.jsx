@@ -68,7 +68,6 @@ const History = () => {
 
   //ordershipments del usuario (el id del usuario está en el token)
   //mapeo todos los pedidos del usuario y filtro
-
   //filtros (de forma local)
 
 
@@ -105,7 +104,7 @@ const History = () => {
                 </div>
 
                 <div className="relative">
-                  <select id="city_receiver" className="h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  <select id="city_receiver" className="h-full rounded-r border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     name="city_receiver"
                     value={filters.city_receiver}
                     onChange={handleCityFilter}>

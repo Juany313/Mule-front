@@ -196,7 +196,7 @@ const NavBar = () => {
               </Link>
             </span>}
             { isLogged && <NavLink
-              to="auth/dashboard/"
+              to="../auth/dashboard"
               className="text-white hover:text-s300 p-2"
               activeClassName="text-blue-500"
               onClick={closeMenu}

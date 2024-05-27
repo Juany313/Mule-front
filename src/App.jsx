@@ -28,12 +28,11 @@ import Dashboard from "./views/auth/Dashboard";
 import AuthenticatedApp from "./views/profile/AuthenticatedApp";
 import Shipments from "./views/auth/Shipments";
 import History from "./views/auth/History";
-import Products from "./views/Products";
+import ConfirmEmail from "./views/auth/ConfirmEmail";
 
 function App() {
   return (
     <Router>
-      <Navigation />
       <Routes>
         {/* <Route path="/auth/profile//*" element={<AuthenticatedApp />}></Route> */}
         <Route path="/auth" element={<LayoutAuth />}>
@@ -44,6 +43,7 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="shipments" element={<Shipments />} />
           <Route path="history" element={<History />} />
+          <Route path="emailConfirm" element={<ConfirmEmail />} />
 
         </Route>
         <Route path="/" element={<Landing />} />
@@ -55,7 +55,8 @@ function App() {
           <Route path="pedido" element={<OrderForm />} />
           <Route path="ordershipment/detail/:id" element={<Detail />} />
           <Route path="payment" element={<Payment />} />
-          <Route path="prueba" element={<Products />} />
+          {/* <Route path="prueba" element={<Products />} /> */}
+
         </Route>
         <Route path="*" element={<LayoutError />} />
       </Routes>
@@ -63,26 +64,6 @@ function App() {
   );
 }
 
-function Navigation() {
-  const navigate = useNavigate();
-  const { isAuthenticated } = useAuth0();
-  const [authenticated, setAuthenticated] = React.useState(false);
-
-  useEffect(() => {
-    const token = Cookies.get("token");
-    if (token) {
-      setAuthenticated(true);
-      navigate("/auth/dashboard");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/auth/profile");
-    }
-  }, [isAuthenticated, navigate]);
-
-  return null; // This component does not render anything
-}
 
 export default App;
+

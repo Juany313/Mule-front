@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import UserLayout from "../profile/UserLayout";
 import Header from "../../assets/Header.png";
 import { FaBox, FaSearch, FaPaperPlane } from "react-icons/fa";
@@ -7,19 +7,20 @@ import { useNavigate } from "react-router-dom";
 import { getUserDetail } from "../../redux/actions";
 import { useEffect } from "react";
 //import { useSelect } from "@material-tailwind/react";
-import Login from "../auth/Login";
-import { setIsLogged } from "../../redux/actions";
+import { useAuth0 } from "@auth0/auth0-react";
+import Swal from "sweetalert2";
+import loginUserAuth from "../../services/auth/requestAuthLogin";
+import parseJwt from "../../helpers/parseJwt";
 
 
-const Dashboard = ({ setIsAuth, infoUser, isAuth }) => {
-  console.log('estoy en dashboard')
-
+const Dashboard = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const userDetail = useSelector((state) => state.userDetail);
-  const isLogged = useSelector((state) => state.isLogged);
-  const idUser = infoUser.id;
-  console.log("loggggg", infoUser);
+  const navigate = useNavigate(); 
+  const infoUserLogged = useSelector((state) => state.infoUserLogged);
+  const userDetail = useSelector((state) => state.userDetail); 
+  const { isAuthenticated, user } = useAuth0();
+  const idUser = infoUserLogged?.id
+    console.log('loggggg',infoUserLogged)
 
   if (isAuthenticated) {
     var emailAuth = user.email;
@@ -70,19 +71,17 @@ const Dashboard = ({ setIsAuth, infoUser, isAuth }) => {
   // };
 
   // const handleTrack = () => {
-    //   navigate("/rastrear-pedido");
-    // };
- 
-    
+  //   navigate("/rastrear-pedido");
+  // };
+
   const handleSend = () => {
     navigate("/header/pedido");
   };
 
 
+
   return (
-    <>
-     {isLogged ? (
-        <UserLayout infoUser={infoUser} setIsAuth={setIsAuth} isAuth={isAuth}>
+    <UserLayout >
       <div className="flex flex-col h-screen pt-28">
       
         <header className="bg-#efefef shadow-md w-full py-0 px-0 text-center">
@@ -114,13 +113,20 @@ const Dashboard = ({ setIsAuth, infoUser, isAuth }) => {
           </div>
         </div>
       </div>
-      </UserLayout>
-      ) : (
-        <Login setIsAuth={setIsAuth} />
-      )}
-    </>
+    </UserLayout>
   );
 };
 
+const ActionButton = ({ icon, title, onClick }) => {
+  return (
+    <div 
+      className="flex flex-col items-center justify-center bg-white shadow-md rounded-lg p-4 hover:bg-blue-100 cursor-pointer"
+      onClick={onClick}
+    >
+      {icon}
+      <p className="text-lg font-semibold mt-2">{title}</p>
+    </div>
+  );
+};
 
 export default Dashboard;

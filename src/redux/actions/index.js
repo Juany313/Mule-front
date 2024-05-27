@@ -17,6 +17,7 @@ export const IS_LOGGED = "IS_LOGGED";
 export const INFO_USER_LOGGED = "INFO_USER_LOGGED";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
 export const SET_ORDER_TYPE = "SET_ORDER_TYPE";
+export const UPDATE_USER_DETAIL = "UPDATE_USER_DETAIL"
 /* Juanyyyy */
 export const AGREGAR_PEDIDO = "AGREGAR_PEDIDO";
 export const POST_USER = "AGREGAR_PEDIDO";
@@ -304,6 +305,22 @@ const setInfoUserLogged = (user) => {
   };
 }
 
+const updateUserDetail = (id, infoUser)=>{
+  return async (dispatch)=>{
+    try {
+      const { data } = await axios.put(`http://localhost:3000/users/profile/${id}`, infoUser
+      );
+      return dispatch({
+        type: UPDATE_USER_DETAIL,
+        payload: data,
+      });
+      
+    } catch (error) {
+      
+    }
+  }
+}
+
 export {
   getUserDetail,
   getAllUsers,
@@ -319,5 +336,5 @@ export {
   orderDate,
   setIsLogged,
   setInfoUserLogged,
-
+  updateUserDetail
 };
