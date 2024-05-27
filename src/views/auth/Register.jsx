@@ -67,7 +67,7 @@ const Register = () => {
       Swal.fire({
         icon: "success",
         title: "Usuario creado con éxito",
-        text: "Ya puedes iniciar sesión",
+        text: "Hemos enviado un correo de confirmación a tu dirección de correo electrónico",
         showConfirmButton: true,
       });
 
