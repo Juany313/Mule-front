@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import UserLayout from "../profile/UserLayout";
 import Header from "../../assets/Header.png";
 import { FaBox, FaSearch, FaPaperPlane } from "react-icons/fa";
@@ -7,58 +7,60 @@ import { useNavigate } from "react-router-dom";
 import { getUserDetail } from "../../redux/actions";
 import { useEffect } from "react";
 //import { useSelect } from "@material-tailwind/react";
-import { useAuth0 } from "@auth0/auth0-react";
-import Swal from "sweetalert2";
-import loginUserAuth from "../../services/auth/requestAuthLogin";
-import parseJwt from "../../helpers/parseJwt";
+import Login from "../auth/Login";
+import { setIsLogged } from "../../redux/actions";
 
 
-const Dashboard = () => {
+const Dashboard = ({ setIsAuth, infoUser, isAuth }) => {
+  console.log('estoy en dashboard')
+
   const dispatch = useDispatch();
-  const navigate = useNavigate(); 
-  const infoUserLogged = useSelector((state) => state.infoUserLogged);
-  const userDetail = useSelector((state) => state.userDetail); 
-  const { isAuthenticated, user } = useAuth0();
-  const idUser = infoUserLogged?.id
-    console.log('loggggg',infoUserLogged)
+  const navigate = useNavigate();
+  const userDetail = useSelector((state) => state.userDetail);
+  const isLogged = useSelector((state) => state.isLogged);
+  const idUser = infoUser.id;
+  console.log("loggggg", infoUser);
 
-  if (isAuthenticated) {
-    var emailAuth = user.email;
-    console.log("aca emaaaill",emailAuth);
-    console.log(isAuthenticated);
-  }
+  useEffect(() => {
+    dispatch(getUserDetail(idUser));
+  }, [dispatch, idUser]);
 
-  const handleLoginSubmitAuth = async () => {
-    try {
-      const token = await loginUserAuth(emailAuth);
-      localStorage.setItem("token", token);
-      Swal.fire({
-        icon: "success",
-        title: "Inicio de sesión exitoso",
-        text: "Bienvenido a la plataforma",
-        showConfirmButton: true,
-      });
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Correo o contraseña incorrectos",
-        showConfirmButton: true,
-      });
+  useEffect(() => {
+    if (localStorage.getItem("token") && isLogged === true){
+      dispatch(
+        setIsLogged(
+          true
+        )
+      );
     }
+  }
+  , []);
+      
+
+  const parseJwt = (token) => {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
   };
 
-    useEffect(() => {
-    if (isAuthenticated) {
-      handleLoginSubmitAuth();
-    } 
-  }, []);
 
-
-    useEffect(()=>{
-        dispatch(getUserDetail(idUser))
-    }, [dispatch, idUser])
-
+  const ActionButton = ({ icon, title, onClick }) => {
+    return (
+      <div
+        className="flex flex-col items-center justify-center bg-white shadow-md rounded-lg p-4 hover:bg-blue-100 cursor-pointer"
+        onClick={onClick}
+      >
+        {icon}
+        <p className="text-lg font-semibold mt-2">{title}</p>
+      </div>
+    );
+  };
 
   // Funciones para manejar los clics en cada tarjeta
   // const handleQuote = () => {
@@ -66,17 +68,19 @@ const Dashboard = () => {
   // };
 
   // const handleTrack = () => {
-  //   navigate("/rastrear-pedido");
-  // };
-
+    //   navigate("/rastrear-pedido");
+    // };
+ 
+    
   const handleSend = () => {
     navigate("/header/pedido");
   };
 
 
-
   return (
-    <UserLayout >
+    <>
+     {isLogged ? (
+        <UserLayout infoUser={infoUser} setIsAuth={setIsAuth} isAuth={isAuth}>
       <div className="flex flex-col h-screen pt-28">
       
         <header className="bg-#efefef shadow-md w-full py-0 px-0 text-center">
@@ -108,20 +112,13 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-    </UserLayout>
+      </UserLayout>
+      ) : (
+        <Login setIsAuth={setIsAuth} />
+      )}
+    </>
   );
 };
 
-const ActionButton = ({ icon, title, onClick }) => {
-  return (
-    <div 
-      className="flex flex-col items-center justify-center bg-white shadow-md rounded-lg p-4 hover:bg-blue-100 cursor-pointer"
-      onClick={onClick}
-    >
-      {icon}
-      <p className="text-lg font-semibold mt-2">{title}</p>
-    </div>
-  );
-};
 
 export default Dashboard;

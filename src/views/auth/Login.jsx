@@ -1,99 +1,160 @@
-/* dependencies */
-import React, { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import Swal from "sweetalert2";
+import Cookies from "js-cookie";
+import {useSelector, useDispatch} from "react-redux";
 
 /* icons */
 import { RiMailLine, RiLock2Line } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-//import { Checkbox } from "@material-tailwind/react";
-
-/* services, helpers and actions */
+import { Checkbox } from "@material-tailwind/react";
 import loginUser from "../../services/auth/requestLogin";
-import parseJwt from "../../helpers/parseJwt";
-import {
-  setIsLogged,
-  setInfoUserLogged
-  } from "../../redux/actions/index";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import Dashboard from "./Dashboard";
+import {setIsLogged} from "../../redux/actions/index";
+import { setInfoUserLogged } from "../../redux/actions/index";
 
 const Login = () => {
+  //const navigate = useNavigate();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { loginWithRedirect } = useAuth0();
+  const { getIdTokenClaims } = useAuth0();
   const isLogged = useSelector((state) => state.isLogged);
-  const infoUserLogged = useSelector((state) => state.infoUserLogged);
-  const [isAuth0, setIsAuth0] = useState(false);
   const [showPassword, SetShowPassword] = useState(false);
   const [showEmail, setShowEmail] = useState(false);
-  const { isAuthenticated, user } = useAuth0();
-  const { loginWithRedirect } = useAuth0();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  console.log('estoy en login')
+  const decodedToken = () => dispatch(setInfoUserLogged(
+    localStorage.getItem("token") && parseJwt(localStorage.getItem("token"))
+  ));
+
+
+  
+
+  /*useEffect(() => {
+    if (localStorage.getItem("token") && isAuth === true) {
+      setIsAuth(
+        parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
+      );
+    }
+  }, [isAuth]);*/
 
   useEffect(() => {
     const checkToken = () => {
       console.log('Logueado ?',isLogged);
-      if (localStorage.getItem("token") && (isLogged === true || isAuthenticated === true))  {
+      if (localStorage.getItem("token") && isLogged === true)  {
         dispatch(setIsLogged(
           parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
         ));
-        console.log("googleAuth", isAuthenticated);
-        const emailAuth = infoUserLogged.email;
-        console.log("Este Email se acaba de loguear", emailAuth);
-        console.log("Este es el token", localStorage.getItem("token"));
-        console.log("Este es el token decodificado", infoUserLogged);
-        navigate("dashboard");
       }
       if (localStorage.getItem("token") && isLogged === false) {
         dispatch(setIsLogged(
           false
         ));
       }
+      else {
+        dispatch(setIsLogged(
+          false
+        ));
+      }
     };
+  
     // Verificar la validez del token inmediatamente
     checkToken();
+  
     // Verificar la validez del token cada minuto
     const intervalId = setInterval(checkToken, 60000);
+  
     // Limpiar el intervalo cuando el componente se desmonte
     return () => clearInterval(intervalId);
-  }, [isLogged, isAuthenticated]);
+  }, []);
+
+
+  /*const getToken = async () => {
+    const gettoken = await getIdTokenClaims();
+    const tokengoogle = gettoken.__raw;
+    localStorage.setItem("token", tokengoogle);
+    setIsAuth(
+      parseJwt(localStorage.getItem("token")).exp * 100
+    );
+  };*/
+
+  const parseJwt = (token) => {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  };
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const token = await loginUser(formData);
-      localStorage.setItem("token", token);
-      dispatch(setInfoUserLogged(
-        localStorage.getItem("token") && parseJwt(localStorage.getItem("token"))
-      ));
-      Swal.fire({
-        icon: "success",
-        title: "Inicio de sesión exitoso",
-        text: "Bienvenido a la plataforma",
-        showConfirmButton: true,
-      });
-      
+
+    //
+    if (formData.email && formData.password) {
+      try {
+        //Obtiene el token de inicio de sesión
+        const token = await loginUser(formData);
+        // Almacena el token en el almacenamiento local
+        localStorage.setItem("token", token);
+        // Asigna Id a la sesión de usuario
+        dispatch(setInfoUserLogged(
+          localStorage.getItem("token") && parseJwt(localStorage.getItem("token"))
+        ));
+        Swal.fire({
+          icon: "success",
+          title: "Inicio de sesión exitoso",
+          text: "Bienvenido a la plataforma",
+          showConfirmButton: true,
+        });
+        localStorage.setItem("token", token);
+         dispatch(setIsLogged(
+          parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
+
+        ));
+        
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Error al iniciar sesión, verifique sus credenciales",
+          showConfirmButton: true,
+        });
+      }
+    } else {
+      const gettoken = await getIdTokenClaims();
+      const tokengoogle = gettoken.__raw;
+      localStorage.setItem("token", tokengoogle);
       dispatch(setIsLogged(
         parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
-
       ));
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Error al iniciar sesión",
-        showConfirmButton: true,
-      });
+      //setIsAuth(parseJwt(localStorage.getItem("token")).exp * 100);
     }
   };
 
+ 
+
+
+  const infoUser =
+    localStorage.getItem("token") && parseJwt(localStorage.getItem("token"));
+   console.log("Información del token para el back",infoUser)
+
+  
+
   return (
     <div>
+      {isLogged ? (
+        <Dashboard  infoUser={infoUser}  />
+      ) : (
         <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">
           <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-white mb-8">
             Iniciar <span className="text-primary">sesión</span>
@@ -186,7 +247,7 @@ const Login = () => {
             </span>
           </div>
         </div>
-      
+      )}
     </div>
   );
 };

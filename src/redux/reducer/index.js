@@ -125,6 +125,7 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 filteredOrders: sortedOrders,
             };
+
         case IS_LOGGED:
             return {
                 ...state,
@@ -142,6 +143,7 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 orderType: action.payload,
             };
+
 
         default:
             return state;

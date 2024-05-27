@@ -116,7 +116,6 @@ const NavBar = () => {
   };
 
   return (
-
     <nav
       className={`bg-p300 py-4 pl-4 pr-8 ${
         isOpen ? "fixed top-0 left-0 w-full" : ""
@@ -156,7 +155,6 @@ const NavBar = () => {
               </NavLink>
             </span>
             <span className="text-white hover:text-s300 p-2 cursor-pointer">
-
               <Link
                 to="service"
                 spy={true}
