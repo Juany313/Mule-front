@@ -159,7 +159,7 @@ const NavBar = () => {
                 Inicio
               </NavLink>
             </span>
-            <span className="text-white hover:text-s300 p-2 cursor-pointer">
+            {!isLogged && <span className="text-white hover:text-s300 p-2 cursor-pointer">
 
               <Link
                 to="service"
@@ -171,8 +171,8 @@ const NavBar = () => {
               >
                 Servicios
               </Link>
-            </span>
-            <span className="text-white hover:text-s300 p-2 cursor-pointer">
+            </span>}
+            {!isLogged &&<span className="text-white hover:text-s300 p-2 cursor-pointer">
               <Link
                 to="about"
                 spy={true}
@@ -183,8 +183,8 @@ const NavBar = () => {
               >
                 Nosotros
               </Link>
-            </span>
-            <span className="text-white hover:text-s300 p-2 cursor-pointer">
+            </span>}
+            {!isLogged &&<span className="text-white hover:text-s300 p-2 cursor-pointer">
               <Link
                 to="orderShipment"
                 spy={true}
@@ -195,14 +195,14 @@ const NavBar = () => {
               >
                 Pedidos
               </Link>
-            </span>
+            </span>}
             { isLogged && <NavLink
-              to="pedido"
+              to="auth/dashboard/"
               className="text-white hover:text-s300 p-2"
               activeClassName="text-blue-500"
               onClick={closeMenu}
             >
-              Iniciar Pedido
+              Perfil
             </NavLink>}
 
             {!isLogged ? <NavLink
