@@ -57,6 +57,8 @@ const Dashboard = () => {
     } 
   }, [isAuthenticated]);
 
+  
+  
 
     useEffect(()=>{
         dispatch(getUserDetail(idUser))
