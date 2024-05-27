@@ -35,6 +35,8 @@ const products = [
 
 const Payment = () => {
   const [preferenceId, setPreferenceId] = useState(null);
+  const location = useLocation();
+  const { orderData } = location.state;
 
   initMercadoPago("APP_USR-cfcbc101-b2d1-447a-9572-dc7a2935f197", {
     locale: "es-AR",
@@ -43,10 +45,47 @@ const Payment = () => {
   const handlePay = async (id, title, quantity, unit_price) => {
     try {
       const response = await axios.post("http://localhost:3000/payments/", {
-        id: id,
-        title: title,
-        quantity: quantity,
-        unit_price: unit_price,
+        id: orderData.id,
+        title:
+          orderData.typeShipmentId === 1
+            ? "Sucursal a puerta"
+            : orderData.typeShipmentId === 2
+            ? "Sucursal a sucursal"
+            : orderData.typeShipmentId === 3
+            ? "Puerta a sucursal"
+            : orderData.typeShipmentId === 4
+            ? "Puerta a Puerta"
+            : null,
+        quantity: 1,
+        unit_price: orderData.cost,
+        // orderData.measureId === 1
+        //   ? 15000
+        //   : orderData.measureId === 2
+        //   ? 30000
+        //   : orderData.measureId === 3
+        //   ? 45000
+        //   : null,
+        payer: {
+          name: orderData.name_transmiter,
+          surname: orderData.surname_transmiter,
+          phone: {
+            area_code: "54",
+            number: orderData.celphone_transmiter,
+          },
+          address: {
+            street_name: orderData.address_transmiter,
+          },
+          identification: {
+            type: "DNI",
+            number: orderData.cedula_claimant,
+          },
+        },
+        shipments: {
+          receiver_address: {
+            street_name: orderData.address_receiver,
+            city_name: orderData.city_receiver,
+          },
+        },
       });
       const iDpreference = response.data.id;
       setPreferenceId(iDpreference);

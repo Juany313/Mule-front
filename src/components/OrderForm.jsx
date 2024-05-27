@@ -6,10 +6,59 @@ import { createOrder } from "../redux/actions/index";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const DISTANCES = {
+  "buenos aires": {
+    cordoba: 695,
+    corrientes: 801,
+    "entre rios": 362,
+    "santa fe": 475,
+  },
+  cordoba: {
+    "buenos aires": 695,
+    corrientes: 882,
+    "entre rios": 596,
+    "santa fe": 340,
+  },
+  corrientes: {
+    "buenos aires": 801,
+    cordoba: 882,
+    "entre rios": 533,
+    "santa fe": 606,
+  },
+  "entre rios": {
+    "buenos aires": 362,
+    cordoba: 596,
+    corrientes: 533,
+    "santa fe": 271,
+  },
+  "santa fe": {
+    "buenos aires": 475,
+    cordoba: 340,
+    corrientes: 606,
+    "entre rios": 271,
+  },
+};
+
+const calculateWeightByInput = (idMeasure) => {
+  if (idMeasure == 1) {
+    return Number(3000);
+  } else if (idMeasure == 2) {
+    return Number(4500);
+  } else if (idMeasure == 3) {
+    return Number(6000);
+  }
+};
+
+const calculateCost = (weight, distance) => {
+  const ratePerKgPerKm = 0.01;
+  return weight * distance * ratePerKgPerKm;
+};
+
 const OrderForm = () => {
   const [step, setStep] = useState(1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const infoUserLogged = useSelector((state) => state.infoUserLogged);
 
   const validationSchema = Yup.object().shape({
     name_claimant: Yup.string().required("Nombre es requerido"),
@@ -69,9 +118,29 @@ const OrderForm = () => {
       declared_value: "",
       product_image: null,
       pay_method: "",
+      user_id: null,
     },
     validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async ({
+      name_claimant,
+      cedula_claimant,
+      cellphone_claimant,
+      name_transmiter,
+      surname_transmiter,
+      celphone_transmiter,
+      city_transmiter,
+      address_transmiter,
+      name_receiver,
+      celphone_receiver,
+      city_receiver,
+      address_receiver,
+      weight,
+      declared_value,
+      product_image,
+      pay_method,
+      typeShipmentId,
+      measureId,
+    }) => {
       const formData = new FormData();
       try {
         formData.append("file", values.product_image);
@@ -80,8 +149,57 @@ const OrderForm = () => {
           "https://api.cloudinary.com/v1_1/deotitxt8/image/upload",
           formData
         );
-        dispatch(createOrder(values));
-        navigate("/header/payment");
+        const { url } = res.data;
+
+        const distance = DISTANCES[city_transmiter][city_receiver];
+        const cost = calculateCost(calculateWeightByInput(measureId), distance);
+
+        const orderData = {
+          name_claimant,
+          cedula_claimant,
+          cellphone_claimant,
+          name_transmiter,
+          surname_transmiter,
+          celphone_transmiter,
+          city_transmiter,
+          address_transmiter,
+          name_receiver,
+          celphone_receiver,
+          city_receiver,
+          address_receiver,
+          weight,
+          declared_value,
+          product_image: url,
+          pay_method,
+          typeShipmentId: Number(typeShipmentId),
+          measureId: Number(measureId),
+          user_id: infoUserLogged.id,
+          cost,
+        };
+        dispatch(
+          createOrder({
+            name_claimant,
+            cedula_claimant,
+            cellphone_claimant,
+            name_transmiter,
+            surname_transmiter,
+            celphone_transmiter,
+            city_transmiter,
+            address_transmiter,
+            name_receiver,
+            celphone_receiver,
+            city_receiver,
+            address_receiver,
+            weight,
+            declared_value,
+            product_image: url,
+            pay_method,
+            typeShipmentId: Number(typeShipmentId),
+            measureId: Number(measureId),
+            user_id: infoUserLogged.id,
+          })
+        );
+        navigate("/header/payment", { state: { orderData } });
       } catch (error) {
         console.log(error.message);
       }
