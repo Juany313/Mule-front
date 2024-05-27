@@ -21,46 +21,48 @@ const Dashboard = ({ setIsAuth, infoUser, isAuth }) => {
   const idUser = infoUser.id;
   console.log("loggggg", infoUser);
 
-  useEffect(() => {
-    dispatch(getUserDetail(idUser));
-  }, [dispatch, idUser]);
-
-  useEffect(() => {
-    if (localStorage.getItem("token") && isLogged === true){
-      dispatch(
-        setIsLogged(
-          true
-        )
-      );
-    }
+  if (isAuthenticated) {
+    var emailAuth = user.email;
+    var nameAuth = user.nickname;
+    console.log("aca emaaaill",emailAuth);
+    console.log("aca emaaaill",nameAuth);
+    console.log(isAuthenticated);
   }
-  , []);
-      
 
-  const parseJwt = (token) => {
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split("")
-        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-        .join("")
-    );
-    return JSON.parse(jsonPayload);
+  const handleLoginSubmitAuth = async () => {
+    try {
+      // modificar para utilizar nameAuth
+      const token = await loginUserAuth(emailAuth);
+      localStorage.setItem("token", token);
+      Swal.fire({
+        icon: "success",
+        title: "Inicio de sesión exitoso",
+        text: "Bienvenido a la plataforma",
+        showConfirmButton: true,
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Correo o contraseña incorrectos",
+        showConfirmButton: true,
+      });
+    }
   };
 
+    useEffect(() => {
+    if (isAuthenticated) {
+      handleLoginSubmitAuth();
+    } 
+  }, [isAuthenticated]);
 
-  const ActionButton = ({ icon, title, onClick }) => {
-    return (
-      <div
-        className="flex flex-col items-center justify-center bg-white shadow-md rounded-lg p-4 hover:bg-blue-100 cursor-pointer"
-        onClick={onClick}
-      >
-        {icon}
-        <p className="text-lg font-semibold mt-2">{title}</p>
-      </div>
-    );
-  };
+  
+  
+
+    useEffect(()=>{
+        dispatch(getUserDetail(idUser))
+    }, [dispatch, idUser])
+
 
   // Funciones para manejar los clics en cada tarjeta
   // const handleQuote = () => {

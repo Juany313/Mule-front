@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import validate from "../../utils"
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 
 /* actions */
@@ -15,11 +17,13 @@ import { TbUserSquare } from "react-icons/tb";
 import {useDispatch} from "react-redux";
 
 const Register = () => {
+  const navigate = useNavigate();
 
   /* Estado global */
   const dispatch = useDispatch();
 
   /* Estados locales */
+  const [submitButtonClicked, setSubmitButtonClicked] = useState(false);
   const [showPassword, SetShowPassword] = useState(false);
   const [userData, setUserData] = useState({
     name: "",
@@ -51,11 +55,29 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setSubmitButtonClicked(true);
+    if (errors.name || errors.email || errors.password) {
+      return; // No se envía la solicitud si hay errores presentes
+    }
     const result = await dispatch(postUser(userData));
+    console.log("result.success", result);
     if (result.success) {
-      alert("USUARIO CREADO CON EXITO!!");
+      localStorage.setItem("email", userData.email);
+      navigate("/auth/");
+      Swal.fire({
+        icon: "success",
+        title: "Usuario creado con éxito",
+        text: "Hemos enviado un correo de confirmación a tu dirección de correo electrónico",
+        showConfirmButton: true,
+      });
+
     } else {
-      alert("Ocurrió un error al crear el usuario");
+      Swal.fire({
+        icon: "error",
+        title: "Error al crear usuario",
+        text: "Por favor, intenta nuevamente",
+        showConfirmButton: true,
+      });
     }
   };
   
@@ -91,7 +113,7 @@ const Register = () => {
                 placeholder="Nombre"
               />
             </div>
-              {errors.name && <span className="text-red-800 mb-4">{errors.name}</span>}
+              {submitButtonClicked && errors.name && <span className="text-red-800 mb-4">{errors.name}</span>}
         </div>
 
         <div className="mb-4">
@@ -106,33 +128,34 @@ const Register = () => {
                 placeholder="Correo electrónico"
               />
             </div>
-              {errors.email && <span className="text-red-800 mb-4">{errors.email}</span>}
+              {submitButtonClicked && errors.email && <span className="text-red-800 mb-4">{errors.email}</span>}
         </div>
- 
-        <div className="relative mb-2">
-          <RiLock2Line className="absolute top-1/2 -translate-y-1/2 left-2 text-black" />
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            value={userData.password}
-            onChange={handleChange}
-            className="py-3 pl-8 pr-8  w-full outline-none rounded-lg focus:border focus:border-black"
-            placeholder="Contraseña"
-          />
-          {errors.password && <span className="text-red-800 mb-4">{errors.password}</span>}
-          {showPassword ? (
-            <LuEye
-              onClick={() => SetShowPassword(!showPassword)}
-              className="absolute top-1/2 -translate-y-1/2 right-2 hover:cursor-pointer text-black"
+        <div className=" mb-2">
+          <div className="relative">
+            <RiLock2Line className="absolute top-1/2 -translate-y-1/2 left-2 text-black" />
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={userData.password}
+              onChange={handleChange}
+              className="py-3 pl-8 pr-8  w-full outline-none rounded-lg focus:border focus:border-black"
+              placeholder="Contraseña"
             />
-          ) : (
-            <LuEyeOff
-              onClick={() => SetShowPassword(!showPassword)}
-              className="absolute top-1/2 -translate-y-1/2 right-2 hover:cursor-pointer text-black"
-            />
-          )}
+            
+            {showPassword ? (
+              <LuEye
+                onClick={() => SetShowPassword(!showPassword)}
+                className="absolute top-1/2 -translate-y-1/2 right-2 hover:cursor-pointer text-black"
+              />
+            ) : (
+              <LuEyeOff
+                onClick={() => SetShowPassword(!showPassword)}
+                className="absolute top-1/2 -translate-y-1/2 right-2 hover:cursor-pointer text-black"
+              />
+            )}
+          </div>
+          {submitButtonClicked && errors.password && <span className="text-red-800 mb-4">{errors.password}</span>}
         </div>
- 
   
         <div>
           <button

@@ -25,7 +25,7 @@ const Login = () => {
   const [showPassword, SetShowPassword] = useState(false);
   const [showEmail, setShowEmail] = useState(false);
   const [formData, setFormData] = useState({
-    email: "",
+    email: localStorage.getItem("email") || "",
     password: "",
   });
   console.log('estoy en login')
@@ -44,26 +44,23 @@ const Login = () => {
     }
   }, [isAuth]);*/
 
+
+  const checkToken = () => {
+    if (localStorage.getItem("token") && (isLogged === true || isAuthenticated === true))  {
+      dispatch(setIsLogged(
+        parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
+      ));
+      const emailAuth = infoUserLogged.email;
+      navigate("dashboard");
+    }
+    if (localStorage.getItem("token") && isLogged === false) {
+      dispatch(setIsLogged(
+        false
+      ));
+    }
+  };
+
   useEffect(() => {
-    const checkToken = () => {
-      console.log('Logueado ?',isLogged);
-      if (localStorage.getItem("token") && isLogged === true)  {
-        dispatch(setIsLogged(
-          parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
-        ));
-      }
-      if (localStorage.getItem("token") && isLogged === false) {
-        dispatch(setIsLogged(
-          false
-        ));
-      }
-      else {
-        dispatch(setIsLogged(
-          false
-        ));
-      }
-    };
-  
     // Verificar la validez del token inmediatamente
     checkToken();
   
@@ -98,57 +95,31 @@ const Login = () => {
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
-
-    //
-    if (formData.email && formData.password) {
-      try {
-        //Obtiene el token de inicio de sesión
-        const token = await loginUser(formData);
-        // Almacena el token en el almacenamiento local
-        localStorage.setItem("token", token);
-        // Asigna Id a la sesión de usuario
-        dispatch(setInfoUserLogged(
-          localStorage.getItem("token") && parseJwt(localStorage.getItem("token"))
-        ));
-        Swal.fire({
-          icon: "success",
-          title: "Inicio de sesión exitoso",
-          text: "Bienvenido a la plataforma",
-          showConfirmButton: true,
-        });
-        localStorage.setItem("token", token);
-         dispatch(setIsLogged(
-          parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
-
-        ));
-        
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Error al iniciar sesión, verifique sus credenciales",
-          showConfirmButton: true,
-        });
-      }
-    } else {
-      const gettoken = await getIdTokenClaims();
-      const tokengoogle = gettoken.__raw;
-      localStorage.setItem("token", tokengoogle);
+    try {
+      const token = await loginUser(formData);
+      localStorage.setItem("token", token);
+      dispatch(setInfoUserLogged(
+        localStorage.getItem("token") && parseJwt(localStorage.getItem("token"))
+      ));
+      Swal.fire({
+        icon: "success",
+        title: "Inicio de sesión exitoso",
+        text: "Bienvenido a la plataforma",
+        showConfirmButton: true,
+      });
+      
       dispatch(setIsLogged(
         parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
       ));
-      //setIsAuth(parseJwt(localStorage.getItem("token")).exp * 100);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Error al iniciar sesión",
+        showConfirmButton: true,
+      });
     }
   };
-
- 
-
-
-  const infoUser =
-    localStorage.getItem("token") && parseJwt(localStorage.getItem("token"));
-   console.log("Información del token para el back",infoUser)
-
-  
 
   return (
     <div>
