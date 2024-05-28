@@ -11,6 +11,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 // Importación de layouts y componentes
 import LayoutAuth from "./layouts/LayoutAuth";
 import LayoutAdmin from "./layouts/LayoutAdmin";
+import LayoutAdminAlpha from "./layouts/LayoutAdminAlpha";
 import LayoutError from "./layouts/LayoutError";
 import Landing from "./views/Landing";
 import Detail from "./views/Detail";
@@ -29,6 +30,12 @@ import AuthenticatedApp from "./views/profile/AuthenticatedApp";
 import Shipments from "./views/auth/Shipments";
 import History from "./views/auth/History";
 import ConfirmEmail from "./views/auth/ConfirmEmail";
+
+
+/* Enlistment */
+import Enlistment from "./views/admin/Enlistment/Enlistment";
+import EnlistmentTable from "./views/admin/Enlistment/EnlistmentTable";
+import EnlistmentForm from "./views/admin/Enlistment/EnlistmentForm";
 
 function App() {
   return (
@@ -56,7 +63,13 @@ function App() {
           <Route path="ordershipment/detail/:id" element={<Detail />} />
           <Route path="payment" element={<Payment />} />
           {/* <Route path="prueba" element={<Products />} /> */}
-
+        </Route>
+        <Route path="/admin" element={<LayoutAdminAlpha />}>
+          <Route index element={<Home />} />
+          <Route path="enlistment" element={<Enlistment />}>
+            <Route index element={<EnlistmentForm />} />
+            <Route path="list" element={<EnlistmentTable />} />
+          </Route>
         </Route>
         <Route path="*" element={<LayoutError />} />
       </Routes>
