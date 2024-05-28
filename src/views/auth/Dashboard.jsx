@@ -4,13 +4,14 @@ import UserLayout from "../profile/UserLayout";
 import Header from "../../assets/Header.png";
 import { FaBox, FaSearch, FaPaperPlane } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { getUserDetail } from "../../redux/actions";
+import { getUserDetail, setIsLogged } from "../../redux/actions";
 import { useEffect } from "react";
 //import { useSelect } from "@material-tailwind/react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Swal from "sweetalert2";
 import loginUserAuth from "../../services/auth/requestAuthLogin";
 import parseJwt from "../../helpers/parseJwt";
+import { setInfoUserLogged } from "../../redux/actions";
 
 
 const Dashboard = () => {
@@ -20,27 +21,36 @@ const Dashboard = () => {
   const userDetail = useSelector((state) => state.userDetail); 
   const { isAuthenticated, user } = useAuth0();
   const idUser = infoUserLogged?.id
-    console.log('loggggg',infoUserLogged)
+
+    useEffect(() => {
+      if (isAuthenticated) {
+        dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
+      }
+    }, []);
 
   if (isAuthenticated) {
     var emailAuth = user.email;
-    var nameAuth = user.nickname;
-    console.log("aca emaaaill",emailAuth);
-    console.log("aca emaaaill",nameAuth);
-    console.log(isAuthenticated);
+    var nameAuth = user.name;
   }
+  useEffect(() => {
+  if (isAuthenticated) {
+    handleLoginSubmitAuth();
+  } 
+}, [isAuthenticated, dispatch]);
 
   const handleLoginSubmitAuth = async () => {
     try {
       // modificar para utilizar nameAuth
-      const token = await loginUserAuth(emailAuth);
+      const token = await loginUserAuth(emailAuth, nameAuth);
       localStorage.setItem("token", token);
-      Swal.fire({
-        icon: "success",
-        title: "Inicio de sesión exitoso",
-        text: "Bienvenido a la plataforma",
-        showConfirmButton: true,
-      });
+      dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
+      // Swal.fire({
+      //   icon: "success",
+      //   title: "Inicio de sesión exitoso",
+      //   text: "Bienvenido a la plataforma",
+      //   showConfirmButton: true,
+      // });
+      dispatch(setIsLogged(true));
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -50,14 +60,6 @@ const Dashboard = () => {
       });
     }
   };
-
-    useEffect(() => {
-    if (isAuthenticated) {
-      handleLoginSubmitAuth();
-    } 
-  }, [isAuthenticated]);
-
-  
   
 
     useEffect(()=>{
@@ -66,13 +68,13 @@ const Dashboard = () => {
 
 
   // Funciones para manejar los clics en cada tarjeta
-  // const handleQuote = () => {
-  //   navigate("/cotizar-paquete");
-  // };
+   const handleQuote = () => {
+     navigate("/cotizar-paquete");
+   };
 
-  // const handleTrack = () => {
-  //   navigate("/rastrear-pedido");
-  // };
+   const handleTrack = () => {
+     navigate("/rastrear-pedido");
+  };
 
   const handleSend = () => {
     navigate("/header/pedido");
@@ -95,7 +97,7 @@ const Dashboard = () => {
           <h2 className="text-xl font-semibold text-gray-800"></h2>
 
           <div className="p-0 grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* <ActionButton
+             <ActionButton
               icon={<FaBox size="3rem" />}
               title="Cotizar Paquete"
               onClick={handleQuote}
@@ -104,7 +106,7 @@ const Dashboard = () => {
               icon={<FaSearch size="3rem" />}
               title="Rastrear Pedido"
               onClick={handleTrack}
-            /> */}
+            /> 
             <ActionButton
               icon={<FaPaperPlane size="3rem" />}
               title="Enviar Paquete"

@@ -11,6 +11,7 @@ import { IoHomeOutline } from "react-icons/io5";
 import { BsBoxSeam } from "react-icons/bs";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { TfiLocationPin } from "react-icons/tfi";
+import { LuUserSquare2 } from "react-icons/lu";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./Navprofile.css";
 import LOGO from "../../assets/LogoMule.png";
@@ -29,7 +30,7 @@ const NavProfile = () => {
   };
 
   const handleLogout = () => {
-     logout({ logoutParams: { returnTo: "http://localhost:4000/header" } })
+     logout({ logoutParams: { returnTo: "https://mule-front.onrender.com/header" } })
      dispatch(
       setIsLogged(false)
     )
@@ -63,9 +64,6 @@ const NavProfile = () => {
         >
           <Card className="h-screen  bg-p100 w-[20rem] p-12 shadow-xl shadow-blue-gray-900/8 rounded-none ">
             <div className="mb-2 p-4 flex flex-row items-center gap-6">
-              <Typography variant="h5" color="white">
-                Perfil
-              </Typography>
               <button className="Btn" onClick={handleLogout}>
                 <div className="sign">
                   <svg viewBox="0 0 512 512">
@@ -85,6 +83,18 @@ const NavProfile = () => {
                     <IoHomeOutline className="h-8 w-8" />
                   </ListItemPrefix>
                   Inicio
+                </Link>
+              </ListItem>
+
+              <ListItem className="gap-3 text-white">
+                <Link
+                  to="/auth/profile"
+                  className="flex items-center gap-3 w-full h-full"
+                >
+                  <ListItemPrefix>
+                    <LuUserSquare2  className="h-8 w-8" />
+                  </ListItemPrefix>
+                  Perfil
                 </Link>
               </ListItem>
 

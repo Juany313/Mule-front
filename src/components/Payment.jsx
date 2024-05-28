@@ -7,16 +7,15 @@ const Payment = () => {
   const [preferenceId, setPreferenceId] = useState(null);
   const location = useLocation();
   const { orderData } = location.state;
-  console.log("DATA:", orderData);
 
-  initMercadoPago("TEST-fba43614-ef7f-45c0-8443-fc699301ff2c", {
+  initMercadoPago("APP_USR-8441c4d2-2057-46ca-8e1b-9a3328ed76bb", {
     locale: "es-AR",
   });
 
   const handlePay = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/payments/", {
-        id: orderData.id,
+      const response = await axios.post("https://mule-server.onrender.com/payments/", {
+        id: orderData.typeShipmentId,
         title:
           orderData.typeShipmentId === 1
             ? "Sucursal a puerta"
@@ -28,7 +27,7 @@ const Payment = () => {
             ? "Puerta a Puerta"
             : null,
         quantity: 1,
-        unit_price: 30000,
+        unit_price: orderData.cost,
         // orderData.measureId === 1
         //   ? 15000
         //   : orderData.measureId === 2
@@ -51,6 +50,7 @@ const Payment = () => {
             number: orderData.cedula_claimant,
           },
         },
+        pay_method: orderData.pay_method,
         shipments: {
           receiver_address: {
             street_name: orderData.address_receiver,
@@ -112,7 +112,7 @@ const Payment = () => {
       )}
       <div className="p-4">
         <button
-          onClick={() => handlePay(1, "Pieza", 1, 10)}
+          onClick={() => handlePay()}
           className="bg-s300 text-black uppercase font-bold text-sm w-full py-3 px-4 rounded-lg hover:text-gray-100 transition-colors"
         >
           Pagar
