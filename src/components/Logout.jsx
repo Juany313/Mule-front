@@ -7,13 +7,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const Logout = () => {
     const dispatch = useDispatch();
+    
     const navigate = useNavigate();
     const { logout } = useAuth0();
     const logoutSuccess = () => {
         localStorage.removeItem("token");
         console.log("Logout success");
         dispatch(setIsLogged(false));
-        navigate("/header");
+        logout({ logoutParams: { returnTo: "http://localhost:4000/header" } })
     }
     return (
         <button 

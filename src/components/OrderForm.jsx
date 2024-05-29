@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { createOrder } from "../redux/actions/index";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -107,7 +108,6 @@ const OrderForm = () => {
       cedula_claimant: "",
       cellphone_claimant: "",
       name_transmiter: "",
-      surname_transmiter: "",
       celphone_transmiter: "",
       city_transmiter: "",
       address_transmiter: "",
@@ -116,8 +116,6 @@ const OrderForm = () => {
       city_receiver: "",
       address_receiver: "",
       weight: "",
-      typeShipmentId: null,
-      measureId: null,
       declared_value: "",
       product_image: null,
       pay_method: "",
@@ -146,7 +144,7 @@ const OrderForm = () => {
     }) => {
       const formData = new FormData();
       try {
-        formData.append("file", product_image);
+        formData.append("file", values.product_image);
         formData.append("upload_preset", "rdybvtpg");
         const res = await axios.post(
           "https://api.cloudinary.com/v1_1/deotitxt8/image/upload",
@@ -306,22 +304,6 @@ const OrderForm = () => {
               <div className="relative mb-4">
                 <input
                   type="text"
-                  name="surname_transmiter"
-                  value={formik.values.surname_transmiter}
-                  onChange={formik.handleChange}
-                  className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
-                  placeholder="Apellido/s"
-                />
-                {formik.errors.name_transmiter &&
-                  formik.touched.name_transmiter && (
-                    <span className="text-red-600 font-semibold">
-                      {formik.errors.name_transmiter}
-                    </span>
-                  )}
-              </div>
-              <div className="relative mb-4">
-                <input
-                  type="text"
                   name="celphone_transmiter"
                   value={formik.values.celphone_transmiter}
                   onChange={formik.handleChange}
@@ -344,8 +326,6 @@ const OrderForm = () => {
                   onChange={formik.handleChange}
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                 >
-                  <p>Provincia de origen</p>
-                  <option value="">Seleccionar</option>
                   <option value="buenos aires">Buenos Aires</option>
                   <option value="cordoba">Córdoba</option>
                   <option value="corrientes">Corrientes</option>
@@ -401,7 +381,6 @@ const OrderForm = () => {
                     </span>
                   )}
               </div>
-
               <div className="relative mb-4">
                 <input
                   type="number"
@@ -427,8 +406,6 @@ const OrderForm = () => {
                   onChange={formik.handleChange}
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                 >
-                  <p>Provincia de destino</p>
-                  <option value="">Seleccionar</option>
                   <option value="buenos aires">Buenos Aires</option>
                   <option value="cordoba">Córdoba</option>
                   <option value="corrientes">Corrientes</option>
@@ -484,45 +461,6 @@ const OrderForm = () => {
                 )}
               </div>
               <div className="relative mb-4">
-                <select
-                  name="typeShipmentId"
-                  value={formik.values.typeShipmentId}
-                  onChange={formik.handleChange}
-                  className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
-                >
-                  <p>Tipo de envío</p>
-                  <option value="">Seleccionar</option>
-                  <option value="1">Sucursal a Puerta</option>
-                  <option value="2">Sucursal a Sucursal</option>
-                  <option value="3">Puerta a Sucursal</option>
-                  <option value="4">Puerta a Puerta</option>
-                </select>
-                {/* {formik.errors.pay_method && formik.touched.pay_method && (
-                  <span className="text-red-600 font-semibold">
-                    {formik.errors.pay_method}
-                  </span>
-                )} */}
-              </div>
-              <div className="relative mb-4">
-                <select
-                  name="measureId"
-                  value={formik.values.measureId}
-                  onChange={formik.handleChange}
-                  className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
-                >
-                  <p>Tamaño del paquete</p>
-                  <option value="">Seleccionar</option>
-                  <option value="1">Pequeño</option>
-                  <option value="2">Mediano</option>
-                  <option value="3">Grande</option>
-                </select>
-                {/* {formik.errors.pay_method && formik.touched.pay_method && (
-                  <span className="text-red-600 font-semibold">
-                    {formik.errors.pay_method}
-                  </span>
-                )} */}
-              </div>
-              <div className="relative mb-4">
                 <input
                   type="text"
                   name="declared_value"
@@ -562,8 +500,6 @@ const OrderForm = () => {
                   onChange={formik.handleChange}
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                 >
-                  <p>Método de pago</p>
-                  <option value="">Seleccionar</option>
                   <option value="Efectivo">Efectivo</option>
                   <option value="Credito">Tarjeta de crédito</option>
                   <option value="Debito">Tarjeta de débito</option>

@@ -257,9 +257,9 @@ const Login = () => {
     // Verificar la validez del token inmediatamente
     checkToken();
     // Verificar la validez del token cada minuto
-    const intervalId = setInterval(checkToken, 60000);
+    //const intervalId = setInterval(checkToken, 60000);
     // Limpiar el intervalo cuando el componente se desmonte
-    return () => clearInterval(intervalId);
+    //return () => clearInterval(intervalId);
   }, [isLogged, isAuthenticated]);
 
 
