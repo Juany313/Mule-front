@@ -15,7 +15,7 @@ root.render(
         domain="dev-h0iezuyqkhhjz3e7.us.auth0.com"
         clientId="Yx41UTDIBR1mBOyoClCO8DFR8h0pMWKD"
         authorizationParams={{
-          redirect_uri: "https://mule-front.onrender.com/auth/dashboard",
+          redirect_uri: "http://localhost:4000/auth/dashboard",
         }}
       >
         <App />

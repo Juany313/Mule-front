@@ -30,7 +30,7 @@ const NavProfile = () => {
   };
 
   const handleLogout = () => {
-     logout({ logoutParams: { returnTo: "https://mule-front.onrender.com/header" } })
+     logout({ logoutParams: { returnTo: "http://localhost:4000/header" } })
      dispatch(
       setIsLogged(false)
     )
