@@ -52,20 +52,9 @@ const Dashboard = () => {
       // });
       dispatch(setIsLogged(true));
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Correo o contraseña incorrectos",
-        showConfirmButton: true,
-      });
+      console.log(error);
     }
   };
-  
-
-    useEffect(()=>{
-        dispatch(getUserDetail(idUser))
-    }, [dispatch, idUser])
-
 
   // Funciones para manejar los clics en cada tarjeta
    const handleQuote = () => {
