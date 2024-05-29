@@ -147,9 +147,9 @@ const OrderForm = () => {
       const formData = new FormData();
       try {
         formData.append("file", product_image);
-        formData.append("upload_preset", "rdybvtpg");
+        formData.append("upload_preset", import.meta.env.VITE_PRESET);
         const res = await axios.post(
-          "https://api.cloudinary.com/v1_1/deotitxt8/image/upload",
+          `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/image/upload`,
           formData
         );
         const { url } = res.data;
