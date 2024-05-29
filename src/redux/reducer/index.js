@@ -16,7 +16,7 @@ import {
     SET_ORDER_TYPE,
     UPDATE_USER_DETAIL,
     GET_ALL_ENLISTMENTS,
-    GET_ENLISTMENT_ID,
+    GET_ENLISTMENT_BY_ID,
     POST_ENLISTMENT,
     PUT_ENLISTMENT,
     DELETE_ENLISTMENT,
@@ -164,7 +164,7 @@ function rootReducer(state = initialState, action) {
                 allEnlistments: action.payload
             }
 
-        case GET_ENLISTMENT_ID:
+        case GET_ENLISTMENT_BY_ID:
             return {
                 ...state,
                 enlistmentDetail: action.payload
