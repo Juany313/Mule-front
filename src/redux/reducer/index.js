@@ -20,6 +20,7 @@ import {
     POST_ENLISTMENT,
     PUT_ENLISTMENT,
     DELETE_ENLISTMENT,
+    SET_ORDER_DATA,
 } from "../actions";
 
 let initialState = {
@@ -38,6 +39,7 @@ let initialState = {
     orderType: "",
     allEnlistments: [],
     enlistmentDetail: [],
+    orderData: []
 }
 
 function rootReducer(state = initialState, action) {
@@ -193,8 +195,16 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 allEnlistments: state.allEnlistments.filter(enlistment => enlistment.id !== action.payload)
             }
+
+        case SET_ORDER_DATA:
+            return {
+                ...state,
+                orderData: action.payload
+            }
+
+            
         
-    
+        
 
 
         default:
