@@ -14,6 +14,13 @@ import {
     IS_LOGGED,
     INFO_USER_LOGGED,
     SET_ORDER_TYPE,
+    UPDATE_USER_DETAIL,
+    GET_ALL_ENLISTMENTS,
+    GET_ENLISTMENT_ID,
+    POST_ENLISTMENT,
+    PUT_ENLISTMENT,
+    DELETE_ENLISTMENT,
+    SET_ORDER_DATA,
 } from "../actions";
 
 let initialState = {
@@ -30,6 +37,9 @@ let initialState = {
     isLogged: false,
     infoUserLogged: {},
     orderType: "",
+    allEnlistments: [],
+    enlistmentDetail: [],
+    orderData: []
 }
 
 function rootReducer(state = initialState, action) {
@@ -125,6 +135,7 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 filteredOrders: sortedOrders,
             };
+
         case IS_LOGGED:
             return {
                 ...state,
@@ -142,6 +153,59 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 orderType: action.payload,
             };
+
+        case UPDATE_USER_DETAIL:
+            return {
+                ...state,
+                userDetail: action.payload
+            }
+
+        case GET_ALL_ENLISTMENTS:
+            return {
+                ...state,
+                allEnlistments: action.payload
+            }
+
+        case GET_ENLISTMENT_ID:
+            return {
+                ...state,
+                enlistmentDetail: action.payload
+            }
+        
+        case POST_ENLISTMENT:
+            return {
+                ...state,
+                allEnlistments: state.allEnlistments.concat(action.payload)
+            }
+
+        case PUT_ENLISTMENT:
+            return {
+                ...state,
+                allEnlistments: state.allEnlistments.map(enlistment => {
+                    if (enlistment.id === action.payload.id) {
+                        return action.payload;
+                    }
+                    return enlistment;
+                })
+            }
+        
+        
+        case DELETE_ENLISTMENT:
+            return {
+                ...state,
+                allEnlistments: state.allEnlistments.filter(enlistment => enlistment.id !== action.payload)
+            }
+
+        case SET_ORDER_DATA:
+            return {
+                ...state,
+                orderData: action.payload
+            }
+
+            
+        
+        
+
 
         default:
             return state;

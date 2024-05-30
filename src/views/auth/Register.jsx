@@ -1,6 +1,9 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import validate from "../../utils"
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 
 /* actions */
@@ -15,6 +18,7 @@ import { TbUserSquare } from "react-icons/tb";
 import {useDispatch} from "react-redux";
 
 const Register = () => {
+  const navigate = useNavigate();
 
   /* Estado global */
   const dispatch = useDispatch();
@@ -59,9 +63,22 @@ const Register = () => {
     const result = await dispatch(postUser(userData));
     console.log("result.success", result);
     if (result.success) {
-      alert("USUARIO CREADO CON EXITO!!");
+      localStorage.setItem("email", userData.email);
+      navigate("/auth/");
+      Swal.fire({
+        icon: "success",
+        title: "Usuario creado con éxito",
+        text: "Hemos enviado un correo de confirmación",
+        showConfirmButton: true,
+      });
+
     } else {
-      alert("Ocurrió un error al crear el usuario");
+      Swal.fire({
+        icon: "error",
+        title: "Error al crear usuario",
+        text: "Por favor, intenta nuevamente",
+        showConfirmButton: true,
+      });
     }
   };
   
