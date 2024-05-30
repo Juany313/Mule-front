@@ -23,7 +23,7 @@ export const AGREGAR_PEDIDO = "AGREGAR_PEDIDO";
 export const POST_USER = "AGREGAR_PEDIDO";
 /* Admin Actions */
 export const GET_ALL_ENLISTMENTS = "GET_ALL_ENLISTMENTS";
-export const GET_ENLISTMENT_BY_ID = "GET_ENLISTMENT_BY_ID";
+export const GET_ENLISTMENT_ID = "GET_ENLISTMENT_ID";
 export const POST_ENLISTMENT = "POST_ENLISTMENT";
 export const PUT_ENLISTMENT = "PUT_ENLISTMENT";
 export const DELETE_ENLISTMENT = "DELETE_ENLISTMENT";
@@ -32,7 +32,7 @@ export const DELETE_ENLISTMENT = "DELETE_ENLISTMENT";
 
 
 
-// const URL_BASE = "http://localhost:3000";
+const URL_BASE = "http://localhost:3000";
 
 // actions.js
 
@@ -344,7 +344,7 @@ const getEnlistmentById = (id) => {
     try {
       const { data } = await axios.get(`http://localhost:3000/enlistments/${id}`);
       return dispatch({
-        type: GET_ENLISTMENT_BY_ID,
+        type: GET_ENLISTMENT_ID,
         payload: data,
       });
     } catch (error) {
