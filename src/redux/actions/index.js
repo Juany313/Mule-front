@@ -32,7 +32,7 @@ export const DELETE_ENLISTMENT = "DELETE_ENLISTMENT";
 
 
 
-const URL_BASE = "http://localhost:3000";
+// const URL_BASE = "http://localhost:3000";
 
 // actions.js
 
@@ -70,7 +70,7 @@ export const agregarPedido = (pedido) => {
 export function postUser(data) {
   return async function(dispatch) {
     try {
-      const response = await axios.post('http://localhost:3000/users/register', data);
+      const response = await axios.post('https://mule-server.onrender.com/users/register', data);
       dispatch({
         type: POST_USER,
         payload: response.data,
@@ -147,7 +147,7 @@ const createOrder = (userData) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/order_shipments",
+        "https://mule-server.onrender.com/order_shipments",
         userData // Envía los datos del formulario como parte de la solicitud POST
       );
       dispatch({
@@ -175,7 +175,7 @@ const createOrder = (userData) => {
 const getUserDetail = (id) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/users/${id}`,{
+      const response = await fetch(`https://mule-server.onrender.com/users/${id}`,{
         method: "GET",
         headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -204,7 +204,7 @@ const getOrdersByClient = (id) =>{
       // if (!token) {
       //   throw new Error('No token found');
       // };
-      const response = await axios.get (`http://localhost:3000/order_shipments/${id}`
+      const response = await axios.get (`https://mule-server.onrender.com/order_shipments/${id}`
       // , {
       //   headers: {
       //     "Authorization": `Bearer ${token}`
@@ -226,7 +226,7 @@ const getOrdersByClient = (id) =>{
 const getAllOrders = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("http://localhost:3000/order_shipments");
+      const { data } = await axios.get("https://mule-server.onrender.com/order_shipments");
       console.log('X', data);
       return dispatch({
         type: GET_ALL_ORDERS,
@@ -244,7 +244,7 @@ const getOrderById = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:3000/order_shipments/${id}`
+        `https://mule-server.onrender.com/order_shipments/${id}`
       );
       // const data=orders.find(order => order.id === id)
       return dispatch({
@@ -266,7 +266,7 @@ const orderDeclaredValue = (selectedValues) => {
         .map((field) => `${Object.keys(field)[0]}=${Object.values(field)[0]}`)
         .join("&");
       // Agregar la cadena de parámetros de consulta a la URL base
-      const url = `http://localhost:3000/order_shipments?${queryParams}`;
+      const url = `https://mule-server.onrender.com/order_shipments?${queryParams}`;
 
       // Realizar la solicitud GET con la URL construida
       const { data } = await axios.get(url);
@@ -312,7 +312,7 @@ const setInfoUserLogged = (user) => {
 const updateUserDetail = (id, infoUser)=>{
   return async (dispatch)=>{
     try {
-      const { data } = await axios.put(`http://localhost:3000/users/profile/${id}`, infoUser
+      const { data } = await axios.put(`https://mule-server.onrender.com/users/profile/${id}`, infoUser
       );
       return dispatch({
         type: UPDATE_USER_DETAIL,
@@ -328,7 +328,7 @@ const updateUserDetail = (id, infoUser)=>{
 const getAllEnlistments = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("http://localhost:3000/enlistments");
+      const { data } = await axios.get("https://mule-server.onrender.com/enlistments");
       return dispatch({
         type: GET_ALL_ENLISTMENTS,
         payload: data,
@@ -342,7 +342,7 @@ const getAllEnlistments = () => {
 const getEnlistmentById = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`http://localhost:3000/enlistments/${id}`);
+      const { data } = await axios.get(`https://mule-server.onrender.com/enlistments/${id}`);
       return dispatch({
         type: GET_ENLISTMENT_ID,
         payload: data,
@@ -357,7 +357,7 @@ const postEnlistment = (enlistmentData) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/enlistments",
+        "https://mule-server.onrender.com/enlistments",
         enlistmentData
       );
       dispatch({
@@ -385,7 +385,7 @@ const putEnlistment = (id, enlistmentData) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.put(
-        `http://localhost:3000/enlistments/${id}`,
+        `https://mule-server.onrender.com/enlistments/${id}`,
         enlistmentData
       );
       dispatch({
@@ -412,7 +412,7 @@ const putEnlistment = (id, enlistmentData) => {
 const deleteEnlistment = (id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`http://localhost:3000/enlistments/${id}`);
+      await axios.delete(`https://mule-server.onrender.com/${id}`);
       dispatch({
         type: DELETE_ENLISTMENT,
         payload: id,
