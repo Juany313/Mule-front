@@ -185,8 +185,7 @@ const getUserDetail = (id) => {
 
     const data = await response.json();
 
-      //    const data=users.find(usuario => usuario.id === 4)
-      console.log(data);
+      // console.log('getuserdetail',data);
       return dispatch({
         type: GET_USER_DETAIL,
         payload: data,
