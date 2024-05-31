@@ -303,7 +303,7 @@ const setInfoUserLogged = (user) => {
 const updateUserDetail = (id, infoUser)=>{
   return async (dispatch)=>{
     try {
-      const { data } = await axios.put(`http://localhost:3000/users/profile/${id}`, infoUser
+      const { data } = await axios.patch(`http://localhost:3000/users/profile/${id}`, infoUser
       );
       return dispatch({
         type: UPDATE_USER_DETAIL,
