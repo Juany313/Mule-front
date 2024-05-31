@@ -21,6 +21,16 @@ export const UPDATE_USER_DETAIL = "UPDATE_USER_DETAIL"
 /* Juanyyyy */
 export const AGREGAR_PEDIDO = "AGREGAR_PEDIDO";
 export const POST_USER = "AGREGAR_PEDIDO";
+/* Admin Actions */
+export const GET_ALL_ENLISTMENTS = "GET_ALL_ENLISTMENTS";
+export const GET_ENLISTMENT_BY_ID = "GET_ENLISTMENT_BY_ID";
+export const POST_ENLISTMENT = "POST_ENLISTMENT";
+export const PUT_ENLISTMENT = "PUT_ENLISTMENT";
+export const DELETE_ENLISTMENT = "DELETE_ENLISTMENT";
+
+
+
+
 
 // const URL_BASE = "http://localhost:3000";
 
@@ -315,6 +325,115 @@ const updateUserDetail = (id, infoUser)=>{
   }
 }
 
+const getAllEnlistments = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get("http://localhost:3000/enlistments");
+      return dispatch({
+        type: GET_ALL_ENLISTMENTS,
+        payload: data,
+      });
+    } catch (error) {
+      // window.alert(error.message);
+    }
+  };
+}
+
+const getEnlistmentById = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`http://localhost:3000/enlistments/${id}`);
+      return dispatch({
+        type: GET_ENLISTMENT_BY_ID,
+        payload: data,
+      });
+    } catch (error) {
+      // window.alert("No existe una orden de pedido con ese número");
+    }
+  };
+}
+
+const postEnlistment = (enlistmentData) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3000/enlistments",
+        enlistmentData
+      );
+      dispatch({
+        type: POST_ENLISTMENT,
+        payload: data,
+      });
+      Swal.fire({
+        title: "Enlistment created!",
+        text: "The enlistment has been created successfully",
+        icon: "success",
+        confirmButtonText: "Accept",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Error creating the enlistment",
+        icon: "Error",
+        confirmButtonText: "Accept",
+      });
+    }
+  };
+};
+
+const putEnlistment = (id, enlistmentData) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(
+        `http://localhost:3000/enlistments/${id}`,
+        enlistmentData
+      );
+      dispatch({
+        type: PUT_ENLISTMENT,
+        payload: data,
+      });
+      Swal.fire({
+        title: "Enlistment updated!",
+        text: "The enlistment has been updated successfully",
+        icon: "success",
+        confirmButtonText: "Accept",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Error updating the enlistment",
+        icon: "Error",
+        confirmButtonText: "Accept",
+      });
+    }
+  };
+};
+
+const deleteEnlistment = (id) => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(`http://localhost:3000/enlistments/${id}`);
+      dispatch({
+        type: DELETE_ENLISTMENT,
+        payload: id,
+      });
+      Swal.fire({
+        title: "Enlistment deleted!",
+        text: "The enlistment has been deleted successfully",
+        icon: "success",
+        confirmButtonText: "Accept",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Error deleting the enlistment",
+        icon: "Error",
+        confirmButtonText: "Accept",
+      });
+    }
+  };
+};
+
 export {
   getUserDetail,
   getAllUsers,
@@ -330,5 +449,10 @@ export {
   orderDate,
   setIsLogged,
   setInfoUserLogged,
-  updateUserDetail
+  updateUserDetail,
+  getAllEnlistments,
+  getEnlistmentById,
+  postEnlistment,
+  putEnlistment,
+  deleteEnlistment,
 };
