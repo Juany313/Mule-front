@@ -1,12 +1,13 @@
 import React from 'react';
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserDetail, updateUserDetail } from '../../redux/actions';
+import { getUserDetail, updateUserDetail, setInfoUserLogged } from '../../redux/actions';
 import validateProfile from './validateProfile';
 import UserLayout from './UserLayout';
 import Swal from "sweetalert2";
 import userImage from '../../assets/user.png'
 import axios from 'axios';
+import parseJwt from '../../helpers/parseJwt';
 
 const Profile = () => {
     const dispatch = useDispatch()
@@ -30,7 +31,13 @@ const Profile = () => {
 
     useEffect(() => {
         // console.log('useEffect', infoUserLogged)
-        if (infoUserLogged.id) {
+        
+        if (localStorage.getItem('token')) {
+            dispatch(
+                setInfoUserLogged(
+                    parseJwt(localStorage.getItem('token'))
+                )
+            )
             dispatch(getUserDetail(infoUserLogged.id))
         }
     }, [dispatch, infoUserLogged.id])
