@@ -25,7 +25,7 @@ import {
 
 let initialState = {
     allUsers: [],
-    userDetail: [],
+    userDetail: {},
     allOrders: [],
     allOrdersCopy: [],
     filteredOrders: [],
