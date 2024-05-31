@@ -62,7 +62,7 @@ function App() {
           <Route path="pedido" element={<OrderForm />} />
           <Route path="ordershipment/detail/:id" element={<Detail />} />
           <Route path="payment" element={<Payment />} />
-          {/* <Route path="prueba" element={<Products />} /> */}
+         
         </Route>
         <Route path="/admin" element={<LayoutAdminAlpha />}>
           <Route index element={<Home />} />

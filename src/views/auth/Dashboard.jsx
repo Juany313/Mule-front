@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import UserLayout from "../profile/UserLayout";
+import AdminLayout from "../admin/AdminLayout";
 import Header from "../../assets/Header.png";
 import { FaBox, FaSearch, FaPaperPlane } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +13,8 @@ import Swal from "sweetalert2";
 import loginUserAuth from "../../services/auth/requestAuthLogin";
 import parseJwt from "../../helpers/parseJwt";
 import { setInfoUserLogged } from "../../redux/actions";
+import { Link } from "react-router-dom";
+
 
 
 const Dashboard = () => {
@@ -21,6 +24,9 @@ const Dashboard = () => {
   const userDetail = useSelector((state) => state.userDetail); 
   const { isAuthenticated, user } = useAuth0();
   const idUser = infoUserLogged?.id
+
+  let role = infoUserLogged?.role
+
 
     useEffect(() => {
       if (isAuthenticated) {
@@ -72,39 +78,42 @@ const Dashboard = () => {
 
 
   return (
-    <UserLayout >
-      <div className="flex flex-col h-screen pt-28">
-      
-        <header className="bg-#efefef shadow-md w-full py-0 px-0 text-center">
-          <img
-            className="  bg-cover h-full w-full"
-            src={Header}
-            alt="Delivery"
-          />
-        </header>
-        <div className="flex-1 p-0 overflow-y-auto">
-          <h2 className="text-xl font-semibold text-gray-800"></h2>
+    role === "uer" ? 
+      (<UserLayout >
+        <div className="flex flex-col h-screen pt-28">
+        
+          <header className="bg-#efefef shadow-md w-full py-0 px-0 text-center">
+            <img
+              className="  bg-cover h-full w-full"
+              src={Header}
+              alt="Delivery"
+            />
+          </header>
+          <div className="flex-1 p-0 overflow-y-auto">
+            <h2 className="text-xl font-semibold text-gray-800"></h2>
 
-          <div className="p-0 grid grid-cols-1 md:grid-cols-3 gap-4">
-             <ActionButton
-              icon={<FaBox size="3rem" />}
-              title="Cotizar Paquete"
-              onClick={handleQuote}
-            />
-            <ActionButton
-              icon={<FaSearch size="3rem" />}
-              title="Rastrear Pedido"
-              onClick={handleTrack}
-            /> 
-            <ActionButton
-              icon={<FaPaperPlane size="3rem" />}
-              title="Enviar Paquete"
-              onClick={handleSend}
-            />
+            <div className="p-0 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <ActionButton
+                icon={<FaBox size="3rem" />}
+                title="Cotizar Paquete"
+                onClick={handleQuote}
+              />
+              <ActionButton
+                icon={<FaSearch size="3rem" />}
+                title="Rastrear Pedido"
+                onClick={handleTrack}
+              /> 
+              <ActionButton
+                icon={<FaPaperPlane size="3rem" />}
+                title="Enviar Paquete"
+                onClick={handleSend}
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </UserLayout>
+      </UserLayout>
+    ) : <AdminLayout/>
+  
   );
 };
 
