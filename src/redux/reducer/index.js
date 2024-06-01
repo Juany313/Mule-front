@@ -20,12 +20,13 @@ import {
     POST_ENLISTMENT,
     PUT_ENLISTMENT,
     DELETE_ENLISTMENT,
-    SET_ORDER_DATA,
+  SET_ORDER_DATA,
+    POST_IS_LOGING
 } from "../actions";
 
 let initialState = {
     allUsers: [],
-    userDetail: [],
+    userDetail: {},
     allOrders: [],
     allOrdersCopy: [],
     filteredOrders: [],
@@ -204,7 +205,11 @@ function rootReducer(state = initialState, action) {
 
             
         
-        
+      case POST_IS_LOGING:
+        return {
+          ...state,
+          allUsers: action.payload
+        }
 
 
         default:
