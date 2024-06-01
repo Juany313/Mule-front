@@ -29,7 +29,7 @@ export const PUT_ENLISTMENT = "PUT_ENLISTMENT";
 export const DELETE_ENLISTMENT = "DELETE_ENLISTMENT";
 export const SET_ORDER_DATA = "SET_ORDER_DATA";
 
-
+export const POST_IS_LOGING = "POST_IS_LOGING"
 
 
 
@@ -186,8 +186,7 @@ const getUserDetail = (id) => {
 
     const data = await response.json();
 
-      //    const data=users.find(usuario => usuario.id === 4)
-      console.log(data);
+      // console.log('getuserdetail',data);
       return dispatch({
         type: GET_USER_DETAIL,
         payload: data,
@@ -295,6 +294,24 @@ const setIsLogged = (isLogged) => {
   };
 }
 
+export function isLoging(data) {
+  return async function(dispatch) {
+    try {
+      const response = await axios.post('http://localhost:3000/users/register-auth0', data);
+      dispatch({
+        type: POST_IS_LOGING,
+        payload: response.data,
+      });
+      // Devuelve un objeto de acción indicando que la solicitud se completó con éxito
+      return { success: true };
+    } catch (error) {
+      console.error("Error al crear el usuario:", error.message);
+      // Devuelve un objeto de acción indicando que la solicitud falló
+      return { success: false };
+    }
+  };
+}
+
 const setInfoUserLogged = (user) => {
   return {
     type: INFO_USER_LOGGED,
@@ -305,7 +322,7 @@ const setInfoUserLogged = (user) => {
 const updateUserDetail = (id, infoUser)=>{
   return async (dispatch)=>{
     try {
-      const { data } = await axios.put(`http://localhost:3000/users/profile/${id}`, infoUser
+      const { data } = await axios.patch(`http://localhost:3000/users/profile/${id}`, infoUser
       );
       return dispatch({
         type: UPDATE_USER_DETAIL,
