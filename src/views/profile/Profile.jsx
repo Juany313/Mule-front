@@ -29,6 +29,8 @@ const Profile = () => {
     const [errors, setErrors] = useState({});
 
 
+    
+
     useEffect(() => {
         // console.log('useEffect', infoUserLogged)
         
@@ -39,6 +41,7 @@ const Profile = () => {
                 )
             )
             dispatch(getUserDetail(infoUserLogged.id))
+            
         }
     }, [dispatch, infoUserLogged.id])
 
@@ -137,6 +140,7 @@ const Profile = () => {
 
         } else {
             submitHandler();
+            window.location.reload();
             // Si todos los campos están completos, guardar los datos
         }
     }
