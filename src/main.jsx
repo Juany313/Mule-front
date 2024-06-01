@@ -15,7 +15,7 @@ root.render(
         domain="dev-1m7fdf5yimzufwoe.us.auth0.com"
     clientId="G0Zqz0iZxBj1UYFv1OjZsLVuBUi5u5fY"
     authorizationParams={{
-      redirect_uri: "http://localhost:5173"
+      redirect_uri: "http://localhost:4000/auth/dashboard"
     }}
       >
         <App />
