@@ -31,6 +31,7 @@ const Payment = () => {
         payer: {
           name: orderData.name_transmiter,
           surname: orderData.surname_transmiter,
+          email: orderData.email,
           phone: {
             area_code: "54",
             number: orderData.celphone_transmiter,

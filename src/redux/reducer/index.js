@@ -1,44 +1,46 @@
 import {
-  GET_ALL_ORDERS,
-  GET_ALL_USERS,
-  GET_ORDER_ID,
-  GET_USER_DETAIL,
-  FILTER_VALUES,
-  AGREGAR_PEDIDO,
-  GET_ALL_MEASURES,
-  GET_TYPES_SHIPMENTS,
-  GET_ALL_BRANCHES,
-  GET_ORDERS_BY_CLIENT,
-  ORDER_BY_DATE,
-  FILTER_BY_CITY,
-  IS_LOGGED,
-  INFO_USER_LOGGED,
-  SET_ORDER_TYPE,
-  UPDATE_USER_DETAIL,
-  GET_ALL_ENLISTMENTS,
-  GET_ENLISTMENT_BY_ID,
-  POST_ENLISTMENT,
-  PUT_ENLISTMENT,
-  DELETE_ENLISTMENT,
+    GET_ALL_ORDERS,
+    GET_ALL_USERS,
+    GET_ORDER_ID,
+    GET_USER_DETAIL,
+    FILTER_VALUES,
+    AGREGAR_PEDIDO,
+    GET_ALL_MEASURES,
+    GET_TYPES_SHIPMENTS,
+    GET_ALL_BRANCHES,
+    GET_ORDERS_BY_CLIENT,
+    ORDER_BY_DATE,
+    FILTER_BY_CITY,
+    IS_LOGGED,
+    INFO_USER_LOGGED,
+    SET_ORDER_TYPE,
+    UPDATE_USER_DETAIL,
+    GET_ALL_ENLISTMENTS,
+    GET_ENLISTMENT_ID,
+    POST_ENLISTMENT,
+    PUT_ENLISTMENT,
+    DELETE_ENLISTMENT,
+    SET_ORDER_DATA,
 } from "../actions";
 
 let initialState = {
-  allUsers: [],
-  userDetail: [],
-  allOrders: [],
-  allOrdersCopy: [],
-  filteredOrders: [],
-  orderDetail: [],
-  filtrados: [],
-  allMeasures: [],
-  allTypesShipments: [],
-  allBranches: [],
-  isLogged: false,
-  infoUserLogged: {},
-  orderType: "",
-  allEnlistments: [],
-  enlistmentDetail: [],
-};
+    allUsers: [],
+    userDetail: [],
+    allOrders: [],
+    allOrdersCopy: [],
+    filteredOrders: [],
+    orderDetail: [],
+    filtrados: [],
+    allMeasures: [],
+    allTypesShipments: [],
+    allBranches: [],
+    isLogged: false,
+    infoUserLogged: {},
+    orderType: "",
+    allEnlistments: [],
+    enlistmentDetail: [],
+    orderData: []
+}
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -170,7 +172,7 @@ function rootReducer(state = initialState, action) {
         allEnlistments: action.payload,
       };
 
-    case GET_ENLISTMENT_BY_ID:
+    case GET_ENLISTMENT_ID:
       return {
         ...state,
         enlistmentDetail: action.payload,
@@ -182,24 +184,34 @@ function rootReducer(state = initialState, action) {
         allEnlistments: state.allEnlistments.concat(action.payload),
       };
 
-    case PUT_ENLISTMENT:
-      return {
-        ...state,
-        allEnlistments: state.allEnlistments.map((enlistment) => {
-          if (enlistment.id === action.payload.id) {
-            return action.payload;
-          }
-          return enlistment;
-        }),
-      };
+        case PUT_ENLISTMENT:
+            return {
+                ...state,
+                allEnlistments: state.allEnlistments.map(enlistment => {
+                    if (enlistment.id === action.payload.id) {
+                        return action.payload;
+                    }
+                    return enlistment;
+                })
+            }
+        
+        
+        case DELETE_ENLISTMENT:
+            return {
+                ...state,
+                allEnlistments: state.allEnlistments.filter(enlistment => enlistment.id !== action.payload)
+            }
 
-    case DELETE_ENLISTMENT:
-      return {
-        ...state,
-        allEnlistments: state.allEnlistments.filter(
-          (enlistment) => enlistment.id !== action.payload
-        ),
-      };
+        case SET_ORDER_DATA:
+            return {
+                ...state,
+                orderData: action.payload
+            }
+
+            
+        
+        
+
 
     default:
       return state;

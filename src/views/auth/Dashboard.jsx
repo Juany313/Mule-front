@@ -58,7 +58,7 @@ const Dashboard = () => {
 
   // Funciones para manejar los clics en cada tarjeta
    const handleQuote = () => {
-     navigate("/cotizar-paquete");
+     navigate("/header/shipment-price");
    };
 
    const handleTrack = () => {

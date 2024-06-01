@@ -23,10 +23,11 @@ export const AGREGAR_PEDIDO = "AGREGAR_PEDIDO";
 export const POST_USER = "AGREGAR_PEDIDO";
 /* Admin Actions */
 export const GET_ALL_ENLISTMENTS = "GET_ALL_ENLISTMENTS";
-export const GET_ENLISTMENT_BY_ID = "GET_ENLISTMENT_BY_ID";
+export const GET_ENLISTMENT_ID = "GET_ENLISTMENT_BY_ID";
 export const POST_ENLISTMENT = "POST_ENLISTMENT";
 export const PUT_ENLISTMENT = "PUT_ENLISTMENT";
 export const DELETE_ENLISTMENT = "DELETE_ENLISTMENT";
+export const SET_ORDER_DATA = "SET_ORDER_DATA";
 
 
 
@@ -146,6 +147,7 @@ const getAllBranches = () => {
 const createOrder = (userData) => {
   return async (dispatch) => {
     try {
+      console.log("DATA:", userData);
       const { data } = await axios.post(
         "http://localhost:3000/order_shipments",
         userData // Envía los datos del formulario como parte de la solicitud POST
@@ -200,16 +202,7 @@ const getUserDetail = (id) => {
 const getOrdersByClient = (id) =>{
   return async (dispatch)=>{
     try {
-      // const token = localStorage.getItem('token')
-      // if (!token) {
-      //   throw new Error('No token found');
-      // };
       const response = await axios.get (`http://localhost:3000/order_shipments/${id}`
-      // , {
-      //   headers: {
-      //     "Authorization": `Bearer ${token}`
-      //   }
-      // }
     )
       return dispatch ({
         type: GET_ORDERS_BY_CLIENT,
@@ -434,6 +427,30 @@ const deleteEnlistment = (id) => {
   };
 };
 
+const setOrderData = (orderData) => {
+  return {
+    type: SET_ORDER_DATA,
+    payload: orderData,
+  };
+};
+
+const filterOrderShipmentsByUser = (userId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3000/order_shipments/${userId}`
+      );
+      return dispatch({
+        type: GET_ORDERS_BY_CLIENT,
+        payload: data,
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+}
+
+
 export {
   getUserDetail,
   getAllUsers,
@@ -455,4 +472,5 @@ export {
   postEnlistment,
   putEnlistment,
   deleteEnlistment,
+  setOrderData,
 };
