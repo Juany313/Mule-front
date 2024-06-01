@@ -7,6 +7,7 @@ import {
     ListItemSuffix,
     Chip,
   } from "@material-tailwind/react";
+  import { TbUsers } from "react-icons/tb";
   import { IoHomeOutline } from "react-icons/io5";
   import { BsBoxSeam } from "react-icons/bs";
   import { LiaShippingFastSolid } from "react-icons/lia";
@@ -58,7 +59,7 @@ import {
   
         {isChecked && (
           <div
-            className={`flex h-screen pt-16 overflow-hidden ${
+            className={` absolute flex h-screen pt-16 overflow-hidden ${
               isChecked ? "tabscreen-enter-active" : "tabscreen-enter"
             }`}
           >
@@ -76,7 +77,7 @@ import {
               <List className=" gap-8">
                 <ListItem className="gap-3 text-white">
                   <Link
-                    to="/auth/"
+                    to="/admin/"
                     className="flex items-center gap-3 w-full h-full"
                   >
                     <ListItemPrefix>
@@ -112,29 +113,28 @@ import {
   
                 <ListItem className=" gap-3 text-white">
                 <Link
-                    to="/auth/history"
+                    to="customers"
+                    className="flex items-center gap-3 w-full h-full"
+                  >
+                  <ListItemPrefix>
+                    <TbUsers className="h-8 w-8" />
+                  </ListItemPrefix>
+                  Clientes
+                  </Link>
+                </ListItem>
+                
+                <ListItem className=" gap-3 text-white">
+                <Link
+                    to="drivers"
                     className="flex items-center gap-3 w-full h-full"
                   >
                   <ListItemPrefix>
                     <LiaShippingFastSolid className="h-8 w-8" />
                   </ListItemPrefix>
-                  Ver mis envíos
+                  Conductores
                   </Link>
                 </ListItem>
-                <ListItem className=" gap-3 text-white">
-                  <ListItemPrefix>
-                    <TfiLocationPin className="h-8 w-8" />
-                  </ListItemPrefix>
-                  Sucursales
-                  <ListItemSuffix>
-                    <Chip
-                      size="sm"
-                      variant="ghost"
-                      color="blue-gray"
-                      className="rounded-full"
-                    />
-                  </ListItemSuffix>
-                </ListItem>
+                
               </List>
             </Card>
           </div>

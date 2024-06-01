@@ -4,6 +4,7 @@ import UserLayout from "../profile/UserLayout";
 import AdminLayout from "../admin/AdminLayout";
 import Header from "../../assets/Header.png";
 import { FaBox, FaSearch, FaPaperPlane } from "react-icons/fa";
+import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { getUserDetail, setIsLogged } from "../../redux/actions";
 import { useEffect } from "react";
@@ -14,6 +15,7 @@ import loginUserAuth from "../../services/auth/requestAuthLogin";
 import parseJwt from "../../helpers/parseJwt";
 import { setInfoUserLogged } from "../../redux/actions";
 import { Link } from "react-router-dom";
+
 
 
 
@@ -75,6 +77,7 @@ const Dashboard = () => {
     navigate("/header/pedido");
   };
 
+  
 
 
   return (
@@ -112,8 +115,7 @@ const Dashboard = () => {
           </div>
         </div>
       </UserLayout>
-    ) : <AdminLayout/>
-  
+    ) : (window.location.href = "http://localhost:4000/admin")
   );
 };
 

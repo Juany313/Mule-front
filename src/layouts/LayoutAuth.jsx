@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const LayoutAuth = () => {
   return (
-    <div className=" min-h-screen flex  items-center">
+    <div className=" min-h-screen flex justify-center items-center">
       <Outlet />
     </div>
   );

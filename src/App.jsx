@@ -26,6 +26,8 @@ import Home from "./views/admin/Home";
 import Profile from "./views/profile/Profile";
 import Payment from "./components/Payment";
 import Dashboard from "./views/auth/Dashboard";
+import Customers from "./views/admin/customers/Customers"
+import Drivers from "./views/admin/drivers/Drivers"
 import AuthenticatedApp from "./views/profile/AuthenticatedApp";
 import Shipments from "./views/auth/Shipments";
 import History from "./views/auth/History";
@@ -65,11 +67,9 @@ function App() {
          
         </Route>
         <Route path="/admin" element={<LayoutAdminAlpha />}>
-          <Route index element={<Home />} />
-          <Route path="enlistment" element={<Enlistment />}>
-            <Route index element={<EnlistmentForm />} />
-            <Route path="list" element={<EnlistmentTable />} />
-          </Route>
+          <Route index element={<Enlistment />} />
+          <Route path="customers" element={<Customers />} />
+          <Route path="drivers" element={<Drivers />} />
         </Route>
         <Route path="*" element={<LayoutError />} />
       </Routes>
