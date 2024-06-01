@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export default async function loginUserAuth(email,name) {
+export default async function loginUserAuth(email, name) {
+  console.log(email,name);
   try {
     const response = await axios.post(
       "http://localhost:3000/users/register-auth0",
@@ -11,6 +12,7 @@ export default async function loginUserAuth(email,name) {
 
     if (response.data) {
       const token = response.data;
+      console.log("Token recibido:", token); 
       localStorage.setItem("token", token);
       return token;
     } else {
