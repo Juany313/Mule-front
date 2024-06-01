@@ -224,8 +224,7 @@ const Login = () => {
   const isLogged = useSelector((state) => state.isLogged);
   const [showPassword, SetShowPassword] = useState(false);
   const [showEmail, setShowEmail] = useState(false);
-  const { isAuthenticated, user } = useAuth0();
-  const { getIdTokenClaims } = useAuth0();
+  const { isAuthenticated} = useAuth0();
   const { loginWithRedirect } = useAuth0();
   const [formData, setFormData] = useState({
     email: localStorage.getItem("email") || "",

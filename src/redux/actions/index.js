@@ -184,8 +184,7 @@ const getUserDetail = (id) => {
     });
 
     const data = await response.json();
-
-      // console.log('getuserdetail',data);
+      //console.log('getuserdetail',data);
       return dispatch({
         type: GET_USER_DETAIL,
         payload: data,
