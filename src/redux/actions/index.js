@@ -29,7 +29,7 @@ export const PUT_ENLISTMENT = "PUT_ENLISTMENT";
 export const DELETE_ENLISTMENT = "DELETE_ENLISTMENT";
 export const SET_ORDER_DATA = "SET_ORDER_DATA";
 
-
+export const POST_IS_LOGING = "POST_IS_LOGING"
 
 
 
@@ -290,6 +290,24 @@ const setIsLogged = (isLogged) => {
   return {
     type: IS_LOGGED,
     payload: isLogged,
+  };
+}
+
+export function isLoging(data) {
+  return async function(dispatch) {
+    try {
+      const response = await axios.post('http://localhost:3000/users/register-auth0', data);
+      dispatch({
+        type: POST_IS_LOGING,
+        payload: response.data,
+      });
+      // Devuelve un objeto de acción indicando que la solicitud se completó con éxito
+      return { success: true };
+    } catch (error) {
+      console.error("Error al crear el usuario:", error.message);
+      // Devuelve un objeto de acción indicando que la solicitud falló
+      return { success: false };
+    }
   };
 }
 

@@ -22,6 +22,9 @@ const Dashboard = () => {
   const { isAuthenticated, user } = useAuth0();
   const idUser = infoUserLogged?.id
 
+
+  console.log(user);
+
     useEffect(() => {
       if (isAuthenticated) {
         dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
