@@ -34,10 +34,11 @@ import History from "./views/auth/History";
 import ConfirmEmail from "./views/auth/ConfirmEmail";
 
 
-/* Enlistment */
+/* Admin */
 import Enlistment from "./views/admin/Enlistment/Enlistment";
 import EnlistmentTable from "./views/admin/Enlistment/EnlistmentTable";
 import EnlistmentForm from "./views/admin/Enlistment/EnlistmentForm";
+import CreateDriver from "./views/admin/drivers/CreateDriver";
 
 function App() {
   return (
@@ -70,6 +71,7 @@ function App() {
           <Route index element={<Enlistment />} />
           <Route path="customers" element={<Customers />} />
           <Route path="drivers" element={<Drivers />} />
+          <Route path="drivers/create" element={<CreateDriver />} />
         </Route>
         <Route path="*" element={<LayoutError />} />
       </Routes>

@@ -16,19 +16,26 @@ import {
   import { useAuth0 } from "@auth0/auth0-react";
   import "./NavAdmin.css";
   import LOGO from "../../assets/LogoMule.png";
-  import { useState } from "react";
+  import { useState, useEffect } from "react";
   import { Link } from "react-router-dom";
   import { useDispatch } from "react-redux";
   import { setIsLogged } from "../../redux/actions";
+  import { useLocation } from "react-router-dom";
   
   const NavAdmin = () => {
     const dispatch = useDispatch();
     const { logout } = useAuth0();
+    const location = useLocation();
     const [isChecked, setIsChecked] = useState(false);
   
     const handleCheck = () => {
       setIsChecked(!isChecked);
     };
+
+    useEffect(() => {
+      // Ocultar la barra de navegación al cambiar de ubicación
+      setIsChecked(false);
+    }, [location]);
   
     const handleLogout = () => {
        logout({ logoutParams: { returnTo: "http://localhost:4000/header" } })
@@ -87,29 +94,7 @@ import {
                   </Link>
                 </ListItem>
   
-                <ListItem className="gap-3 text-white">
-                  <Link
-                    to="/auth/profile"
-                    className="flex items-center gap-3 w-full h-full"
-                  >
-                    <ListItemPrefix>
-                      <LuUserSquare2  className="h-8 w-8" />
-                    </ListItemPrefix>
-                    Perfil
-                  </Link>
-                </ListItem>
-  
-                <ListItem className=" gap-3  text-white">
-                  <Link
-                    to="/header/pedido"
-                    className="flex items-center gap-3 w-full h-full"
-                  >
-                    <ListItemPrefix>
-                      <BsBoxSeam className="h-8 w-8" />
-                    </ListItemPrefix>
-                    Hacer un envío
-                  </Link>
-                </ListItem>
+                
   
                 <ListItem className=" gap-3 text-white">
                 <Link

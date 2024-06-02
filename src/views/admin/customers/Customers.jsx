@@ -2,7 +2,7 @@ import React from 'react'
 
 const Customers = () => {
   return (
-    <div className='w-[200px] bg-slate-500 '>Customers</div>
+    <div className='min-h-[80vh] flex justify-center items-center '>Customers</div>
   )
 }
 
