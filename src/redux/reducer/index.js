@@ -20,17 +20,22 @@ import {
     POST_ENLISTMENT,
     PUT_ENLISTMENT,
     DELETE_ENLISTMENT,
-    SET_ORDER_DATA,
+
+    
     SET_PAGE_DRIVERS,
     INCREASE_PAGE_DRIVERS,
     DECREASE_PAGE_DRIVERS,
     GET_DRIVERS,
     
+
+  SET_ORDER_DATA,
+    POST_IS_LOGING
+
 } from "../actions";
 
 let initialState = {
     allUsers: [],
-    userDetail: [],
+    userDetail: {},
     allOrders: [],
     allOrdersCopy: [],
     filteredOrders: [],
@@ -51,6 +56,7 @@ let initialState = {
 }
 
 function rootReducer(state = initialState, action) {
+
     switch (action.type) {
         case SET_PAGE_DRIVERS:
             return {
@@ -233,13 +239,16 @@ function rootReducer(state = initialState, action) {
 
             
         
-        
+      case POST_IS_LOGING:
+        return {
+          ...state,
+          allUsers: action.payload
+        }
 
 
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 }
-
 
 export default rootReducer;

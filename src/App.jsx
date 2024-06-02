@@ -38,7 +38,11 @@ import ConfirmEmail from "./views/auth/ConfirmEmail";
 import Enlistment from "./views/admin/Enlistment/Enlistment";
 import EnlistmentTable from "./views/admin/Enlistment/EnlistmentTable";
 import EnlistmentForm from "./views/admin/Enlistment/EnlistmentForm";
+
 import CreateDriver from "./views/admin/drivers/CreateDriver";
+
+import ShipmentPrice from "./components/ShipmentPrice";
+
 
 function App() {
   return (
@@ -65,7 +69,13 @@ function App() {
           <Route path="pedido" element={<OrderForm />} />
           <Route path="ordershipment/detail/:id" element={<Detail />} />
           <Route path="payment" element={<Payment />} />
+
          
+
+          <Route path= "shipment-price" element={ <ShipmentPrice /> } />
+
+          {/* <Route path="prueba" element={<Products />} /> */}
+
         </Route>
         <Route path="/admin" element={<LayoutAdminAlpha />}>
           <Route index element={<Enlistment />} />
