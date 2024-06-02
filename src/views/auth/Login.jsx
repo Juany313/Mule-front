@@ -208,6 +208,8 @@ import Swal from "sweetalert2";
 import { RiMailLine, RiLock2Line } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";
 import { LuEye, LuEyeOff } from "react-icons/lu";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook,FaGithub } from "react-icons/fa6";
 //import { Checkbox } from "@material-tailwind/react";
 
 /* services, helpers and actions */
@@ -217,6 +219,7 @@ import {
   setIsLogged,
   setInfoUserLogged
   } from "../../redux/actions/index";
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -293,22 +296,11 @@ const Login = () => {
   };
 
   return (
-    <div>
+   <div>
         <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">
           <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-white mb-8">
             Iniciar <span className="text-primary">sesión</span>
-          </h1>
-          <button
-            className="flex items-center justify-center py-3 px-4 gap-4 bg-secondary-900 w-full rounded-full mb-8 text-gray-100"
-            onClick={() => loginWithRedirect()}
-          >
-            <img
-              src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png"
-              alt="Google Logo"
-              className="w-4 h-4"
-            />
-            Ingresa con Google
-          </button>
+        </h1>
 
           <div className="relative mb-4">
             <RiMailLine className="absolute top-1/2 -translate-y-1/2 left-2 text-primary" />
@@ -367,7 +359,43 @@ const Login = () => {
             >
               Ingresar
             </button>
-          </div>
+        </div>
+
+        <p className=" text-black py-3 text-center "> O Ingresa con alguna de tus redes Sociales: </p>
+        <div className="flex items-center justify-center">
+          <button
+            className="flex items-center justify-center mx-4 gap-2 bg-secondary-900 w-13 h-13 rounded-full mb-5 text-gray-300  hover:bg-blue-900 "
+            onClick={() => loginWithRedirect()}
+          >
+            <FcGoogle
+              className="w-9  h-9"
+            />
+          
+            
+        </button>
+
+        {/* Facebook */}
+          <button
+            className="flex items-center justify-center  mx-4 gap-2 bg-secondary-900 w-13 h-13 rounded-full mb-5 text-gray-300  hover:bg-blue-900 hover:text-white"
+            onClick={() => loginWithRedirect()}
+          >
+            <FaFacebook
+              className="w-9  h-9 text-white"
+            />
+            
+        </button>
+        
+
+        {/* GitHub */}
+          <button
+            className="flex items-center justify-center mx-4 gap-2 bg-secondary-900 w-13 h-13 rounded-full mb-5  hover:bg-blue-900 hover:text-white"
+            onClick={() => loginWithRedirect()}
+          >
+            <FaGithub
+              className="w-9  h-9  "
+            />
+        </button>
+        </div>
           <div className="flex flex-col flex-gap-4 items-center ">
             <Link
               to="/auth/olvide-password"
@@ -384,7 +412,8 @@ const Login = () => {
                 Registrate
               </Link>
             </span>
-          </div>
+        </div>
+        
         </div>
       
     </div>
