@@ -147,6 +147,7 @@ const getAllBranches = () => {
 const createOrder = (userData) => {
   return async (dispatch) => {
     try {
+      console.log("DATA:", userData);
       const { data } = await axios.post(
         "http://localhost:3000/order_shipments",
         userData // Envía los datos del formulario como parte de la solicitud POST
@@ -184,8 +185,7 @@ const getUserDetail = (id) => {
     });
 
     const data = await response.json();
-
-      // console.log('getuserdetail',data);
+      //console.log('getuserdetail',data);
       return dispatch({
         type: GET_USER_DETAIL,
         payload: data,
