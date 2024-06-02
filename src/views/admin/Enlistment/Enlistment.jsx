@@ -33,8 +33,10 @@ const Enlistments = () => {
     }
 
     return (
+
         <div className="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0 m-8">
             {/*<div className="md:w-1/4">
+
                 <h1 className="text-2xl font-semibold mb-4">Enlistments</h1>
                 <EnlistmentForm  
                     setDeleteOnOff = {setDeleteOnOff}
