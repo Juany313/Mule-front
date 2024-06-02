@@ -3,7 +3,10 @@ import validateDrivers from "./validateDrivers"
 
 /* hooks */
 import {useDispatch} from "react-redux";
-import { useState } from "react";
+import { useState } from "react";postDriver
+
+/* actions */
+import {postDriver} from "../../../redux/actions/index"
 
 const CreateDriver = () => {
 
@@ -41,13 +44,12 @@ const CreateDriver = () => {
           });
       };
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         setSubmitButtonClicked(true);
       
-        
-        //const result = await dispatch(postUser(userData));
-        //console.log("result.success", result);
+        const result =  dispatch(postDriver(driverData));
+        console.log("result.success", result);
         
         
       };
@@ -56,7 +58,7 @@ const CreateDriver = () => {
 
   return (
     <div className="  flex justify-center items-center mt-[200px]">
-        <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">
+        <div className="bg-gray-400 p-8 rounded-xl w-auto  lg:w-[450px]">
         
         <form className="mb-8  " onSubmit={handleSubmit}>
 
@@ -90,7 +92,7 @@ const CreateDriver = () => {
             <div>
                 <button
                     type="submit"
-                    className="bg-s300 text-black uppercase font-bold text-sm w-full py-3 px-4 rounded-lg hover:text-gray-100 transition-colors"
+                    className="bg-gray-500 text-black uppercase font-bold text-sm w-full py-3 px-4 rounded-lg hover:text-gray-100 transition-colors"
                 >
                     Crear Conductor
                 </button>

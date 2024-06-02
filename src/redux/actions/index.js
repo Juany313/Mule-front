@@ -33,21 +33,11 @@ export const SET_ORDER_DATA = "SET_ORDER_DATA";
 export const SET_PAGE_DRIVERS = "SET_PAGE_DRIVERS";
 export const INCREASE_PAGE_DRIVERS = "INCREASE_PAGE_DRIVERS";
 export const DECREASE_PAGE_DRIVERS = "DECREASE_PAGE_DRIVERS";
+export const GET_DRIVERS = "GET_DRIVERS";
+export const POST_DRIVER = "POST_DRIVER";
 
 
-/* Driver Paginate */
-export const setPageDrivers = (page) => ({
-  type: SET_PAGE_DRIVERS,
-  payload: page
-});
 
-export const increasePageDrivers = () => ({
-  type: INCREASE_PAGE_DRIVERS
-});
-
-export const decreasePageDrivers = () => ({
-  type: DECREASE_PAGE_DRIVERS
-});
 
 
  const URL_BASE = "http://localhost:3000";
@@ -453,6 +443,46 @@ const filterOrderShipmentsByUser = (userId) => {
   };
 }
 
+/* Driver Paginate */
+export const setPageDrivers = (page) => ({
+  type: SET_PAGE_DRIVERS,
+  payload: page
+});
+
+export const increasePageDrivers = () => ({
+  type: INCREASE_PAGE_DRIVERS
+});
+
+export const decreasePageDrivers = () => ({
+  type: DECREASE_PAGE_DRIVERS
+});
+
+/* Drivers */
+
+export function getDrivers(){
+  return async function(dispatch){
+      const response = await axios("http://localhost:3000/drivers")
+      return dispatch({
+          type: GET_DRIVERS,
+          payload: [{hola:"acaa"}] //response.data
+      })
+  }
+}
+
+export function postDriver(driver) {
+  return async function(dispatch) {
+      try {
+      const response = await axios.post('http://localhost:300/drivers', driver);
+
+      return dispatch({
+          type: POST_DRIVER,
+          payload: response.data,
+      });
+      } catch (error) {
+      console.error(error);
+      }
+  };
+}
 
 export {
   getUserDetail,

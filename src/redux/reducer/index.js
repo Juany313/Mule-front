@@ -23,7 +23,9 @@ import {
     SET_ORDER_DATA,
     SET_PAGE_DRIVERS,
     INCREASE_PAGE_DRIVERS,
-    DECREASE_PAGE_DRIVERS
+    DECREASE_PAGE_DRIVERS,
+    GET_DRIVERS,
+    
 } from "../actions";
 
 let initialState = {
@@ -45,6 +47,7 @@ let initialState = {
     orderData: [],
     currentPageDrivers: 1,
     itemsPerPageDrivers: 5,
+    allDrivers: []
 }
 
 function rootReducer(state = initialState, action) {
@@ -65,6 +68,11 @@ function rootReducer(state = initialState, action) {
                 currentPageDrivers: state.currentPageDrivers - 1
             };
 
+        case GET_DRIVERS:
+            return {
+                ...state,
+                allDrivers: action.payload,
+            };
         case GET_ALL_USERS:
             return {
                 ...state,
