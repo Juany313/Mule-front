@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import UserLayout from "../profile/UserLayout";
-import AdminLayout from "../admin/AdminLayout";
 import Header from "../../assets/Header.png";
 import { FaBox, FaSearch, FaPaperPlane } from "react-icons/fa";
 import { Navigate } from "react-router-dom";
