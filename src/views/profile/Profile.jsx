@@ -15,6 +15,7 @@ const Profile = () => {
     const infoUserLogged = useSelector((state) => state.infoUserLogged)
 
     const [isEditing, setIsEditing] = useState(false);
+    
 
     const [input, setInput] = useState({
         name: "",
@@ -29,8 +30,6 @@ const Profile = () => {
     const [errors, setErrors] = useState({});
 
 
-    
-
     useEffect(() => {
         // console.log('useEffect', infoUserLogged)
         
@@ -40,8 +39,9 @@ const Profile = () => {
                     parseJwt(localStorage.getItem('token'))
                 )
             )
-            dispatch(getUserDetail(infoUserLogged.id))
             
+            dispatch(getUserDetail(infoUserLogged.id))
+           
         }
     }, [dispatch, infoUserLogged.id])
 
