@@ -12,7 +12,7 @@ function DriversTable({ drivers }) {
   const displayedDrivers = drivers?.slice(startIndex, endIndex);
 
   return (
-    <div className="overflow-x-auto">
+    <div className=" overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
@@ -31,7 +31,7 @@ function DriversTable({ drivers }) {
           ))}
         </tbody>
       </table>
-      <div className="flex justify-center mt-4">
+      <div className="absolute bottom-0 left-0 w-full py-4 flex justify-center">
         {/* Botón Anterior */}
         <button
           onClick={() => {
