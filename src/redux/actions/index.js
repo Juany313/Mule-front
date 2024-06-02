@@ -29,11 +29,28 @@ export const PUT_ENLISTMENT = "PUT_ENLISTMENT";
 export const DELETE_ENLISTMENT = "DELETE_ENLISTMENT";
 export const SET_ORDER_DATA = "SET_ORDER_DATA";
 
+/* Admin Drivers Actions */
+export const SET_PAGE_DRIVERS = "SET_PAGE_DRIVERS";
+export const INCREASE_PAGE_DRIVERS = "INCREASE_PAGE_DRIVERS";
+export const DECREASE_PAGE_DRIVERS = "DECREASE_PAGE_DRIVERS";
 
 
+/* Driver Paginate */
+export const setPageDrivers = (page) => ({
+  type: SET_PAGE_DRIVERS,
+  payload: page
+});
+
+export const increasePageDrivers = () => ({
+  type: INCREASE_PAGE_DRIVERS
+});
+
+export const decreasePageDrivers = () => ({
+  type: DECREASE_PAGE_DRIVERS
+});
 
 
-// const URL_BASE = "http://localhost:3000";
+ const URL_BASE = "http://localhost:3000";
 
 // actions.js
 
@@ -52,20 +69,7 @@ export const agregarPedido = (pedido) => {
 };
 
 
-/* export function postUser(data) {
-  return async function(dispatch) {
-      try {
-      const response = await axios.post('http://localhost:3000/users/register', data);
 
-      return dispatch({
-          type: POST_USER,
-          payload: response.data,
-      });
-      } catch (error) {
-      console.error(error.message);
-      }
-  };
-} */
 
 //formulario de registro
 export function postUser(data) {

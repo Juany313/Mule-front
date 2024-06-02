@@ -21,6 +21,9 @@ import {
     PUT_ENLISTMENT,
     DELETE_ENLISTMENT,
     SET_ORDER_DATA,
+    SET_PAGE_DRIVERS,
+    INCREASE_PAGE_DRIVERS,
+    DECREASE_PAGE_DRIVERS
 } from "../actions";
 
 let initialState = {
@@ -39,11 +42,29 @@ let initialState = {
     orderType: "",
     allEnlistments: [],
     enlistmentDetail: [],
-    orderData: []
+    orderData: [],
+    currentPageDrivers: 1,
+    itemsPerPageDrivers: 5,
 }
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
+        case SET_PAGE_DRIVERS:
+            return {
+                ...state,
+                currentPageDrivers: action.payload
+            };
+        case INCREASE_PAGE_DRIVERS:
+            return {
+                ...state,
+                currentPageDrivers: state.currentPageDrivers + 1
+            };
+        case DECREASE_PAGE_DRIVERS:
+            return {
+                ...state,
+                currentPageDrivers: state.currentPageDrivers - 1
+            };
+
         case GET_ALL_USERS:
             return {
                 ...state,
