@@ -28,7 +28,6 @@ const NavProfile = () => {
   const [isChecked, setIsChecked] = useState(false);
 
   const infoUserLogged = useSelector((state) => state.infoUserLogged.name);
-  console.log("USERNAME: ",infoUserLogged);
 
 
 
