@@ -12,6 +12,8 @@ const Enlistments = () => {
     const [selectSubmit, setSelectSubmit] = useState('')
     const [createOnOff, setCreateOnOff] = useState(false) 
 
+    
+
     const handleSave = (e) => {
         e.preventDefault();
         // Aquí irá la lógica para guardar o actualizar los datos de enlistamiento

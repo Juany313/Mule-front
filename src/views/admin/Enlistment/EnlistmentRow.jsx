@@ -15,10 +15,7 @@ const EnlistmentRow = ({
     createOnOff,
     setCreateOnOff,}) => {
 
-    const { getOrderShipmentById } = useEnlistment();
 
-    const orderShipment = getOrderShipmentById(orderShipment_Id);
-    console.log(orderShipment);
 
     const onEdit = () => {
         setEditOnOff(false);

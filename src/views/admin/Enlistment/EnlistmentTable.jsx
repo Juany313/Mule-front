@@ -1,9 +1,10 @@
 import React from 'react';
 import { useDispatch} from 'react-redux';
 import { useEffect } from 'react';
-import { getAllEnlistments } from '../../../redux/actions';
+import { getAllEnlistments, getAllOrders } from '../../../redux/actions';
 import useEnlistment from '../../../hooks/useEnlistment';
 import EnlistmentRow from './EnlistmentRow';
+import useOrderShipment from '../../../hooks/useOrderShipment';
 
 const EnlistmentTable = (
     editOnOff ,
@@ -17,12 +18,33 @@ const EnlistmentTable = (
     setCreateOnOff
 ) => {
     const { allEnlistments } = useEnlistment();
+    const {allOrders} = useOrderShipment();
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getAllEnlistments());
+        dispatch(getAllOrders());
+
     }
     , [dispatch]);
+
+    useEffect(() => {
+        console.log(allEnlistments);
+        console.log(allOrders);
+        const orderWithEnlistmet = allEnlistments.map((enlistment) => {
+            const orderShipment_Id = enlistment.ordershipment_id;
+            const order = allOrders.find(order => order.id === orderShipment_Id);
+            return {
+                ...enlistment,
+                order
+            }
+        });
+        // ...
+    }, [allEnlistments, allOrders]);
+    
+
+
+
 
     return (
         <table className="min-w-full divide-y divide-gray-200">
@@ -43,7 +65,8 @@ const EnlistmentTable = (
                     return (
                         <EnlistmentRow
                             orderShipment_Id={orderShipment_Id}
-                            enlistment={enlistment} 
+                            enlistment={enlistment}
+
                             key={enlistment.id} 
                             actualBackOrder={actualBackOrder}
                             editOnOff={editOnOff} 
