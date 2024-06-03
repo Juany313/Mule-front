@@ -20,11 +20,22 @@ import {
     POST_ENLISTMENT,
     PUT_ENLISTMENT,
     DELETE_ENLISTMENT,
+
+    
+    SET_PAGE_DRIVERS,
+    INCREASE_PAGE_DRIVERS,
+    DECREASE_PAGE_DRIVERS,
+    GET_DRIVERS,
+    
+
+  SET_ORDER_DATA,
+    POST_IS_LOGING
+
 } from "../actions";
 
 let initialState = {
     allUsers: [],
-    userDetail: [],
+    userDetail: {},
     allOrders: [],
     allOrdersCopy: [],
     filteredOrders: [],
@@ -38,10 +49,36 @@ let initialState = {
     orderType: "",
     allEnlistments: [],
     enlistmentDetail: [],
+    orderData: [],
+    currentPageDrivers: 1,
+    itemsPerPageDrivers: 5,
+    allDrivers: []
 }
 
 function rootReducer(state = initialState, action) {
+
     switch (action.type) {
+        case SET_PAGE_DRIVERS:
+            return {
+                ...state,
+                currentPageDrivers: action.payload
+            };
+        case INCREASE_PAGE_DRIVERS:
+            return {
+                ...state,
+                currentPageDrivers: state.currentPageDrivers + 1
+            };
+        case DECREASE_PAGE_DRIVERS:
+            return {
+                ...state,
+                currentPageDrivers: state.currentPageDrivers - 1
+            };
+
+        case GET_DRIVERS:
+            return {
+                ...state,
+                allDrivers: action.payload,
+            };
         case GET_ALL_USERS:
             return {
                 ...state,
@@ -193,14 +230,25 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 allEnlistments: state.allEnlistments.filter(enlistment => enlistment.id !== action.payload)
             }
+
+        case SET_ORDER_DATA:
+            return {
+                ...state,
+                orderData: action.payload
+            }
+
+            
         
-    
+      case POST_IS_LOGING:
+        return {
+          ...state,
+          allUsers: action.payload
+        }
 
 
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 }
-
 
 export default rootReducer;

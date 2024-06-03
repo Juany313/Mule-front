@@ -27,12 +27,24 @@ export const GET_ENLISTMENT_ID = "GET_ENLISTMENT_BY_ID";
 export const POST_ENLISTMENT = "POST_ENLISTMENT";
 export const PUT_ENLISTMENT = "PUT_ENLISTMENT";
 export const DELETE_ENLISTMENT = "DELETE_ENLISTMENT";
+export const SET_ORDER_DATA = "SET_ORDER_DATA";
+
+
+/* Admin Drivers Actions */
+export const SET_PAGE_DRIVERS = "SET_PAGE_DRIVERS";
+export const INCREASE_PAGE_DRIVERS = "INCREASE_PAGE_DRIVERS";
+export const DECREASE_PAGE_DRIVERS = "DECREASE_PAGE_DRIVERS";
+export const GET_DRIVERS = "GET_DRIVERS";
+export const POST_DRIVER = "POST_DRIVER";
+
+
+export const POST_IS_LOGING = "POST_IS_LOGING"
 
 
 
 
 
-// const URL_BASE = "http://localhost:3000";
+ const URL_BASE = "https://mule-server.onrender.com";
 
 // actions.js
 
@@ -51,20 +63,7 @@ export const agregarPedido = (pedido) => {
 };
 
 
-/* export function postUser(data) {
-  return async function(dispatch) {
-      try {
-      const response = await axios.post('http://localhost:3000/users/register', data);
 
-      return dispatch({
-          type: POST_USER,
-          payload: response.data,
-      });
-      } catch (error) {
-      console.error(error.message);
-      }
-  };
-} */
 
 //formulario de registro
 export function postUser(data) {
@@ -146,6 +145,7 @@ const getAllBranches = () => {
 const createOrder = (userData) => {
   return async (dispatch) => {
     try {
+      console.log("DATA:", userData);
       const { data } = await axios.post(
         "https://mule-server.onrender.com/order_shipments",
         userData // Envía los datos del formulario como parte de la solicitud POST
@@ -183,9 +183,7 @@ const getUserDetail = (id) => {
     });
 
     const data = await response.json();
-
-      //    const data=users.find(usuario => usuario.id === 4)
-      console.log(data);
+      //console.log('getuserdetail',data);
       return dispatch({
         type: GET_USER_DETAIL,
         payload: data,
@@ -299,6 +297,24 @@ const setIsLogged = (isLogged) => {
   return {
     type: IS_LOGGED,
     payload: isLogged,
+  };
+}
+
+export function isLoging(data) {
+  return async function(dispatch) {
+    try {
+      const response = await axios.post('https://mule-server.onrender.com/users/register-auth0', data);
+      dispatch({
+        type: POST_IS_LOGING,
+        payload: response.data,
+      });
+      // Devuelve un objeto de acción indicando que la solicitud se completó con éxito
+      return { success: true };
+    } catch (error) {
+      console.error("Error al crear el usuario:", error.message);
+      // Devuelve un objeto de acción indicando que la solicitud falló
+      return { success: false };
+    }
   };
 }
 
@@ -434,6 +450,70 @@ const deleteEnlistment = (id) => {
   };
 };
 
+const setOrderData = (orderData) => {
+  return {
+    type: SET_ORDER_DATA,
+    payload: orderData,
+  };
+};
+
+const filterOrderShipmentsByUser = (userId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(
+        `https://mule-server.onrender.com/order_shipments/${userId}`
+      );
+      return dispatch({
+        type: GET_ORDERS_BY_CLIENT,
+        payload: data,
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+}
+
+/* Driver Paginate */
+export const setPageDrivers = (page) => ({
+  type: SET_PAGE_DRIVERS,
+  payload: page
+});
+
+export const increasePageDrivers = () => ({
+  type: INCREASE_PAGE_DRIVERS
+});
+
+export const decreasePageDrivers = () => ({
+  type: DECREASE_PAGE_DRIVERS
+});
+
+/* Drivers */
+
+export function getDrivers(){
+  return async function(dispatch){
+      const response = await axios("https://mule-server.onrender.com/drivers")
+      return dispatch({
+          type: GET_DRIVERS,
+          payload: [{hola:"acaa"}] //response.data
+      })
+  }
+}
+
+export function postDriver(driver) {
+  return async function(dispatch) {
+      try {
+      const response = await axios.post('https://mule-server.onrender.com/drivers', driver);
+
+      return dispatch({
+          type: POST_DRIVER,
+          payload: response.data,
+      });
+      } catch (error) {
+      console.error(error);
+      }
+  };
+}
+
 export {
   getUserDetail,
   getAllUsers,
@@ -455,4 +535,4 @@ export {
   postEnlistment,
   putEnlistment,
   deleteEnlistment,
-};
+}
