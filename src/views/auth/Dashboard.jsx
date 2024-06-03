@@ -89,7 +89,7 @@ const Dashboard = () => {
 
 
   return (
-    role === "uer" ? 
+    role === "user" ? 
       (<UserLayout >
         <div className="flex flex-col h-screen pt-28">
         
