@@ -3,15 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import UserLayout from "../profile/UserLayout";
 import Header from "../../assets/Header.png";
 import { FaBox, FaSearch, FaPaperPlane } from "react-icons/fa";
+import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { getUserDetail, setIsLogged } from "../../redux/actions";
+import { setIsLogged } from "../../redux/actions";
 import { useEffect } from "react";
 //import { useSelect } from "@material-tailwind/react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Swal from "sweetalert2";
 import loginUserAuth from "../../services/auth/requestAuthLogin";
 import parseJwt from "../../helpers/parseJwt";
-import { setInfoUserLogged } from "../../redux/actions";
+
+import { Link } from "react-router-dom";
+
+
+
+import { setInfoUserLogged, getUserDetail } from "../../redux/actions";
+
 
 
 const Dashboard = () => {
@@ -23,11 +30,17 @@ const Dashboard = () => {
   const idUser = infoUserLogged?.id
 
 
+  let role = infoUserLogged?.role
+
+
+
   console.log(user);
+
 
     useEffect(() => {
       if (isAuthenticated) {
         dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
+        dispatch(getUserDetail(infoUserLogged.id))
       }
     }, []);
 
@@ -72,42 +85,45 @@ const Dashboard = () => {
     navigate("/header/pedido");
   };
 
+  
 
 
   return (
-    <UserLayout >
-      <div className="flex flex-col h-screen pt-28">
-      
-        <header className="bg-#efefef shadow-md w-full py-0 px-0 text-center">
-          <img
-            className="  bg-cover h-full w-full"
-            src={Header}
-            alt="Delivery"
-          />
-        </header>
-        <div className="flex-1 p-0 overflow-y-auto">
-          <h2 className="text-xl font-semibold text-gray-800"></h2>
+    role === "user" ? 
+      (<UserLayout >
+        <div className="flex flex-col h-screen pt-28">
+        
+          <header className="bg-#efefef shadow-md w-full py-0 px-0 text-center">
+            <img
+              className="  bg-cover h-full w-full"
+              src={Header}
+              alt="Delivery"
+            />
+          </header>
+          <div className="flex-1 p-0 overflow-y-auto">
+            <h2 className="text-xl font-semibold text-gray-800"></h2>
 
-          <div className="p-0 grid grid-cols-1 md:grid-cols-3 gap-4">
-             <ActionButton
-              icon={<FaBox size="3rem" />}
-              title="Cotizar Paquete"
-              onClick={handleQuote}
-            />
-            <ActionButton
-              icon={<FaSearch size="3rem" />}
-              title="Rastrear Pedido"
-              onClick={handleTrack}
-            /> 
-            <ActionButton
-              icon={<FaPaperPlane size="3rem" />}
-              title="Enviar Paquete"
-              onClick={handleSend}
-            />
+            <div className="p-0 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <ActionButton
+                icon={<FaBox size="3rem" />}
+                title="Cotizar Paquete"
+                onClick={handleQuote}
+              />
+              <ActionButton
+                icon={<FaSearch size="3rem" />}
+                title="Rastrear Pedido"
+                onClick={handleTrack}
+              /> 
+              <ActionButton
+                icon={<FaPaperPlane size="3rem" />}
+                title="Enviar Paquete"
+                onClick={handleSend}
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </UserLayout>
+      </UserLayout>
+    ) : (window.location.href = "http://localhost:4000/admin")
   );
 };
 
