@@ -1,14 +1,23 @@
 // Componente LayoutAdminAlpha
 import React from 'react';
+import NavAdmin from '../views/admin/NavAdmin';
 import { Outlet } from 'react-router-dom';
 
-const LayoutAdminAlpha = () => {
+const LayoutAdminAlpha = ({setIsAuth}) => {
     return (
-        <div>
-            <h1>Layout del administrador</h1> 
-            <Outlet />
+        <div className="min-h-screen ">
+     
+      <NavAdmin setIsAuth={setIsAuth} />
+        <div  className="mt-[150px]  ">
+            <Outlet />    
         </div>
+      
+    </div>
     );
 };
 
+
 export default LayoutAdminAlpha;
+
+
+
