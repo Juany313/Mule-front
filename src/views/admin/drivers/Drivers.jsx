@@ -42,7 +42,6 @@ const Drivers = () => {
       dispatch(getDrivers());
     }
   }, [dispatch, allDrivers]);
-  console.log("driverssss",allDrivers );
   
   return (
     <div className='relative h-[650px] mt-[150px] mx-[400px] p-[60px] border border-black rounded'>

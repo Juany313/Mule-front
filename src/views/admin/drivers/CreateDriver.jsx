@@ -49,7 +49,6 @@ const CreateDriver = () => {
         setSubmitButtonClicked(true);
       
         const result =  dispatch(postDriver(driverData));
-        console.log("result.success", result);
         
         
       };

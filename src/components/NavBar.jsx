@@ -109,7 +109,6 @@ const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, user } = useAuth0();
   const isLogged = useSelector((state) => state.isLogged);
-  console.log(isLogged);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);

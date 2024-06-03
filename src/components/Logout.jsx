@@ -12,7 +12,6 @@ const Logout = () => {
     const { logout } = useAuth0();
     const logoutSuccess = () => {
         localStorage.removeItem("token");
-        console.log("Logout success");
         dispatch(setIsLogged(false));
         logout({ logoutParams: { returnTo: "http://localhost:4000/header" } })
     }

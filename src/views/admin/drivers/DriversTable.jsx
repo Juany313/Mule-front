@@ -36,7 +36,6 @@ function DriversTable({ drivers }) {
         <button
           onClick={() => {
               dispatch(decreasePageDrivers())
-              console.log("startIndex",startIndex);
           }}
           disabled={currentPage === 1}
           className="mx-1 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
@@ -47,8 +46,6 @@ function DriversTable({ drivers }) {
         <button
           onClick={() => {
               dispatch(increasePageDrivers())
-              console.log("currentPage",currentPage);
-              console.log("endIndex",endIndex);
           }}
           disabled={endIndex >= drivers?.length}
           className="mx-1 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"

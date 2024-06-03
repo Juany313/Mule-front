@@ -18,7 +18,6 @@ const EnlistmentRow = ({
     const { getOrderShipmentById } = useEnlistment();
 
     const orderShipment = getOrderShipmentById(orderShipment_Id);
-    console.log(orderShipment);
 
     const onEdit = () => {
         setEditOnOff(false);
@@ -27,7 +26,6 @@ const EnlistmentRow = ({
     }
 
     const onDelete = () => {
-        console.log('Eliminando');
     }
 
 

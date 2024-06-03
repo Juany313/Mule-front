@@ -145,7 +145,6 @@ const getAllBranches = () => {
 const createOrder = (userData) => {
   return async (dispatch) => {
     try {
-      console.log("DATA:", userData);
       const { data } = await axios.post(
         "https://mule-server.onrender.com/order_shipments",
         userData // Envía los datos del formulario como parte de la solicitud POST
@@ -183,7 +182,6 @@ const getUserDetail = (id) => {
     });
 
     const data = await response.json();
-      //console.log('getuserdetail',data);
       return dispatch({
         type: GET_USER_DETAIL,
         payload: data,
@@ -225,7 +223,6 @@ const getAllOrders = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get("https://mule-server.onrender.com/order_shipments");
-      console.log('X', data);
       return dispatch({
         type: GET_ALL_ORDERS,
         payload: data,
