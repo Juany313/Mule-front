@@ -118,7 +118,7 @@ const OrderForm = () => {
     pay_method: Yup.string().required("Método de pago es requerido"),
   });
 
-  const { errors}  = useFormik;
+  const { errors } = useFormik;
 
   const formik = useFormik({
     initialValues: {
@@ -375,29 +375,13 @@ const OrderForm = () => {
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                   placeholder="Nombre/s"
                 />
-                {formik.errors.name_transmiter &&
-                 (
-                    <span className="text-red-600 font-semibold">
-                      {formik.errors.name_transmiter}
-                    </span>
-                  )}
+                {formik.errors.name_transmiter && (
+                  <span className="text-red-600 font-semibold">
+                    {formik.errors.name_transmiter}
+                  </span>
+                )}
               </div>
-              <div className="relative mb-4">
-                <input
-                  type="text"
-                  name="surname_transmiter"
-                  value={formik.values.surname_transmiter}
-                  onChange={formik.handleChange}
-                  className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
-                  placeholder="Apellido/s"
-                />
-                {formik.errors.name_transmiter &&
-                 (
-                    <span className="text-red-600 font-semibold">
-                      {formik.errors.name_transmiter}
-                    </span>
-                  )}
-              </div>
+
               <div className="relative mb-4">
                 <input
                   type="text"
@@ -407,12 +391,11 @@ const OrderForm = () => {
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                   placeholder="Apellido/s"
                 />
-                {formik.errors.name_transmiter &&
-                  (
-                    <span className="text-red-600 font-semibold">
-                      {formik.errors.name_transmiter}
-                    </span>
-                  )}
+                {formik.errors.name_transmiter && (
+                  <span className="text-red-600 font-semibold">
+                    {formik.errors.name_transmiter}
+                  </span>
+                )}
               </div>
               <div className="relative mt-7 mb-7">
                 <input
@@ -425,12 +408,11 @@ const OrderForm = () => {
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                   placeholder="Telefono"
                 />
-                {formik.errors.celphone_transmiter &&
-                 (
-                    <span className="text-red-600 font-semibold">
-                      {formik.errors.celphone_transmiter}
-                    </span>
-                  )}
+                {formik.errors.celphone_transmiter && (
+                  <span className="text-red-600 font-semibold">
+                    {formik.errors.celphone_transmiter}
+                  </span>
+                )}
               </div>
               <div className="relative mb-4">
                 <h2 className="text-sm text-left ml-2 uppercase font-bold tracking-[5px] text-white mb-2">
@@ -449,12 +431,11 @@ const OrderForm = () => {
                   <option value="entre rios">Entre Ríos</option>
                   <option value="santa fe">Santa Fe</option>
                 </select>
-                {formik.errors.city_transmiter &&
-                 (
-                    <span className="text-red-600 font-semibold">
-                      {formik.errors.city_transmiter}
-                    </span>
-                  )}
+                {formik.errors.city_transmiter && (
+                  <span className="text-red-600 font-semibold">
+                    {formik.errors.city_transmiter}
+                  </span>
+                )}
               </div>
               <div className="relative mb-4">
                 <input
@@ -465,12 +446,11 @@ const OrderForm = () => {
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                   placeholder="Direccion"
                 />
-                {formik.errors.address_transmiter &&
-                (
-                    <span className="text-red-600 font-semibold">
-                      {formik.errors.address_transmiter}
-                    </span>
-                  )}
+                {formik.errors.address_transmiter && (
+                  <span className="text-red-600 font-semibold">
+                    {formik.errors.address_transmiter}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -491,12 +471,11 @@ const OrderForm = () => {
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                   placeholder="Nombre/s"
                 />
-                {formik.errors.name_receiver &&
-                 (
-                    <span className="text-red-600 font-semibold">
-                      {formik.errors.name_receiver}
-                    </span>
-                  )}
+                {formik.errors.name_receiver && (
+                  <span className="text-red-600 font-semibold">
+                    {formik.errors.name_receiver}
+                  </span>
+                )}
               </div>
 
               <div className="relative mb-4">
@@ -510,12 +489,11 @@ const OrderForm = () => {
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                   placeholder="Telefono"
                 />
-                {formik.errors.celphone_receiver &&
-                 (
-                    <span className="text-red-600 font-semibold">
-                      {formik.errors.celphone_receiver}
-                    </span>
-                  )}
+                {formik.errors.celphone_receiver && (
+                  <span className="text-red-600 font-semibold">
+                    {formik.errors.celphone_receiver}
+                  </span>
+                )}
               </div>
               <div className="relative mb-4">
                 <h2 className="text-sm text-left ml-2 uppercase font-bold tracking-[5px] text-white mb-2">
@@ -534,12 +512,11 @@ const OrderForm = () => {
                   <option value="entre rios">Entre Ríos</option>
                   <option value="santa fe">Santa Fe</option>
                 </select>
-                {formik.errors.city_receiver &&
-                (
-                    <span className="text-red-600 font-semibold">
-                      {formik.errors.city_receiver}
-                    </span>
-                  )}
+                {formik.errors.city_receiver && (
+                  <span className="text-red-600 font-semibold">
+                    {formik.errors.city_receiver}
+                  </span>
+                )}
               </div>
               <div className="relative mt-7 mb-4">
                 <input
@@ -550,12 +527,11 @@ const OrderForm = () => {
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                   placeholder="Direccion"
                 />
-                {formik.errors.address_receiver &&
-                (
-                    <span className="text-red-600 font-semibold">
-                      {formik.errors.address_receiver}
-                    </span>
-                  )}
+                {formik.errors.address_receiver && (
+                  <span className="text-red-600 font-semibold">
+                    {formik.errors.address_receiver}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -576,7 +552,7 @@ const OrderForm = () => {
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                   placeholder="Peso del pedido"
                 />
-                {formik.errors.weight &&  (
+                {formik.errors.weight && (
                   <span className="text-red-600 font-semibold">
                     {formik.errors.weight}
                   </span>
@@ -624,12 +600,11 @@ const OrderForm = () => {
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                   placeholder="Valor declarado (ARS)"
                 />
-                {formik.errors.declared_value &&
-                 (
-                    <span className="text-red-600 font-semibold">
-                      {formik.errors.declared_value}
-                    </span>
-                  )}
+                {formik.errors.declared_value && (
+                  <span className="text-red-600 font-semibold">
+                    {formik.errors.declared_value}
+                  </span>
+                )}
               </div>
               <div className="relative mb-4">
                 <h2 className="text-sm text-left ml-2 uppercase font-bold tracking-[5px] text-white mb-2">
@@ -644,12 +619,11 @@ const OrderForm = () => {
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                   placeholder="Imagen del pedido"
                 />
-                {formik.errors.product_image &&
-                  (
-                    <span className="text-red-600 font-semibold">
-                      {formik.errors.product_image}
-                    </span>
-                  )}
+                {formik.errors.product_image && (
+                  <span className="text-red-600 font-semibold">
+                    {formik.errors.product_image}
+                  </span>
+                )}
               </div>
               <div className="relative mb-4">
                 <h2 className="text-sm text-left ml-2 uppercase font-bold tracking-[5px] text-white mb-2">
@@ -666,7 +640,7 @@ const OrderForm = () => {
                   <option value="Credito">Tarjeta de crédito</option>
                   <option value="Debito">Tarjeta de débito</option>
                 </select>
-                {formik.errors.pay_method &&(
+                {formik.errors.pay_method && (
                   <span className="text-red-600 font-semibold">
                     {formik.errors.pay_method}
                   </span>
