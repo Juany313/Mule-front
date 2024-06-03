@@ -22,17 +22,17 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex items-center justify-start mt-8 ml-4">
+    <div className="flex items-center justify-start mt-8 ml-4 mb-4">
       <form onSubmit={handleSubmit} className="flex ">
         <input
-          className="border border-g500 focus:outline-none focus:border-indigo-500 rounded-lg py-2 px-20 block w-full appearance-none leading-normal"
+          className="border border-g400 focus:outline-none rounded-lg py-2 px-20 block w-full appearance-none leading-normal"
           type="text"
           value={id}
           placeholder="Código de seguimiento"
           onChange={handleChange}
         />
         <button
-          className="bg-s300 hover:bg-p400 text-white font-bold py-2 px-4 ml-2 rounded-r-lg"
+          className="bg-s300 text-gray-800 hover:bg-p300  hover:text-white font-bold py-2 px-4 ml-2 rounded-lg"
           type="submit"
           onClick={handleSubmit}
         >
