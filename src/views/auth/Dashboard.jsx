@@ -80,7 +80,7 @@ const Dashboard = () => {
       
         <header className="bg-#efefef shadow-md w-full py-0 px-0 text-center">
           <img
-            className="  bg-cover h-full w-full"
+            className="  bg-cover h-full w-full "
             src={Header}
             alt="Delivery"
           />
