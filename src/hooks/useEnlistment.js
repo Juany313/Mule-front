@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import { useSelector } from 'react-redux';
-import { getAllEnlistments } from '../redux/actions/index';
+import { getAllEnlistments , setEnlistments } from '../redux/actions/index';
 
 
 
@@ -12,7 +12,7 @@ const useEnlistment = () => {
         getAllEnlistments();
     }, []);
 
-        return { allEnlistments };
+        return { allEnlistments, setEnlistments };
 
 }
 
