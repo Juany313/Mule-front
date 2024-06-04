@@ -216,7 +216,7 @@ const getAllOrders = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get("http://localhost:3000/order_shipments");
-      console.log('X', data);
+      //console.log('X', data);
       return dispatch({
         type: GET_ALL_ORDERS,
         payload: data,
@@ -332,16 +332,25 @@ const updateUserDetail = (id, infoUser) => {
   }
 }
 
+const setEnlistments = (enlistments) => {
+  return {
+    type: GET_ALL_ENLISTMENTS,
+    payload: enlistments,
+  };
+};
+
 const getAllEnlistments = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("http://localhost:3000/enlistments");
-      return dispatch({
-        type: GET_ALL_ENLISTMENTS,
-        payload: data,
-      });
+      await axios.get("http://localhost:3000/enlistments")
+      .then((response) => {
+        dispatch({
+          type: GET_ALL_ENLISTMENTS,
+          payload: response.data,
+        });
+      })
     } catch (error) {
-      // window.alert(error.message);
+      console.error(error.message);
     }
   };
 }
@@ -544,5 +553,6 @@ export {
   putEnlistment,
   deleteEnlistment,
   setOrderData,
+  setEnlistments,
   postReviews
 };

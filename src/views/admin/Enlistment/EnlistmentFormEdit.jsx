@@ -3,16 +3,14 @@ import icon_cancel from '../../../assets/Icon_cancelar.svg';
 import { putEnlistment } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 
-const EnlistmentForm = ({
-     setShowModal,
-     setSelectSubmit,
-     createOnOff,
-     setCreateOnOff,
-     actualBackOrder,
-    }) => {
-    
-    const dispatch = useDispatch();
+const EnlistmentFormEdit = (
+    {
+        setShowModalEdit,
+        actualBackOrder
+    }
+) => {
     const enlistment = actualBackOrder; 
+    const dispatch = useDispatch();
 
     const handleCreateChange = () => {
         if (createOnOff === false) {
@@ -23,12 +21,12 @@ const EnlistmentForm = ({
     
     const handleSave = (e) => {
         e.preventDefault();
-        setShowModal(false);
+        setShowModalEdit(false);
            
     };
 
     const handleCancel = () => {
-        setShowModal(false);
+        setShowModalEdit(false);
     };
 
     const handleChange = (e) => {
@@ -46,26 +44,6 @@ const EnlistmentForm = ({
                         style={{ cursor: 'pointer' }} />
                 </div>
                 <form className="space-y-4" onSubmit={handleSave}>
-                <div>
-                        <label className="block text-sm font-medium text-gray-700">Solicitante</label>
-                        <input
-                            type="text"
-                            name="solicitante"
-                            value={enlistment && enlistment.state}
-                            onChange={handleChange}
-                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Receptor</label>
-                        <input
-                            type="text"
-                            name="receptor"
-                            value={enlistment && enlistment.guide_number}
-                            onChange={handleChange}
-                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-                    </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700">Fecha</label>
                         <input
@@ -177,4 +155,4 @@ const EnlistmentForm = ({
     );
 };
 
-export default EnlistmentForm;
+export default EnlistmentFormEdit;
