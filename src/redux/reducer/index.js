@@ -20,8 +20,9 @@ import {
     POST_ENLISTMENT,
     PUT_ENLISTMENT,
     DELETE_ENLISTMENT,
-  SET_ORDER_DATA,
-    POST_IS_LOGING
+    SET_ORDER_DATA,
+    POST_IS_LOGING,
+    POST_REVIEWS,
 } from "../actions";
 
 let initialState = {
@@ -40,7 +41,8 @@ let initialState = {
     orderType: "",
     allEnlistments: [],
     enlistmentDetail: [],
-    orderData: []
+    orderData: [],
+    reviews: []
 }
 
 function rootReducer(state = initialState, action) {
@@ -216,6 +218,12 @@ function rootReducer(state = initialState, action) {
           ...state,
           allUsers: action.payload
         }
+
+        case POST_REVIEWS:
+          return {
+            ...state,
+            reviews: action.payload
+          }
 
 
     default:

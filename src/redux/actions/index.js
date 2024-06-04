@@ -29,7 +29,8 @@ export const PUT_ENLISTMENT = "PUT_ENLISTMENT";
 export const DELETE_ENLISTMENT = "DELETE_ENLISTMENT";
 export const SET_ORDER_DATA = "SET_ORDER_DATA";
 
-export const POST_IS_LOGING = "POST_IS_LOGING"
+export const POST_IS_LOGING = "POST_IS_LOGING";
+export const POST_REVIEWS = "POST_REVIEWS";
 
 
 
@@ -69,7 +70,7 @@ export const agregarPedido = (pedido) => {
 
 //formulario de registro
 export function postUser(data) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const response = await axios.post('http://localhost:3000/users/register', data);
       dispatch({
@@ -162,7 +163,7 @@ const createOrder = (userData) => {
         icon: "success",
         confirmButtonText: "Aceptar",
       });
-      } catch (error) {
+    } catch (error) {
       Swal.fire({
         title: "Error!",
         text: "Error al crear el pedido",
@@ -177,14 +178,14 @@ const createOrder = (userData) => {
 const getUserDetail = (id) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/users/${id}`,{
+      const response = await fetch(`http://localhost:3000/users/${id}`, {
         method: "GET",
         headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
-    });
+      });
 
-    const data = await response.json();
+      const data = await response.json();
       //console.log('getuserdetail',data);
       return dispatch({
         type: GET_USER_DETAIL,
@@ -197,16 +198,16 @@ const getUserDetail = (id) => {
 };
 
 //Bien de Seguridad, incluye el token, bearer configurado en back ?
-const getOrdersByClient = (id) =>{
-  return async (dispatch)=>{
+const getOrdersByClient = (id) => {
+  return async (dispatch) => {
     try {
-      const response = await axios.get (`http://localhost:3000/order_shipments/${id}`
-    )
-      return dispatch ({
+      const response = await axios.get(`http://localhost:3000/order_shipments/${id}`
+      )
+      return dispatch({
         type: GET_ORDERS_BY_CLIENT,
         payload: response.data
       })
-    }catch (error) {
+    } catch (error) {
       // window.alert(error.message);
     }
   }
@@ -272,14 +273,14 @@ const orderDeclaredValue = (selectedValues) => {
   };
 };
 
-const filterCity = (cities)=>{
+const filterCity = (cities) => {
   return {
     type: FILTER_BY_CITY,
     payload: cities
   }
 }
 
-const orderDate = (date)=>{
+const orderDate = (date) => {
   return {
     type: ORDER_BY_DATE,
     payload: date
@@ -294,7 +295,7 @@ const setIsLogged = (isLogged) => {
 }
 
 export function isLoging(data) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const response = await axios.post('http://localhost:3000/users/register-auth0', data);
       dispatch({
@@ -318,8 +319,8 @@ const setInfoUserLogged = (user) => {
   };
 }
 
-const updateUserDetail = (id, infoUser)=>{
-  return async (dispatch)=>{
+const updateUserDetail = (id, infoUser) => {
+  return async (dispatch) => {
     try {
       const { data } = await axios.patch(`http://localhost:3000/users/profile/${id}`, infoUser
       );
@@ -327,9 +328,9 @@ const updateUserDetail = (id, infoUser)=>{
         type: UPDATE_USER_DETAIL,
         payload: data,
       });
-      
+
     } catch (error) {
-      
+
     }
   }
 }
@@ -466,6 +467,23 @@ const filterOrderShipmentsByUser = (userId) => {
   };
 }
 
+const postReviews = (userId, review) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post("http://localhost:3000/reviews", {
+        ...review,
+        user_id: userId,
+      });
+      dispatch({
+        type: POST_REVIEWS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log ('no está llegando la data', error.message)
+    }
+  }
+}
+
 
 export {
   getUserDetail,
@@ -489,4 +507,5 @@ export {
   putEnlistment,
   deleteEnlistment,
   setOrderData,
+  postReviews
 };
