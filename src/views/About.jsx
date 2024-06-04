@@ -13,7 +13,7 @@ const About = () => {
 
       <div className="absolute inset-0 flex justify-center items-center" style={{ top: '-10%' }}>
         <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 w-full lg:w-11/12 mx-auto justify-center">
-          <div className="flex flex-col lg:flex-row rounded-lg bg-white text-surface shadow-lg dark:bg-surface-dark dark:text-white w-full lg:w-2/3 h-96 lg:h-80">
+          <div className="flex flex-col lg:flex-row rounded-lg bg-white text-surface shadow-lg w-full lg:w-2/3 h-96 lg:h-80">
             <img className="h-full w-full lg:w-2/5 rounded-t-lg object-cover lg:rounded-none lg:rounded-l-lg" src="https://res.cloudinary.com/deotitxt8/image/upload/v1717444942/Assets/i8qqazijvlwvaz2rbib6.jpg" alt="Descripción de la imagen" />
             <div className="flex flex-col justify-start p-4 lg:p-8 w-full lg:w-3/5">
               <h5 className="mb-4 text-xl lg:text-xl font-Merriweather font-semibold">Nuestra flota</h5>
@@ -21,7 +21,7 @@ const About = () => {
             </div>
           </div>
 
-          <div className="flex flex-col lg:flex-row rounded-lg bg-white text-surface shadow-lg dark:bg-surface-dark dark:text-white w-full lg:w-2/3 h-96 lg:h-80">
+          <div className="flex flex-col lg:flex-row rounded-lg bg-white text-surface shadow-lg w-full lg:w-2/3 h-96 lg:h-80">
             <img className="h-full w-full lg:w-2/5 rounded-t-lg object-cover lg:rounded-none lg:rounded-l-lg" src="https://res.cloudinary.com/deotitxt8/image/upload/v1717444943/Assets/fjcyft86oevjtay37x3c.jpg" alt="Descripción de la imagen" />
             <div className="flex flex-col justify-start p-4 lg:p-8 w-full lg:w-3/5">
               <h5 className="mb-4 text-xl lg:text-xl font-Merriweather font-semibold">Nuestros clientes</h5>
