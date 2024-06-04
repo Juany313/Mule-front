@@ -86,8 +86,105 @@ const ShipmentPrice = () => {
   });
 
   return (
-    <div className="min-h-screen bg-g200 flex items-center justify-center p-4">
-      <div className="bg-p100 p-4 rounded-xl w-auto lg:w-[1050px]">
+    // <div className="relative overflow-hidden min-h-screen flex items-center justify-center p-3">
+    //   <div className="bg-p100 p-4 rounded-xl w-full max-w-4xl shadow-2xl">
+    //     <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-white mb-8">
+    //       COTIZÁ TU ENVÍO
+    //     </h1>
+    //     <form className="mb-8 space-y-4" onSubmit={formik.handleSubmit}>
+    //       <div className="relative mb-4">
+    //         <h2 className="text-sm text-left uppercase font-bold tracking-[5px] text-white mb-2">
+    //           ELIJA ORIGEN
+    //         </h2>
+    //         <select
+    //           name="city_transmiter"
+    //           value={formik.values.city_transmiter}
+    //           onChange={formik.handleChange}
+    //           onBlur={formik.handleBlur}
+    //           className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
+    //         >
+    //           <option value="">Seleccionar</option>
+    //           <option value="buenos aires">Buenos Aires</option>
+    //           <option value="cordoba">Córdoba</option>
+    //           <option value="corrientes">Corrientes</option>
+    //           <option value="entre rios">Entre Ríos</option>
+    //           <option value="santa fe">Santa Fe</option>
+    //         </select>
+    //         {formik.errors.city_transmiter &&
+    //           formik.touched.city_transmiter && (
+    //             <span className="text-red-600 font-semibold">
+    //               {formik.errors.city_transmiter}
+    //             </span>
+    //           )}
+    //       </div>
+    //       <div className="relative mb-4">
+    //         <h2 className="text-sm text-left uppercase font-bold tracking-[5px] text-white mb-2">
+    //           ELIJA DESTINO
+    //         </h2>
+    //         <select
+    //           name="city_receiver"
+    //           value={formik.values.city_receiver}
+    //           onChange={formik.handleChange}
+    //           onBlur={formik.handleBlur}
+    //           className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
+    //         >
+    //           <option value="">Seleccionar</option>
+    //           <option value="buenos aires">Buenos Aires</option>
+    //           <option value="cordoba">Córdoba</option>
+    //           <option value="corrientes">Corrientes</option>
+    //           <option value="entre rios">Entre Ríos</option>
+    //           <option value="santa fe">Santa Fe</option>
+    //         </select>
+    //         {formik.errors.city_receiver && formik.touched.city_receiver && (
+    //           <span className="text-red-600 font-semibold">
+    //             {formik.errors.city_receiver}
+    //           </span>
+    //         )}
+    //       </div>
+    //       <div className="relative mb-4">
+    //         <h2 className="text-sm text-left uppercase font-bold tracking-[5px] text-white mb-2">
+    //           TAMAÑO
+    //         </h2>
+    //         <select
+    //           name="measureId"
+    //           value={formik.values.measureId}
+    //           onChange={formik.handleChange}
+    //           onBlur={formik.handleBlur}
+    //           className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
+    //         >
+    //           <option value="">Seleccionar</option>
+    //           <option value="1">Pequeño</option>
+    //           <option value="2">Mediano</option>
+    //           <option value="3">Grande</option>
+    //         </select>
+    //         {formik.errors.measureId && formik.touched.measureId && (
+    //           <span className="text-red-600 font-semibold">
+    //             {formik.errors.measureId}
+    //           </span>
+    //         )}
+    //       </div>
+    //       <div className="flex justify-between">
+    //         <button
+    //           type="submit"
+    //           disabled={
+    //             !formik.isValid ||
+    //             formik.isSubmitting ||
+    //             formik.values.measureId === null
+    //           }
+    //           className={`bg-s300 text-black uppercase font-bold text-sm w-full py-3 px-4 rounded-lg transition-colors ${
+    //             !formik.isValid || formik.values.measureId === null
+    //               ? "opacity-50 cursor-not-allowed"
+    //               : "hover:text-gray-100"
+    //           }`}
+    //         >
+    //           Cotizar
+    //         </button>
+    //       </div>
+    //     </form>
+    //   </div>
+    // </div>
+    <div className="relative overflow-hidden min-h-screen flex items-center justify-center p-3 bg-gradient-to-b from-p100 to-p500">
+      <div className="bg-p100 p-4 rounded-xl w-full max-w-4xl shadow-2xl">
         <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-white mb-8">
           COTIZÁ TU ENVÍO
         </h1>
