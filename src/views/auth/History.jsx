@@ -135,13 +135,11 @@ const History = () => {
                     </svg>
                   </div>
                 </div> */}
-
+               
                 <Link to='/header/prueba'>
                   <button >Deja tu comentario</button>
                 </Link>
-              
-              {/* <button onClick={handleButtonClick}>Deja tu comentario</button>
-                {showForm && <ReviewForm />} */}
+
             </div>
           </div>
 

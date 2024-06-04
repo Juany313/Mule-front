@@ -4,14 +4,12 @@ import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2'
 import { postReviews } from '../redux/actions';
 
-
-
 const Validate = (input) => {
   const errors = {}
   const commentRegex = /^[a-zA-Z\s]+$/
   const scoreRegex = /^\d+$/
 
-      // Verifico si el comentario contiene solo letras y espacios
+  //comment
   if (input.comment.length > 1 && !commentRegex.test(input.comment)) {
     errors.comment = 'Sólo se permiten letras y espacios';
   }
@@ -30,13 +28,12 @@ const Validate = (input) => {
   }
 
   return errors
-
 }
 
 const ReviewForm = () => {
   const dispatch = useDispatch();
   const infoUserLogged = useSelector((state) => state.infoUserLogged)
-console.log ('infoUser', infoUserLogged)
+
   const [input, setInput] = useState({
     score: "",
     comment: ""
