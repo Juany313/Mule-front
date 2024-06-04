@@ -1,28 +1,47 @@
 import React from 'react';
 import { useDispatch} from 'react-redux';
 import { useEffect } from 'react';
-import { getAllEnlistments } from '../../../redux/actions';
+import { useState } from 'react';
+import { getAllEnlistments, getAllOrders } from '../../../redux/actions';
 import useEnlistment from '../../../hooks/useEnlistment';
 import EnlistmentRow from './EnlistmentRow';
+import useOrderShipment from '../../../hooks/useOrderShipment';
 
 const EnlistmentTable = (
-    editOnOff ,
-    setEditOnOff,
-    deleteOnOff,
-    setDeleteOnOff,   
-    actualBackOrder, 
-    setActualBackOrder,
-    setSelectSubmit,
-    createOnOff,
-    setCreateOnOff
+   {
+    setShowModalEdit,
+    setShowModalDetail
+   }
 ) => {
     const { allEnlistments } = useEnlistment();
+    const {allOrders} = useOrderShipment();
     const dispatch = useDispatch();
+    const [orderWithEnlistmet, setOrderWithEnlistmet] = useState([]);
 
-    useEffect(() => {
-        dispatch(getAllEnlistments());
+    const [dataLoaded, setDataLoaded] = useState(false);
+
+const chargingData = async () => {
+    if (!dataLoaded) {
+        await dispatch(getAllEnlistments());
+        await dispatch(getAllOrders());
+        const orderWithEnlistmet = allEnlistments.map((enlistment) => {
+            const orderShipment_Id = enlistment.ordershipment_id;
+            const order = allOrders.find(order => order.id === orderShipment_Id);
+            console.log('order', order);    
+            return {
+                ...enlistment,
+                order
+            }
+        });
+        setOrderWithEnlistmet(orderWithEnlistmet);
+        setDataLoaded(true);
     }
-    , [dispatch]);
+}
+
+useEffect(() => {
+    chargingData();
+}, [dispatch, allEnlistments, allOrders]);
+    
 
     return (
         <table className="min-w-full divide-y divide-gray-200">
@@ -32,28 +51,22 @@ const EnlistmentTable = (
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"># Guía</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Distancia (Km)</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tiempo de entrega</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hora de Solicitud</th>
+                    {/*<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hora de Solicitud</th>*/}
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre Solicitante</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Teléfono Solicitante</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dirección Origen</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dirección Destino</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                 </tr>
             </thead>
             {
-                allEnlistments.map((enlistment) => {
-                    const orderShipment_Id = enlistment.ordershipment_id;
+                orderWithEnlistmet &&  orderWithEnlistmet.map((enlistment) => {
                     return (
                         <EnlistmentRow
-                            orderShipment_Id={orderShipment_Id}
-                            enlistment={enlistment} 
-                            key={enlistment.id} 
-                            actualBackOrder={actualBackOrder}
-                            editOnOff={editOnOff} 
-                            setEditOnOff={setEditOnOff}
-                            deleteOnOff={deleteOnOff}
-                            setDeleteOnOff={setDeleteOnOff}                            
-                            setActualBackOrder={setActualBackOrder}
-                            setSelectSubmit={setSelectSubmit}
-                            createOnOff = {createOnOff}
-                            setCreateOnOff = {setCreateOnOff}  
+                            enlistment={enlistment}
+                            setShowModalEdit = {setShowModalEdit} 
+                            setShowModalDetail={setShowModalDetail}
                             />
                     )
                 })
