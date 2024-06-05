@@ -13,7 +13,7 @@ import LayoutAuth from "./layouts/LayoutAuth";
 import LayoutAdmin from "./layouts/LayoutAdmin";
 import LayoutAdminAlpha from "./layouts/LayoutAdminAlpha";
 import LayoutError from "./layouts/LayoutError";
-import Landing from "./views/Landing";
+import Landing from "./views/Landing/Landing";
 import Detail from "./views/Detail";
 import About from "./views/About";
 import Service from "./views/Service";
