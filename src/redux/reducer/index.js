@@ -32,7 +32,8 @@ import {
 
   SET_ORDER_DATA,
     POST_IS_LOGING,
-    PUT_DRIVER
+    PUT_DRIVER,
+    POST_REVIEWS,
 
 } from "../actions";
 
@@ -55,7 +56,8 @@ let initialState = {
     orderData: [],
     currentPageDrivers: 1,
     itemsPerPageDrivers: 5,
-    allDrivers: []
+    allDrivers: [],
+    reviews: []
 }
 
 function rootReducer(state = initialState, action) {
@@ -272,6 +274,12 @@ function rootReducer(state = initialState, action) {
           ...state,
           allUsers: action.payload
         }
+
+        case POST_REVIEWS:
+          return {
+            ...state,
+            reviews: action.payload
+          }
 
 
     default:

@@ -41,7 +41,7 @@ import AdminHome from "./views/admin/adminHome/AdminHome"
 
 
 import ShipmentPrice from "./components/ShipmentPrice";
-
+import ReviewForm from "./components/ReviewForm";
 
 function App() {
   return (
@@ -73,8 +73,7 @@ function App() {
 
           <Route path= "shipment-price" element={ <ShipmentPrice /> } />
 
-          {/* <Route path="prueba" element={<Products />} /> */}
-
+          <Route path="prueba" element={<ReviewForm />} />
         </Route>
         <Route path="/admin" element={<LayoutAdminAlpha />}>
           <Route index element={<AdminHome />} />
