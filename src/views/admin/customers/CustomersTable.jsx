@@ -49,6 +49,16 @@ const CustomerTable = (
 
     return (
       <div>
+        <div className="px-5 py-5 bg-white justify-start">
+                <div className="inline-flex mt-2 xs:mt-0">
+                    <button onClick={handlePreviousPage} className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
+                        Anterior
+                    </button>
+                    <button onClick={handleNextPage} className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
+                        Siguiente
+                    </button>
+                </div>
+            </div>
       <table className="min-w-full divide-y divide-gray-200">
       <thead className="bg-gray-50">
                 <tr>
@@ -81,14 +91,7 @@ const CustomerTable = (
               })
           }
       </table>
-      <div className="flex justify-between mt-4">
-          <button onClick={handlePreviousPage} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Anterior
-          </button>
-          <button onClick={handleNextPage} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Siguiente
-          </button>
-      </div>
+      
   </div>
     );
 };
