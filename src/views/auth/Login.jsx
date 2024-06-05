@@ -101,7 +101,7 @@ const Login = () => {
   };
 
   return (
-    <div className="content-loging
+    <div className="content-loging w-full
   "
     >
       
