@@ -10,19 +10,19 @@ const Validate = (input) => {
   const scoreRegex = /^\d+$/
 
   //comment
-  if (input.comment.length > 1 && !commentRegex.test(input.comment)) {
+  if (input.comment && input.comment.length > 1 && !commentRegex.test(input.comment)) {
     errors.comment = 'Sólo se permiten letras y espacios';
   }
-  if (input.comment.length<3 || input.comment.length>100) {
+  if (input.comment && input.comment.length < 3 || input.comment && input.comment.length > 100) {
     errors.comment = 'El comentario debe tener entre 3 y 100 caracteres'
   }
 
   //score
-  if (!scoreRegex.test(input.score)) {
+  if (input.score && !scoreRegex.test(input.score)) {
     errors.score = 'La puntuación debe ser un número entero';
   } else {
     const scoreNumber = Number(input.score);
-    if (scoreNumber < 1 || scoreNumber > 5) {
+    if (scoreNumber && scoreNumber < 1 || scoreNumber && scoreNumber > 5) {
       errors.score = 'La puntuación debe estar entre 1 y 5';
     }
   }
@@ -30,7 +30,7 @@ const Validate = (input) => {
   return errors
 }
 
-const ReviewForm = () => {
+const ReviewForm = ({ onSuccess }) => {
   const dispatch = useDispatch();
   const infoUserLogged = useSelector((state) => state.infoUserLogged)
 
@@ -51,44 +51,48 @@ const ReviewForm = () => {
     const property = event.target.name;
     const value = event.target.value;
     setInput({ ...input, [property]: value })
-}
-
-const handleSubmit = async (event) => {
-  event.preventDefault();
-  const validationErrors = Validate(input);
-  if (Object.keys(validationErrors).length === 0) {
-      try {
-      // Enviar el formulario
-      await dispatch(postReviews(infoUserLogged.id, input));
-      Swal.fire({
-        icon: "success",
-        title: "Comentario creado con éxito",
-        text: "Exitosa",
-        showConfirmButton: true,
-      });
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Error",
-      text: "Error, por favor intente de nuevo",
-      showConfirmButton: true,
-    });
   }
-};}
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const validationErrors = Validate(input);
+    if (Object.keys(validationErrors).length === 0) {
+      try {
+        // Enviar el formulario
+        await dispatch(postReviews(infoUserLogged.id, input));
+        Swal.fire({
+          icon: "success",
+          title: "Comentario creado con éxito",
+          text: "Exitosa",
+          showConfirmButton: true,
+        });
+        onSuccess();  // Cierra el modal cuando el comentario se envía con éxito
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Error, por favor intente de nuevo",
+          showConfirmButton: true,
+        });
+      }
+    };
+  }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Comentario:</label>
-      <input
-        name="comment"
-        value={input.comment}
-        onChange={handleChange}
-      />
-      {errors.comment && <p style={{ color: 'darkgrey' }}>{errors.comment}</p>}
+    <form onSubmit={handleSubmit} className="flex flex-col items-center">
+      <div className="mb-4">
+        <label htmlFor='' className='mr-3 font-semibold font-Montserrat'>Comentario:</label>
+        <input type='text' className='w-64 px-4 border border-gray-500 rounded-lg focus:outline-none'
+          name="comment"
+          value={input.comment}
+          onChange={handleChange}
+        />
+        {errors.comment && <p style={{ color: 'darkgrey' }}>{errors.comment}</p>}
+      </div>
 
-      <br />
-      <label> Puntuación:</label>
-        <input
+      <div className="mb-4">
+        <label htmlFor='' className='mr-3 font-semibold font-Montserrat'> Puntuación:</label>
+        <input className='w-64 px-4 border border-gray-500 rounded-lg focus:outline-none'
           type="number"
           name="score"
           value={input.score || ''}
@@ -97,8 +101,8 @@ const handleSubmit = async (event) => {
           max="5"
         />
         {errors.score && <p style={{ color: 'darkgrey' }}>{errors.score}</p>}
-      
-      <br />
+
+      </div>
       <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Enviar</button>
     </form>
   );
@@ -109,12 +113,12 @@ export default ReviewForm
 
 
 // //Cuento el número de palabras
-  // const wordCount = input.comment.trim().split(/\s+/).length;
-  // // Verifico si el comentario contiene solo letras y espacios
-  // if (input.comment.length > 1 && !commentRegex.test(input.comment)) {
-  //   errors.comment = 'Sólo se permiten letras y espacios';
-  // }
-  // // Verifico que el comentario tenga entre 3 y 100 palabras
-  // if (wordCount < 3 || wordCount > 100) {
-  //   errors.comment = 'El comentario debe tener entre 3 y 100 palabras';
-  // }
+// const wordCount = input.comment.trim().split(/\s+/).length;
+// // Verifico si el comentario contiene solo letras y espacios
+// if (input.comment.length > 1 && !commentRegex.test(input.comment)) {
+//   errors.comment = 'Sólo se permiten letras y espacios';
+// }
+// // Verifico que el comentario tenga entre 3 y 100 palabras
+// if (wordCount < 3 || wordCount > 100) {
+//   errors.comment = 'El comentario debe tener entre 3 y 100 palabras';
+// }

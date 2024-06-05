@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getAllOrders } from '../../redux/actions';
 import {Link} from 'react-router-dom'
+import ModalReview from '../../components/ModalReview';
 
 const History = () => {
   const dispatch = useDispatch();
@@ -74,22 +75,20 @@ const History = () => {
   return (
     <UserLayout>
       <body className="antialiased font-sans bg-gray-200 mt-24">
-        <div className="container mx-auto px-4 sm:px-8">
+      <div className="container mx-auto px-4 sm:px-8">
           <div className="py-8">
             <div>
               <h2 className="text-2xl leading-tight">Historial</h2>
             </div>
             {/* FILTROS */}
-            <div className="my-2 flex sm:flex-row flex-col">
+            <div className="my-2 flex flex-col sm:flex-row justify-between items-center">
               <div className="flex flex-row mb-1 sm:mb-0">
-
-
                 <div className="relative">
                   <select id="city_transmiter" className="h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     name="city_transmiter"
                     value={filters.city_transmiter}
                     onChange={handleCityFilter}>
-                    <option value=""> Ciudad de origen</option>
+                    <option value="">Ciudad de origen</option>
                     <option value="santa fe">Santa Fe</option>
                     <option value="buenos aires">Buenos Aires</option>
                     <option value="cordoba">Cordoba</option>
@@ -102,13 +101,12 @@ const History = () => {
                     </svg>
                   </div>
                 </div>
-
                 <div className="relative">
                   <select id="city_receiver" className="h-full rounded-r border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     name="city_receiver"
                     value={filters.city_receiver}
                     onChange={handleCityFilter}>
-                    <option value=""> Ciudad de origen</option>
+                    <option value="">Ciudad de destino</option>
                     <option value="santa fe">Santa Fe</option>
                     <option value="buenos aires">Buenos Aires</option>
                     <option value="cordoba">Cordoba</option>
@@ -121,25 +119,8 @@ const History = () => {
                     </svg>
                   </div>
                 </div>
-
-                {/* <div className="relative">
-                  <select className="h-full rounded-r border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                    onChange={handleSortChange}>
-                    <option value="">Ordenar por fecha</option>
-                    <option value="asc">Orden Ascendente</option>
-                    <option value="desc">Orden Descendente</option>
-                  </select>
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                    </svg>
-                  </div>
-                </div> */}
-               
-                <Link to='/header/prueba'>
-                  <button >Deja tu comentario</button>
-                </Link>
-
+              </div>
+              <ModalReview />
             </div>
           </div>
 
@@ -237,7 +218,6 @@ const History = () => {
             </div>
           </div>
         </div>
-      </div>
     </body>
 
     </UserLayout >
