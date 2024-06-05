@@ -1,8 +1,8 @@
 import React from 'react';
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { getDrivers} from '../../../redux/actions';
+import { getDrivers } from '../../../redux/actions';
 import useDriver from '../../../hooks/useDriver';
 import DriverRow from './DriverRow';
 
@@ -17,51 +17,72 @@ const DriverTable = (
 ) => {
     const { allDrivers } = useDriver();
     const dispatch = useDispatch();
-
     const [dataLoaded, setDataLoaded] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8; // Define cuántos elementos quieres mostrar por página
 
-const chargingData = async () => {
-    if (!dataLoaded) {
-        await dispatch(getDrivers());
-        setDataLoaded(true);
+    const totalPages = Math.ceil(allDrivers.length / itemsPerPage);
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
     }
-}
 
-useEffect(() => {
-    chargingData();
-    console.log(allDrivers);
-}, [dispatch, allDrivers ]);
-    
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    }
+
+    const chargingData = async () => {
+        if (!dataLoaded) {
+            await dispatch(getDrivers());
+            setDataLoaded(true);
+        }
+    }
+
+    useEffect(() => {
+        chargingData();
+    }, [dispatch, allDrivers]);
 
     return (
-        <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-                <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deuda</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Antiguedad</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
-                </tr>
-            </thead>
-            {
-                allDrivers &&  allDrivers.map((driver) => {
-                    return (
-                        <DriverRow
-                            driver={driver}
-                            setShowModalEdit = {setShowModalEdit} 
-                            setShowModalDetail={setShowModalDetail}
-                            setShowModalDelete={setShowModalDelete}
-                            setCurrentDriverId={setCurrentDriverId}
-                            setActualDetail={setActualDetail}
+        <div>
+            <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                    <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deuda</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Antiguedad</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                    </tr>
+                </thead>
+                {
+                    allDrivers.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((driver) => {
+                        return (
+                            <DriverRow
+                                driver={driver}
+                                setShowModalEdit={setShowModalEdit}
+                                setShowModalDetail={setShowModalDetail}
+                                setShowModalDelete={setShowModalDelete}
+                                setCurrentDriverId={setCurrentDriverId}
+                                setActualDetail={setActualDetail}
                             />
-                    )
-                })
-
-            }
-
-        </table>
+                        )
+                    })
+                }
+            </table>
+            <div className="flex justify-between mt-4">
+                <button onClick={handlePreviousPage} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Anterior
+                </button>
+                <button onClick={handleNextPage} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Siguiente
+                </button>
+            </div>
+        </div>
     );
 };
 
