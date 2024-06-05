@@ -187,6 +187,7 @@ const EnlistmentForm = ({
                         <select 
                         name="shipment_type" 
                         value={actualBackOrder.shipment_type}
+                        onChange={handleChange}
                         >
                             <option >Sucursal a Puerta</option>
                             <option >Sucursal a Sucursal</option>
