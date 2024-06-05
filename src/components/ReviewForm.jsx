@@ -6,12 +6,12 @@ import { postReviews } from '../redux/actions';
 
 const Validate = (input) => {
   const errors = {}
-  const commentRegex = /^[a-zA-Z\s]+$/
+  const commentRegex = /^[a-zA-Z,.\s]+$/
   const scoreRegex = /^\d+$/
 
   //comment
   if (input.comment && input.comment.length > 1 && !commentRegex.test(input.comment)) {
-    errors.comment = 'Sólo se permiten letras y espacios';
+    errors.comment = 'No se permiten caracteres especiales';
   }
   if (input.comment && input.comment.length < 3 || input.comment && input.comment.length > 100) {
     errors.comment = 'El comentario debe tener entre 3 y 100 caracteres'
