@@ -54,7 +54,7 @@ export const POST_REVIEWS = "POST_REVIEWS";
 const deleteUser = (id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`http://localhost:3000/users/${id}`,
+      await axios.delete(`https://mule-server.onrender.com/users/${id}`,
         {
           headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -554,7 +554,7 @@ export function postDriver(driver) {
 export function putDriver(driver) {
   return async function(dispatch) {
       try {
-      const response = await axios.put(`http://localhost:300/drivers/${driver.id}`, driver);
+      const response = await axios.put(`https://mule-server.onrender.com/drivers/${driver.id}`, driver);
 
       return dispatch({
           type: PUT_DRIVER,
@@ -569,7 +569,7 @@ export function putDriver(driver) {
 export function deleteDriver(id) {
   return async function(dispatch) {
       try {
-      await axios.delete(`http://localhost:300/drivers/${id}`);
+      await axios.delete(`https://mule-server.onrender.com/drivers/${id}`);
 
       return dispatch({
           type: DELETE_DRIVER,
@@ -585,7 +585,7 @@ export function deleteDriver(id) {
 const postReviews = (userId, review) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post("http://localhost:3000/reviews", {
+      const { data } = await axios.post("https://mule-server.onrender.com/reviews", {
         ...review,
         user_id: userId,
       });
