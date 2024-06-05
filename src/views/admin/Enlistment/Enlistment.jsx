@@ -7,8 +7,6 @@ import EnlistmentDelete from './EnlistmentDelete';
 import icon_crear from '../../../assets/Icon_crear.svg';
 
 const Enlistments = () => {
-    const [editOnOff, setEditOnOff] = useState(true);
-    const [deleteOnOff, setDeleteOnOff] = useState(true);
     const [actualBackOrder, setActualBackOrder] = useState('')
     const [selectSubmit, setSelectSubmit] = useState('')
     const [createOnOff, setCreateOnOff] = useState(false)
@@ -19,15 +17,10 @@ const Enlistments = () => {
     const [currentEnlistmentId, setCurrentEnlistmentId] = useState('')
     const [actualDetail, setActualDetail] = useState({})
 
-
     const handleCreate = () => {
         setShowModal(true);
     }
-
-
-
-
-
+    
     return (
         <div>
             {
