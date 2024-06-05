@@ -13,7 +13,7 @@ import LayoutAuth from "./layouts/LayoutAuth";
 import LayoutAdmin from "./layouts/LayoutAdmin";
 import LayoutAdminAlpha from "./layouts/LayoutAdminAlpha";
 import LayoutError from "./layouts/LayoutError";
-import Landing from "./views/Landing";
+import Landing from "./views/Landing/Landing";
 import Detail from "./views/Detail";
 import About from "./views/About";
 import Service from "./views/Service";
@@ -37,13 +37,11 @@ import ConfirmEmail from "./views/auth/ConfirmEmail";
 /* Admin */
 import Enlistment from "./views/admin/Enlistment/Enlistment";
 import AdminHome from "./views/admin/adminHome/AdminHome"
-import EnlistmentTable from "./views/admin/Enlistment/EnlistmentTable";
-import EnlistmentForm from "./views/admin/Enlistment/EnlistmentForm";
 
-import CreateDriver from "./views/admin/drivers/CreateDriver";
+
 
 import ShipmentPrice from "./components/ShipmentPrice";
-
+import ReviewForm from "./components/ReviewForm";
 
 function App() {
   return (
@@ -75,15 +73,13 @@ function App() {
 
           <Route path= "shipment-price" element={ <ShipmentPrice /> } />
 
-          {/* <Route path="prueba" element={<Products />} /> */}
-
+          <Route path="prueba" element={<ReviewForm />} />
         </Route>
         <Route path="/admin" element={<LayoutAdminAlpha />}>
           <Route index element={<AdminHome />} />
           <Route path="enlistment" element={<Enlistment />} />
           <Route path="customers" element={<Customers />} />
           <Route path="drivers" element={<Drivers />} />
-          <Route path="drivers/create" element={<CreateDriver />} />
         </Route>
         <Route path="*" element={<LayoutError />} />
       </Routes>

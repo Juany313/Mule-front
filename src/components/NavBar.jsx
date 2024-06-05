@@ -76,7 +76,7 @@ const NavBar = () => {
             )}
             {!isLogged && (
               <span className="text-white hover:text-s300 p-2 cursor-pointer">
-                <Link
+                <NavLink
                   to="about"
                   spy={true}
                   smooth={true}
@@ -85,21 +85,7 @@ const NavBar = () => {
                   onClick={closeMenu}
                 >
                   Nosotros
-                </Link>
-              </span>
-            )}
-            {!isLogged && (
-              <span className="text-white hover:text-s300 p-2 cursor-pointer">
-                <Link
-                  to="orderShipment"
-                  spy={true}
-                  smooth={true}
-                  offset={0}
-                  duration={700}
-                  onClick={closeMenu}
-                >
-                  Pedidos
-                </Link>
+                </NavLink>
               </span>
             )}
             {isLogged && (

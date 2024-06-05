@@ -8,29 +8,59 @@ import CustomerRow from './CustomerRow';
 
 const CustomerTable = (
    {
+    setShowModalEdit,
+    setShowModalDetail,
     setShowModalDelete,
+    setActualDetail,
     setCurrentUserId
    }
 ) => {
-    const { allUsers } = useUser();
-    const dispatch = useDispatch();
-    const [dataLoaded, setDataLoaded] = useState(false);
+  const { allUsers } = useUser();
+  const dispatch = useDispatch();
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Define cuántos elementos quieres mostrar por página
 
-const chargingData = async () => {
-    if (!dataLoaded) {
-        await dispatch(getAllUsers());
-        setDataLoaded(true); 
-    }
-}
+  const totalPages = Math.ceil(allUsers.length / itemsPerPage);
 
-useEffect(() => {
-    chargingData();
-}, [dispatch, allUsers]);
+  const handleNextPage = () => {
+      if (currentPage < totalPages) {
+          setCurrentPage(currentPage + 1);
+      }
+  }
+
+  const handlePreviousPage = () => {
+      if (currentPage > 1) {
+          setCurrentPage(currentPage - 1);
+      }
+  }
+
+  const chargingData = async () => {
+      if (!dataLoaded) {
+          await dispatch(getAllUsers());
+          setDataLoaded(true);
+      }
+  }
+
+  useEffect(() => {
+      chargingData();
+  }, [dispatch, allUsers]);
     
 
     return (
-        <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+      <div>
+        <div className="px-5 py-5 bg-white justify-start">
+                <div className="inline-flex mt-2 xs:mt-0">
+                    <button onClick={handlePreviousPage} className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
+                        Anterior
+                    </button>
+                    <button onClick={handleNextPage} className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+      <table className="min-w-full divide-y divide-gray-200">
+      <thead className="bg-gray-50">
                 <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usuario </th>
@@ -46,88 +76,25 @@ useEffect(() => {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                 </tr>
             </thead>
-            {
-                allUsers &&  allUsers.map((user) => {
-                    return (
-                        <CustomerRow
-                            user={user}
-                            setShowModalDelete={setShowModalDelete}
-                            setCurrentUserId={setCurrentUserId}
-                            />
-                    )
-                })
-
-            }
-
-        </table>
+          {
+              allUsers.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((user) => {
+                  return (
+                      <CustomerRow
+                          user={user}
+                          setShowModalEdit={setShowModalEdit}
+                          setShowModalDetail={setShowModalDetail}
+                          setShowModalDelete={setShowModalDelete}
+                          setCurrentUserId={setCurrentUserId}
+                          setActualDetail={setActualDetail}
+                      />
+                  )
+              })
+          }
+      </table>
+      
+  </div>
     );
 };
 
+
 export default CustomerTable;
-
-
-
-/* import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { increasePageDrivers, decreasePageDrivers } from '../../../redux/actions/index';
-
-function DriversTable() {
-    const dispatch = useDispatch();
-
-
-  const allUsers = useSelector((state)=> state.allUsers);
-
-    const currentPage = useSelector(state => state.currentPageDrivers);
-  const itemsPerPage = useSelector(state => state.itemsPerPageDrivers);
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const displayedUsers = allUsers?.slice(startIndex, endIndex);
-
-  return (
-    <div className=" overflow-x-auto">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
-          <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-          
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {displayedUsers?.map((fila, index) => (
-            <tr key={index}>
-              <td className="px-6 py-4 whitespace-nowrap">{fila.name}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{fila.email}</td>
-              
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="absolute bottom-0 left-0 w-full py-4 flex justify-center">
-       
-        <button
-          onClick={() => {
-              dispatch(decreasePageDrivers())
-          }}
-          disabled={currentPage === 1}
-          className="mx-1 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-        >
-          Anterior
-        </button>
-       
-        <button
-          onClick={() => {
-              dispatch(increasePageDrivers())
-          }}
-          disabled={endIndex >= allUsers?.length}
-          className="mx-1 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-        >
-          Siguiente
-        </button>
-      </div>
-    </div>
-  );
-}
-
-export default DriversTable; */

@@ -37,10 +37,12 @@ export const INCREASE_PAGE_DRIVERS = "INCREASE_PAGE_DRIVERS";
 export const DECREASE_PAGE_DRIVERS = "DECREASE_PAGE_DRIVERS";
 export const GET_DRIVERS = "GET_DRIVERS";
 export const POST_DRIVER = "POST_DRIVER";
+export const PUT_DRIVER = "PUT_DRIVER";
+export const DELETE_DRIVER = "DELETE_DRIVER";
 
 
 export const POST_IS_LOGING = "POST_IS_LOGING"
-
+export const POST_REVIEWS = "POST_REVIEWS";
 
 
 
@@ -53,11 +55,11 @@ const deleteUser = (id) => {
   return async (dispatch) => {
     try {
       await axios.delete(`http://localhost:3000/users/${id}`,
-      {
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          }
         }
-      }
       );
       dispatch({
         type: DELETE_USER,
@@ -68,6 +70,8 @@ const deleteUser = (id) => {
     }
   };
 };
+
+
 
 export const setOrderType = (orderType) => {
   return {
@@ -88,7 +92,7 @@ export const agregarPedido = (pedido) => {
 
 //formulario de registro
 export function postUser(data) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const response = await axios.post('https://mule-server.onrender.com/users/register', data);
       dispatch({
@@ -111,11 +115,11 @@ const getAllUsers = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL_BASE}/users`,
-      {
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          }
         }
-      }
       );
       return dispatch({
         type: GET_ALL_USERS,
@@ -169,7 +173,7 @@ const getAllBranches = () => {
   };
 };
 
-const createOrder = (userData) => {
+const createOrder = (userData, id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
@@ -186,7 +190,7 @@ const createOrder = (userData) => {
         icon: "success",
         confirmButtonText: "Aceptar",
       });
-      } catch (error) {
+    } catch (error) {
       Swal.fire({
         title: "Error!",
         text: "Error al crear el pedido",
@@ -204,9 +208,9 @@ const getUserDetail = (id) => {
       const response = await fetch(`https://mule-server.onrender.com/users/${id}`,{
         method: "GET",
         headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
-    });
+      });
 
     const data = await response.json();
       return dispatch({
@@ -220,8 +224,8 @@ const getUserDetail = (id) => {
 };
 
 //Bien de Seguridad, incluye el token, bearer configurado en back ?
-const getOrdersByClient = (id) =>{
-  return async (dispatch)=>{
+const getOrdersByClient = (id) => {
+  return async (dispatch) => {
     try {
       // const token = localStorage.getItem('token')
       // if (!token) {
@@ -238,7 +242,7 @@ const getOrdersByClient = (id) =>{
         type: GET_ORDERS_BY_CLIENT,
         payload: response.data
       })
-    }catch (error) {
+    } catch (error) {
       // window.alert(error.message);
     }
   }
@@ -303,14 +307,14 @@ const orderDeclaredValue = (selectedValues) => {
   };
 };
 
-const filterCity = (cities)=>{
+const filterCity = (cities) => {
   return {
     type: FILTER_BY_CITY,
     payload: cities
   }
 }
 
-const orderDate = (date)=>{
+const orderDate = (date) => {
   return {
     type: ORDER_BY_DATE,
     payload: date
@@ -325,7 +329,7 @@ const setIsLogged = (isLogged) => {
 }
 
 export function isLoging(data) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const response = await axios.post('https://mule-server.onrender.com/users/register-auth0', data);
       dispatch({
@@ -349,8 +353,8 @@ const setInfoUserLogged = (user) => {
   };
 }
 
-const updateUserDetail = (id, infoUser)=>{
-  return async (dispatch)=>{
+const updateUserDetail = (id, infoUser) => {
+  return async (dispatch) => {
     try {
       const { data } = await axios.put(`https://mule-server.onrender.com/users/profile/${id}`, infoUser
       );
@@ -358,9 +362,9 @@ const updateUserDetail = (id, infoUser)=>{
         type: UPDATE_USER_DETAIL,
         payload: data,
       });
-      
+
     } catch (error) {
-      
+
     }
   }
 }
@@ -522,12 +526,12 @@ export const decreasePageDrivers = () => ({
 
 /* Drivers */
 
-export function getDrivers(){
+export const getDrivers= () => {
   return async function(dispatch){
       const response = await axios("https://mule-server.onrender.com/drivers")
       return dispatch({
           type: GET_DRIVERS,
-          payload: [{hola:"acaa"}] //response.data
+          payload: response.data
       })
   }
 }
@@ -538,13 +542,61 @@ export function postDriver(driver) {
       const response = await axios.post('https://mule-server.onrender.com/drivers', driver);
 
       return dispatch({
-          type: POST_DRIVER,
+        type: POST_DRIVER,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export function putDriver(driver) {
+  return async function(dispatch) {
+      try {
+      const response = await axios.put(`http://localhost:300/drivers/${driver.id}`, driver);
+
+      return dispatch({
+          type: PUT_DRIVER,
           payload: response.data,
       });
       } catch (error) {
       console.error(error);
       }
   };
+}
+
+export function deleteDriver(id) {
+  return async function(dispatch) {
+      try {
+      await axios.delete(`http://localhost:300/drivers/${id}`);
+
+      return dispatch({
+          type: DELETE_DRIVER,
+          payload: id,
+      });
+      } catch (error) {
+      console.error(error);
+      }
+  };
+}
+
+
+const postReviews = (userId, review) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post("http://localhost:3000/reviews", {
+        ...review,
+        user_id: userId,
+      });
+      dispatch({
+        type: POST_REVIEWS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log('no está llegando la data', error.message)
+    }
+  }
 }
 
 export {
@@ -571,4 +623,5 @@ export {
   setOrderData,
   setEnlistments,
   deleteUser,
+  postReviews
 };
