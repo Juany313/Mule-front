@@ -1,16 +1,14 @@
 import React from 'react';
 import icon_cancel from '../../../assets/Icon_cancelar.svg';
-import { deleteEnlistment } from '../../../redux/actions';
+import { deleteUser } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 
 const EnlistmentDelete = (
     {
         setShowModalDelete,
-        actualBackOrder,
-        currentEnlistmentId
+        currentUserId
     }
 ) => {
-    const enlistment = actualBackOrder; 
     const dispatch = useDispatch();
     const handleCancel = () => {
         setShowModalDelete(false);
@@ -18,7 +16,7 @@ const EnlistmentDelete = (
 
     const onDelete = () => {
         setShowModalDelete(false);
-        dispatch(deleteEnlistment(currentEnlistmentId));
+        dispatch(deleteUser(currentUserId));
         window.location.reload();
     };
 
