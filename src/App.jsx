@@ -36,6 +36,7 @@ import ConfirmEmail from "./views/auth/ConfirmEmail";
 
 /* Admin */
 import Enlistment from "./views/admin/Enlistment/Enlistment";
+import AdminHome from "./views/admin/adminHome/AdminHome"
 import EnlistmentTable from "./views/admin/Enlistment/EnlistmentTable";
 import EnlistmentForm from "./views/admin/Enlistment/EnlistmentForm";
 
@@ -78,7 +79,8 @@ function App() {
 
         </Route>
         <Route path="/admin" element={<LayoutAdminAlpha />}>
-          <Route index element={<Enlistment />} />
+          <Route index element={<AdminHome />} />
+          <Route path="enlistment" element={<Enlistment />} />
           <Route path="customers" element={<Customers />} />
           <Route path="drivers" element={<Drivers />} />
           <Route path="drivers/create" element={<CreateDriver />} />
