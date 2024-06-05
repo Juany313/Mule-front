@@ -28,6 +28,7 @@ export const POST_ENLISTMENT = "POST_ENLISTMENT";
 export const PUT_ENLISTMENT = "PUT_ENLISTMENT";
 export const DELETE_ENLISTMENT = "DELETE_ENLISTMENT";
 export const SET_ORDER_DATA = "SET_ORDER_DATA";
+export const DELETE_USER = "DELETE_USER";
 
 
 /* Admin Drivers Actions */
@@ -47,6 +48,26 @@ export const POST_IS_LOGING = "POST_IS_LOGING"
  const URL_BASE = "http://localhost:3000";
 
 // actions.js
+
+const deleteUser = (id) => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(`http://localhost:3000/users/${id}`,
+      {
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+      }
+      );
+      dispatch({
+        type: DELETE_USER,
+        payload: id,
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+};
 
 export const setOrderType = (orderType) => {
   return {
@@ -89,7 +110,13 @@ export function postUser(data) {
 const getAllUsers = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${URL_BASE}/users`);
+      const { data } = await axios.get(`${URL_BASE}/users`,
+      {
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+      }
+      );
       return dispatch({
         type: GET_ALL_USERS,
         payload: data,
@@ -537,4 +564,5 @@ export {
   deleteEnlistment,
   setOrderData,
   setEnlistments,
+  deleteUser,
 };
