@@ -21,6 +21,7 @@ import {
     PUT_ENLISTMENT,
     DELETE_ENLISTMENT,
     DELETE_USER,
+    DELETE_DRIVER,
 
     
     SET_PAGE_DRIVERS,
@@ -30,7 +31,8 @@ import {
     
 
   SET_ORDER_DATA,
-    POST_IS_LOGING
+    POST_IS_LOGING,
+    PUT_DRIVER
 
 } from "../actions";
 
@@ -224,6 +226,18 @@ function rootReducer(state = initialState, action) {
                     return enlistment;
                 })
             }
+
+        case PUT_DRIVER:
+            return {
+                ...state,
+                allDrivers: state.allDrivers.map(driver => {
+                    if (driver.id === action.payload.id) {
+                        return action.payload;
+                    }
+                    return driver;
+                })
+            }
+
         
         
         case DELETE_ENLISTMENT:
@@ -238,11 +252,18 @@ function rootReducer(state = initialState, action) {
                 allUsers: state.allUsers.filter(user => user.id !== action.payload)
             }
 
+        case DELETE_DRIVER:
+            return {
+                ...state,
+                allDrivers: state.allDrivers.filter(driver => driver.id !== action.payload)
+            }
+
         case SET_ORDER_DATA:
             return {
                 ...state,
                 orderData: action.payload
             }
+
 
             
         
