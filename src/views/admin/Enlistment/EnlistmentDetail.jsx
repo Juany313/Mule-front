@@ -6,10 +6,12 @@ import { useDispatch } from 'react-redux';
 const EnlistmentDetail = (
     {
         setShowModalDetail,
-        actualBackOrder
+        actualBackOrder,
+        actualDetail
     }
 ) => {
     const enlistment = actualBackOrder; 
+    console.log('actualDetail',actualDetail);
 
     const handleCancel = () => {
         setShowModalDetail(false);

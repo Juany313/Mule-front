@@ -17,6 +17,7 @@ const Enlistments = () => {
     const [ShowModalDetail, setShowModalDetail] = useState(false);
     const [ShowModalDelete, setShowModalDelete] = useState(false)
     const [currentEnlistmentId, setCurrentEnlistmentId] = useState('')
+    const [actualDetail, setActualDetail] = useState({})
 
 
     const handleCreate = () => {
@@ -50,6 +51,7 @@ const Enlistments = () => {
                 ShowModalDetail &&
                 <EnlistmentDetail
                 setShowModalDetail={setShowModalDetail}
+                actualDetail={actualDetail}
                 />
             }
             {
@@ -72,6 +74,7 @@ const Enlistments = () => {
                         setShowModalDetail={setShowModalDetail}
                         setShowModalDelete={setShowModalDelete}
                         setCurrentEnlistmentId={setCurrentEnlistmentId}
+                        setActualDetail={setActualDetail}
                         />
                 </div>
             </div>

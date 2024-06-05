@@ -20,6 +20,7 @@ import {
     POST_ENLISTMENT,
     PUT_ENLISTMENT,
     DELETE_ENLISTMENT,
+    DELETE_USER,
 
     
     SET_PAGE_DRIVERS,
@@ -231,6 +232,12 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 allEnlistments: state.allEnlistments.filter(enlistment => enlistment.id !== action.payload)
+            }
+
+        case DELETE_USER:
+            return {
+                ...state,
+                allUsers: state.allUsers.filter(user => user.id !== action.payload)
             }
 
         case SET_ORDER_DATA:

@@ -11,7 +11,8 @@ const EnlistmentRow = ({
     setShowModalEdit,
     setShowModalDetail,
     setShowModalDelete,
-    setCurrentEnlistmentId
+    setCurrentEnlistmentId,
+    setActualDetail
     }) => {
 
     
@@ -29,6 +30,7 @@ const EnlistmentRow = ({
 
     const onDetail = () => {
         setShowModalDetail(true)
+        setActualDetail(enlistment);
     }
 
 
