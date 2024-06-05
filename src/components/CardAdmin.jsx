@@ -40,7 +40,7 @@ const CardTicket = (props) => {
         </div>
         <hr className="border border-dashed border-gray-500/50 my-4 " />
         <div>
-          <Link to="" className="flex items-center gap-2 hover:underline">
+          <Link to="/header/pedido" className="flex items-center gap-2 hover:underline">
             <IoMdAdd /> Iniciar nuevo pedido
           </Link>
         </div>
