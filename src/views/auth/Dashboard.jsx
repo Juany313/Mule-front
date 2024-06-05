@@ -1,42 +1,25 @@
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import UserLayout from "../profile/UserLayout";
+import LayoutAdminAlpha from "../../layouts/LayoutAdminAlpha"
 import Header from "../../assets/Header.png";
 import { FaBox, FaSearch, FaPaperPlane } from "react-icons/fa";
-import { Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { setIsLogged } from "../../redux/actions";
 import { useEffect } from "react";
-//import { useSelect } from "@material-tailwind/react";
 import { useAuth0 } from "@auth0/auth0-react";
-import Swal from "sweetalert2";
 import loginUserAuth from "../../services/auth/requestAuthLogin";
 import parseJwt from "../../helpers/parseJwt";
-
-import { Link } from "react-router-dom";
-
-
-
 import { setInfoUserLogged, getUserDetail } from "../../redux/actions";
-
-
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); 
   const infoUserLogged = useSelector((state) => state.infoUserLogged);
-  const userDetail = useSelector((state) => state.userDetail); 
   const { isAuthenticated, user } = useAuth0();
   const idUser = infoUserLogged?.id
 
-
-  let role = infoUserLogged?.role
-
-
-
-  console.log(user);
-
-
+    let role = infoUserLogged?.role
     useEffect(() => {
       if (isAuthenticated) {
         dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
@@ -60,12 +43,6 @@ const Dashboard = () => {
       const token = await loginUserAuth(emailAuth, nameAuth);
       localStorage.setItem("token", token);
       dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
-      // Swal.fire({
-      //   icon: "success",
-      //   title: "Inicio de sesión exitoso",
-      //   text: "Bienvenido a la plataforma",
-      //   showConfirmButton: true,
-      // });
       dispatch(setIsLogged(true));
     } catch (error) {
       console.log(error);
@@ -84,9 +61,6 @@ const Dashboard = () => {
   const handleSend = () => {
     navigate("/header/pedido");
   };
-
-  
-
 
   return (
     role === "user" ? 
@@ -122,8 +96,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-      </UserLayout>
-    ) : (window.location.href = "http://localhost:4000/admin")
+      </UserLayout>) :  role === "admin" && <Navigate to="/admin" />
   );
 };
 

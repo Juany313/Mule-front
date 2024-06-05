@@ -24,12 +24,10 @@ import { setInfoUserLogged } from "../../redux/actions";
 
 const NavProfile = () => {
   const dispatch = useDispatch();
-  const { logout } = useAuth0();
+  const { logout, isAuthenticated } = useAuth0();
   const [isChecked, setIsChecked] = useState(false);
 
   const infoUserLogged = useSelector((state) => state.infoUserLogged.name);
-
-
 
   const handleCheck = () => {
     setIsChecked(!isChecked);
