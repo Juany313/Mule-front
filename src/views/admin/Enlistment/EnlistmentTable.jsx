@@ -4,13 +4,16 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { getAllEnlistments, getAllOrders } from '../../../redux/actions';
 import useEnlistment from '../../../hooks/useEnlistment';
-import EnlistmentRow from './EnlistmentRow';
 import useOrderShipment from '../../../hooks/useOrderShipment';
+import EnlistmentRow from './EnlistmentRow';
 
 const EnlistmentTable = (
    {
     setShowModalEdit,
-    setShowModalDetail
+    setShowModalDetail,
+    setShowModalDelete,
+    setCurrentEnlistmentId,
+    setActualDetail
    }
 ) => {
     const { allEnlistments } = useEnlistment();
@@ -34,7 +37,9 @@ const chargingData = async () => {
             }
         });
         setOrderWithEnlistmet(orderWithEnlistmet);
+        await dispatch(getAllEnlistments());
         setDataLoaded(true);
+        
     }
 }
 
@@ -67,6 +72,9 @@ useEffect(() => {
                             enlistment={enlistment}
                             setShowModalEdit = {setShowModalEdit} 
                             setShowModalDetail={setShowModalDetail}
+                            setShowModalDelete={setShowModalDelete}
+                            setCurrentEnlistmentId={setCurrentEnlistmentId}
+                            setActualDetail={setActualDetail}
                             />
                     )
                 })

@@ -9,22 +9,28 @@ import { useState } from 'react';
 const EnlistmentRow = ({
     enlistment,
     setShowModalEdit,
-    setShowModalDetail
+    setShowModalDetail,
+    setShowModalDelete,
+    setCurrentEnlistmentId,
+    setActualDetail
     }) => {
 
     
     console.log('EnlistmentRow', enlistment);
+    
 
     const onEdit = () => {
         setShowModalEdit(true);
     }
 
     const onDelete = () => {
-        console.log('Eliminando');
+        setCurrentEnlistmentId(enlistment.id);
+        setShowModalDelete(true);
     }
 
     const onDetail = () => {
         setShowModalDetail(true)
+        setActualDetail(enlistment);
     }
 
 
@@ -51,7 +57,10 @@ const EnlistmentRow = ({
                     className='w-5'
                     style={{ cursor: 'pointer' }} />
                 </button>
-                <button style={{ marginRight: '10px' }} >
+                <button 
+                    style={{ marginRight: '10px' }}
+                    onClick={onDelete} 
+                    >
                     <img src={icon_eliminar} alt="eliminar" 
                     className='w-5'
                     style={{ cursor: 'pointer' }} />

@@ -1,21 +1,28 @@
 import React from 'react';
 import icon_cancel from '../../../assets/Icon_cancelar.svg';
-import { putEnlistment } from '../../../redux/actions';
+import { deleteEnlistment, putEnlistment } from '../../../redux/actions';
 import { useDispatch } from 'react-redux';
 
-const EnlistmentDetail = (
+const EnlistmentDelete = (
     {
-        setShowModalDetail,
+        setShowModalDelete,
         actualBackOrder,
-        actualDetail
+        currentEnlistmentId
     }
 ) => {
     const enlistment = actualBackOrder; 
-    console.log('actualDetail',actualDetail);
-
+    const dispatch = useDispatch();
     const handleCancel = () => {
-        setShowModalDetail(false);
+        setShowModalDelete(false);
     };
+
+    const onDelete = () => {
+        setShowModalDelete(false);
+        dispatch(deleteEnlistment(currentEnlistmentId));
+        window.location.reload();
+    };
+
+
 
     return (
         <div className='fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center '>
@@ -26,11 +33,11 @@ const EnlistmentDetail = (
                         className='icon-create'
                         style={{ cursor: 'pointer' }} />
                 </div>
-                <div>
-                    // Este div renderiza toda la información de la orden de envío
-                    <div>
-                        <h3>Información Detallada del envío</h3>
-                    </div>
+                
+                <div className="p-4 bg-white rounded shadow-lg">
+                    <h3 className="text-lg font-semibold mb-2">Información Detallada del envío</h3>
+                    <p className="mb-4">¿Estás seguro de que quieres borrar este elemento?</p>
+                    <button onClick={onDelete} className="bg-red-500 text-white px-4 py-2 rounded shadow">Confirmar</button>
                 </div>
 
             </div>
@@ -40,4 +47,4 @@ const EnlistmentDetail = (
     );
 };
 
-export default EnlistmentDetail;
+export default EnlistmentDelete;
