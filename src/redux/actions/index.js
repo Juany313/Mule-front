@@ -42,12 +42,12 @@ export const DELETE_DRIVER = "DELETE_DRIVER";
 
 
 export const POST_IS_LOGING = "POST_IS_LOGING"
+export const POST_REVIEWS = "POST_REVIEWS";
 
 
 
 
-
- const URL_BASE = "http://localhost:3000";
+const URL_BASE = "http://localhost:3000";
 
 // actions.js
 
@@ -55,11 +55,11 @@ const deleteUser = (id) => {
   return async (dispatch) => {
     try {
       await axios.delete(`http://localhost:3000/users/${id}`,
-      {
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          }
         }
-      }
       );
       dispatch({
         type: DELETE_USER,
@@ -92,7 +92,7 @@ export const agregarPedido = (pedido) => {
 
 //formulario de registro
 export function postUser(data) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const response = await axios.post('http://localhost:3000/users/register', data);
       dispatch({
@@ -115,11 +115,11 @@ const getAllUsers = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL_BASE}/users`,
-      {
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          }
         }
-      }
       );
       return dispatch({
         type: GET_ALL_USERS,
@@ -173,13 +173,16 @@ const getAllBranches = () => {
   };
 };
 
-const createOrder = (userData) => {
+const createOrder = (userData, id) => {
   return async (dispatch) => {
     try {
-      console.log("DATA:", userData);
+      console.log("DATA:", id);
       const { data } = await axios.post(
         "http://localhost:3000/order_shipments",
-        userData // Envía los datos del formulario como parte de la solicitud POST
+        {
+          ...userData,
+          user_id: id,
+        } // Envía los datos del formulario como parte de la solicitud POST
       );
       dispatch({
         type: CREATE_ORDER,
@@ -191,7 +194,7 @@ const createOrder = (userData) => {
         icon: "success",
         confirmButtonText: "Aceptar",
       });
-      } catch (error) {
+    } catch (error) {
       Swal.fire({
         title: "Error!",
         text: "Error al crear el pedido",
@@ -206,14 +209,14 @@ const createOrder = (userData) => {
 const getUserDetail = (id) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`http://localhost:3000/users/${id}`,{
+      const response = await fetch(`http://localhost:3000/users/${id}`, {
         method: "GET",
         headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
-    });
+      });
 
-    const data = await response.json();
+      const data = await response.json();
       //console.log('getuserdetail',data);
       return dispatch({
         type: GET_USER_DETAIL,
@@ -226,16 +229,16 @@ const getUserDetail = (id) => {
 };
 
 //Bien de Seguridad, incluye el token, bearer configurado en back ?
-const getOrdersByClient = (id) =>{
-  return async (dispatch)=>{
+const getOrdersByClient = (id) => {
+  return async (dispatch) => {
     try {
-      const response = await axios.get (`http://localhost:3000/order_shipments/${id}`
-    )
-      return dispatch ({
+      const response = await axios.get(`http://localhost:3000/order_shipments/${id}`
+      )
+      return dispatch({
         type: GET_ORDERS_BY_CLIENT,
         payload: response.data
       })
-    }catch (error) {
+    } catch (error) {
       // window.alert(error.message);
     }
   }
@@ -301,14 +304,14 @@ const orderDeclaredValue = (selectedValues) => {
   };
 };
 
-const filterCity = (cities)=>{
+const filterCity = (cities) => {
   return {
     type: FILTER_BY_CITY,
     payload: cities
   }
 }
 
-const orderDate = (date)=>{
+const orderDate = (date) => {
   return {
     type: ORDER_BY_DATE,
     payload: date
@@ -323,7 +326,7 @@ const setIsLogged = (isLogged) => {
 }
 
 export function isLoging(data) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const response = await axios.post('http://localhost:3000/users/register-auth0', data);
       dispatch({
@@ -347,8 +350,8 @@ const setInfoUserLogged = (user) => {
   };
 }
 
-const updateUserDetail = (id, infoUser)=>{
-  return async (dispatch)=>{
+const updateUserDetail = (id, infoUser) => {
+  return async (dispatch) => {
     try {
       const { data } = await axios.patch(`http://localhost:3000/users/profile/${id}`, infoUser
       );
@@ -356,9 +359,9 @@ const updateUserDetail = (id, infoUser)=>{
         type: UPDATE_USER_DETAIL,
         payload: data,
       });
-      
+
     } catch (error) {
-      
+
     }
   }
 }
@@ -374,12 +377,12 @@ const getAllEnlistments = () => {
   return async (dispatch) => {
     try {
       await axios.get("http://localhost:3000/enlistments")
-      .then((response) => {
-        dispatch({
-          type: GET_ALL_ENLISTMENTS,
-          payload: response.data,
-        });
-      })
+        .then((response) => {
+          dispatch({
+            type: GET_ALL_ENLISTMENTS,
+            payload: response.data,
+          });
+        })
     } catch (error) {
       console.error(error.message);
     }
@@ -531,17 +534,17 @@ export const getDrivers= () => {
 }
 
 export function postDriver(driver) {
-  return async function(dispatch) {
-      try {
+  return async function (dispatch) {
+    try {
       const response = await axios.post('http://localhost:300/drivers', driver);
 
       return dispatch({
-          type: POST_DRIVER,
-          payload: response.data,
+        type: POST_DRIVER,
+        payload: response.data,
       });
-      } catch (error) {
+    } catch (error) {
       console.error(error);
-      }
+    }
   };
 }
 
@@ -576,6 +579,23 @@ export function deleteDriver(id) {
 }
 
 
+const postReviews = (userId, review) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post("http://localhost:3000/reviews", {
+        ...review,
+        user_id: userId,
+      });
+      dispatch({
+        type: POST_REVIEWS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log('no está llegando la data', error.message)
+    }
+  }
+}
+
 export {
   getUserDetail,
   getAllUsers,
@@ -600,4 +620,5 @@ export {
   setOrderData,
   setEnlistments,
   deleteUser,
+  postReviews
 };
