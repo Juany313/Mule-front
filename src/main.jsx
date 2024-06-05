@@ -11,9 +11,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Auth0Provider
-        domain="dev-h0iezuyqkhhjz3e7.us.auth0.com"
-    clientId="Yx41UTDIBR1mBOyoClCO8DFR8h0pMWKD"
+    <Auth0Provider
+        domain="dev-1m7fdf5yimzufwoe.us.auth0.com"
+        clientId="CxcvRJYL4FbKMOGuGsV3kwvaGzoPqkP7"
     authorizationParams={{
       redirect_uri: "https://mule-front.onrender.com/auth/dashboard"
     }}
