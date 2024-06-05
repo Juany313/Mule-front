@@ -37,10 +37,8 @@ import ConfirmEmail from "./views/auth/ConfirmEmail";
 /* Admin */
 import Enlistment from "./views/admin/Enlistment/Enlistment";
 import AdminHome from "./views/admin/adminHome/AdminHome"
-import EnlistmentTable from "./views/admin/Enlistment/EnlistmentTable";
-import EnlistmentForm from "./views/admin/Enlistment/EnlistmentForm";
 
-import CreateDriver from "./views/admin/drivers/CreateDriver";
+
 
 import ShipmentPrice from "./components/ShipmentPrice";
 import ReviewForm from "./components/ReviewForm";
@@ -82,7 +80,6 @@ function App() {
           <Route path="enlistment" element={<Enlistment />} />
           <Route path="customers" element={<Customers />} />
           <Route path="drivers" element={<Drivers />} />
-          <Route path="drivers/create" element={<CreateDriver />} />
         </Route>
         <Route path="*" element={<LayoutError />} />
       </Routes>

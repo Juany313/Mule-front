@@ -37,6 +37,8 @@ export const INCREASE_PAGE_DRIVERS = "INCREASE_PAGE_DRIVERS";
 export const DECREASE_PAGE_DRIVERS = "DECREASE_PAGE_DRIVERS";
 export const GET_DRIVERS = "GET_DRIVERS";
 export const POST_DRIVER = "POST_DRIVER";
+export const PUT_DRIVER = "PUT_DRIVER";
+export const DELETE_DRIVER = "DELETE_DRIVER";
 
 
 export const POST_IS_LOGING = "POST_IS_LOGING"
@@ -68,6 +70,8 @@ const deleteUser = (id) => {
     }
   };
 };
+
+
 
 export const setOrderType = (orderType) => {
   return {
@@ -519,13 +523,13 @@ export const decreasePageDrivers = () => ({
 
 /* Drivers */
 
-export function getDrivers() {
-  return async function (dispatch) {
-    const response = await axios("http://localhost:3000/drivers")
-    return dispatch({
-      type: GET_DRIVERS,
-      payload: [{ hola: "acaa" }] //response.data
-    })
+export const getDrivers= () => {
+  return async function(dispatch){
+      const response = await axios("http://localhost:3000/drivers")
+      return dispatch({
+          type: GET_DRIVERS,
+          payload: response.data
+      })
   }
 }
 
@@ -543,6 +547,37 @@ export function postDriver(driver) {
     }
   };
 }
+
+export function putDriver(driver) {
+  return async function(dispatch) {
+      try {
+      const response = await axios.put(`http://localhost:300/drivers/${driver.id}`, driver);
+
+      return dispatch({
+          type: PUT_DRIVER,
+          payload: response.data,
+      });
+      } catch (error) {
+      console.error(error);
+      }
+  };
+}
+
+export function deleteDriver(id) {
+  return async function(dispatch) {
+      try {
+      await axios.delete(`http://localhost:300/drivers/${id}`);
+
+      return dispatch({
+          type: DELETE_DRIVER,
+          payload: id,
+      });
+      } catch (error) {
+      console.error(error);
+      }
+  };
+}
+
 
 const postReviews = (userId, review) => {
   return async (dispatch) => {
