@@ -45,7 +45,7 @@ export const POST_REVIEWS = "POST_REVIEWS";
 
 
 
- const URL_BASE = "http://localhost:3000";
+const URL_BASE = "http://localhost:3000";
 
 // actions.js
 
@@ -53,11 +53,11 @@ const deleteUser = (id) => {
   return async (dispatch) => {
     try {
       await axios.delete(`http://localhost:3000/users/${id}`,
-      {
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          }
         }
-      }
       );
       dispatch({
         type: DELETE_USER,
@@ -111,11 +111,11 @@ const getAllUsers = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`${URL_BASE}/users`,
-      {
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          }
         }
-      }
       );
       return dispatch({
         type: GET_ALL_USERS,
@@ -169,13 +169,16 @@ const getAllBranches = () => {
   };
 };
 
-const createOrder = (userData) => {
+const createOrder = (userData, id) => {
   return async (dispatch) => {
     try {
-      console.log("DATA:", userData);
+      console.log("DATA:", id);
       const { data } = await axios.post(
         "http://localhost:3000/order_shipments",
-        userData // Envía los datos del formulario como parte de la solicitud POST
+        {
+          ...userData,
+          user_id: id,
+        } // Envía los datos del formulario como parte de la solicitud POST
       );
       dispatch({
         type: CREATE_ORDER,
@@ -370,12 +373,12 @@ const getAllEnlistments = () => {
   return async (dispatch) => {
     try {
       await axios.get("http://localhost:3000/enlistments")
-      .then((response) => {
-        dispatch({
-          type: GET_ALL_ENLISTMENTS,
-          payload: response.data,
-        });
-      })
+        .then((response) => {
+          dispatch({
+            type: GET_ALL_ENLISTMENTS,
+            payload: response.data,
+          });
+        })
     } catch (error) {
       console.error(error.message);
     }
@@ -516,28 +519,28 @@ export const decreasePageDrivers = () => ({
 
 /* Drivers */
 
-export function getDrivers(){
-  return async function(dispatch){
-      const response = await axios("http://localhost:3000/drivers")
-      return dispatch({
-          type: GET_DRIVERS,
-          payload: [{hola:"acaa"}] //response.data
-      })
+export function getDrivers() {
+  return async function (dispatch) {
+    const response = await axios("http://localhost:3000/drivers")
+    return dispatch({
+      type: GET_DRIVERS,
+      payload: [{ hola: "acaa" }] //response.data
+    })
   }
 }
 
 export function postDriver(driver) {
-  return async function(dispatch) {
-      try {
+  return async function (dispatch) {
+    try {
       const response = await axios.post('http://localhost:300/drivers', driver);
 
       return dispatch({
-          type: POST_DRIVER,
-          payload: response.data,
+        type: POST_DRIVER,
+        payload: response.data,
       });
-      } catch (error) {
+    } catch (error) {
       console.error(error);
-      }
+    }
   };
 }
 
@@ -553,7 +556,7 @@ const postReviews = (userId, review) => {
         payload: data,
       });
     } catch (error) {
-      console.log ('no está llegando la data', error.message)
+      console.log('no está llegando la data', error.message)
     }
   }
 }
