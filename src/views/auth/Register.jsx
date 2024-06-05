@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Link } from "react-router-dom";
 import validate from "../../utils"
 import Swal from "sweetalert2";
@@ -16,6 +16,10 @@ import { TbUserSquare } from "react-icons/tb";
 
 /* hooks */
 import {useDispatch} from "react-redux";
+// import { HiArrowUturnLeft } from "react-icons/hi2";
+import { FaArrowLeft } from "react-icons/fa6";
+
+import "./Conten.css"
 
 const Register = () => {
   const navigate = useNavigate();
@@ -86,21 +90,21 @@ const Register = () => {
     
 
   return (
-    <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">
+    <div className="content-loging  flex   grid ">
+      
+    <div className="bg-gradient-to-r from-blue-400 to-blue-500 p-8 rounded-xl w-auto  lg:w-[450px] items-center justify-center shadow-2xl shadow-blue-800">
+      <>
+        <button className=" bg-blue-300 hover:bg-blue-700  text-gray-300 font-bold  rounded-md shadow-lg uppercase  m-2 " >
+          <Link to="/auth">
+          <FaArrowLeft className="w-7 h-7 text-white"/> 
+         </Link>
+        </button>
+      </>
+       
       <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-white mb-8">
         Crear <span className="text-primary">cuenta</span>
       </h1>
       <form className="mb-8  " onSubmit={handleSubmit}>
-        <button
-          className="flex items-center justify-center py-3 px-4 gap-4 bg-p300  w-full rounded-full mb-8
-        text-gray-100"
-        >
-          <img
-            src="https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png"
-            className="w-4 h-4"
-          />
-          Registrate con google
-        </button>
 
         <div className="mb-4">
             <div className="relative ">
@@ -177,7 +181,8 @@ const Register = () => {
           Ingresa
         </Link>
       </span>
-    </div>
+      </div>
+      </div>
   );
 };
 

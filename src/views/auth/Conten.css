@@ -1,0 +1,13 @@
+.content-loging {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100rem;
+  height: 100vh;
+  background: linear-gradient(
+    -45deg,
+    rgb(1, 19, 42),
+    rgb(97, 136, 184),
+    rgb(6, 106, 229)
+  );
+}
