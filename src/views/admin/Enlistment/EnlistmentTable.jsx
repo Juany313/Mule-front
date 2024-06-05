@@ -12,7 +12,8 @@ const EnlistmentTable = (
     setShowModalEdit,
     setShowModalDetail,
     setShowModalDelete,
-    setCurrentEnlistmentId
+    setCurrentEnlistmentId,
+    setActualDetail
    }
 ) => {
     const { allEnlistments } = useEnlistment();
@@ -73,6 +74,7 @@ useEffect(() => {
                             setShowModalDetail={setShowModalDetail}
                             setShowModalDelete={setShowModalDelete}
                             setCurrentEnlistmentId={setCurrentEnlistmentId}
+                            setActualDetail={setActualDetail}
                             />
                     )
                 })
