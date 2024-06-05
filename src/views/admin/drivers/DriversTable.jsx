@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { increasePageDrivers, decreasePageDrivers } from '../../../redux/actions/index';
+import { increasePageDrivers, decreasePageDrivers, deleteDrivers, getDrivers } from '../../../redux/actions/index';
 
 function DriversTable({ drivers }) {
     const dispatch = useDispatch();
@@ -11,6 +11,13 @@ function DriversTable({ drivers }) {
   const endIndex = startIndex + itemsPerPage;
   const displayedDrivers = drivers?.slice(startIndex, endIndex);
 
+  function handleDelete(id){
+    //console.log("aca lo que hay en searchString",searchString);
+    dispatch(deleteDrivers(id))
+    dispatch(getDrivers())
+    
+  }
+console.log("displayedDriversrrrrrrrrrrr", displayedDrivers);
   return (
     <div className=" overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">
@@ -18,15 +25,18 @@ function DriversTable({ drivers }) {
           <tr>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+            <th className="px-6 py-3  text-xs text-center font-medium text-gray-500 uppercase tracking-wider ">Eliminar</th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {displayedDrivers?.map((fila, index) => (
+            
             <tr key={index}>
               <td className="px-6 py-4 whitespace-nowrap">{fila.name}</td>
               <td className="px-6 py-4 whitespace-nowrap">{fila.email}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{fila.state}</td>
+              <td className="px-6 py-4 whitespace-nowrap flex items-center justify-center"><button 
+                 
+                onClick={() => handleDelete(fila.id)}>X</button></td>
             </tr>
           ))}
         </tbody>

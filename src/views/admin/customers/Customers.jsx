@@ -27,7 +27,7 @@ const Customers = () => {
       // Si no está cargada, realiza la carga inicial
       dispatch(getAllUsers());
     }
-  }, [dispatch, allUsers]);
+  }, []);
   console.log("allUsers",allUsers );
 
   return (

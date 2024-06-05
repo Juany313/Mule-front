@@ -12,8 +12,10 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <Auth0Provider
-        domain="dev-1m7fdf5yimzufwoe.us.auth0.com"
-    clientId="G0Zqz0iZxBj1UYFv1OjZsLVuBUi5u5fY"
+        //domain="dev-1m7fdf5yimzufwoe.us.auth0.com"
+        domain="dev-h0iezuyqkhhjz3e7.us.auth0.com"
+    //clientId="G0Zqz0iZxBj1UYFv1OjZsLVuBUi5u5fY"
+    clientId="Yx41UTDIBR1mBOyoClCO8DFR8h0pMWKD"
     authorizationParams={{
       redirect_uri: "http://localhost:4000/auth/dashboard"
     }}

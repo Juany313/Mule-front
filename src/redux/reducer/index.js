@@ -26,7 +26,10 @@ import {
     INCREASE_PAGE_DRIVERS,
     DECREASE_PAGE_DRIVERS,
     GET_DRIVERS,
-    
+    GET_DRIVERS_BY_NAME,
+    SET_PAGE_CUSTOMERS,
+    INCREASE_PAGE_CUSTOMERS,
+    DECREASE_PAGE_CUSTOMERS,
 
   SET_ORDER_DATA,
     POST_IS_LOGING
@@ -52,6 +55,8 @@ let initialState = {
     orderData: [],
     currentPageDrivers: 1,
     itemsPerPageDrivers: 5,
+    currentPageCustomers: 1,
+    itemsPerPageCustomers: 5,
     allDrivers: []
 }
 
@@ -79,6 +84,12 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 allDrivers: action.payload,
             };
+            
+            case GET_DRIVERS_BY_NAME:
+                return {
+                    ...state,
+                    allDrivers: action.payload,
+                  };
         case GET_ALL_USERS:
             return {
                 ...state,
@@ -245,6 +256,21 @@ function rootReducer(state = initialState, action) {
           allUsers: action.payload
         }
 
+        case SET_PAGE_CUSTOMERS:
+            return {
+                ...state,
+                currentPageCustomers: action.payload
+            };
+        case INCREASE_PAGE_CUSTOMERS:
+            return {
+                ...state,
+                currentPageCustomers: state.currentPageCustomers + 1
+            };
+        case DECREASE_PAGE_CUSTOMERS:
+            return {
+                ...state,
+                currentPageCustomers: state.currentPageCustomers - 1
+            };
 
     default:
       return state;

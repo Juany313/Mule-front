@@ -89,7 +89,8 @@ const Dashboard = () => {
 
 
   return (
-    role === "user" ? 
+    role === "admin" ? 
+    (window.location.href = "http://localhost:4000/admin") :
       (<UserLayout >
         <div className="flex flex-col h-screen pt-28">
         
@@ -123,7 +124,7 @@ const Dashboard = () => {
           </div>
         </div>
       </UserLayout>
-    ) : (window.location.href = "http://localhost:4000/admin")
+    ) 
   );
 };
 

@@ -1,6 +1,21 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { increasePageDrivers, decreasePageDrivers } from '../../../redux/actions/index';
+import { increasePageCustomers, decreasePageCustomers } from '../../../redux/actions/index';
+
+let users = [
+  {name: "Juany", email: "lala@gmail.com", state: "active"},
+  {name: "Juany", email: "lala@gmail.com", state: "active"},
+  {name: "Juany", email: "lala@gmail.com", state: "active"},
+  {name: "Juany", email: "lala@gmail.com", state: "active"},
+  {name: "Juany", email: "lala@gmail.com", state: "active"},
+  {name: "Jany", email: "lala@gmail.com", state: "active"},
+  {name: "Jany", email: "lala@gmail.com", state: "active"},
+  {name: "Jany", email: "lala@gmail.com", state: "active"},
+  {name: "Jany", email: "lala@gmail.com", state: "active"},
+  {name: "Juany", email: "lala@gmail.com", state: "active"},
+  {name: "Juany", email: "lala@gmail.com", state: "active"},
+  {name: "Juany", email: "lala@gmail.com", state: "active"},
+];
 
 function DriversTable() {
     const dispatch = useDispatch();
@@ -8,13 +23,15 @@ function DriversTable() {
     /* Estado global */
   const allUsers = useSelector((state)=> state.allUsers);
 
-    const currentPage = useSelector(state => state.currentPageDrivers);
-  const itemsPerPage = useSelector(state => state.itemsPerPageDrivers);
+  console.log("allUsers tabla",allUsers );
+    const currentPage = useSelector(state => state.currentPageCustomers);
+  const itemsPerPage = useSelector(state => state.itemsPerPageCustomers);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const displayedUsers = allUsers?.slice(startIndex, endIndex);
-
+  const displayedUsers = users?.slice(startIndex, endIndex);
+  console.log("startIndex", startIndex);
+  console.log("endIndex", endIndex);
   return (
     <div className=" overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">
@@ -39,10 +56,10 @@ function DriversTable() {
         {/* Botón Anterior */}
         <button
           onClick={() => {
-              dispatch(decreasePageDrivers())
+              dispatch(decreasePageCustomers())
               console.log("startIndex",startIndex);
           }}
-          disabled={currentPage === 1}
+          //disabled={currentPage === 1}
           className="mx-1 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
         >
           Anterior
@@ -50,11 +67,11 @@ function DriversTable() {
         {/* Botón Siguiente */}
         <button
           onClick={() => {
-              dispatch(increasePageDrivers())
+              dispatch(increasePageCustomers())
               console.log("currentPage",currentPage);
               console.log("endIndex",endIndex);
           }}
-          disabled={endIndex >= allUsers?.length}
+          //disabled={endIndex >= allUsers?.length}
           className="mx-1 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
         >
           Siguiente

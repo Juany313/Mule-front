@@ -10,26 +10,16 @@ import {useDispatch, useSelector} from "react-redux";
 import { Link } from "react-router-dom";
 
 /* actions */
-import {getDrivers} from "../../../redux/actions/index"
+import {getDrivers, getDriversByName} from "../../../redux/actions/index"
 
-let drivers = [
-  {name: "Juany", email: "lala@gmail.com", state: "active"},
-  {name: "Juany", email: "lala@gmail.com", state: "active"},
-  {name: "Juany", email: "lala@gmail.com", state: "active"},
-  {name: "Juany", email: "lala@gmail.com", state: "active"},
-  {name: "Juany", email: "lala@gmail.com", state: "active"},
-  {name: "Jany", email: "lala@gmail.com", state: "active"},
-  {name: "Jany", email: "lala@gmail.com", state: "active"},
-  {name: "Jany", email: "lala@gmail.com", state: "active"},
-  {name: "Jany", email: "lala@gmail.com", state: "active"},
-  {name: "Juany", email: "lala@gmail.com", state: "active"},
-  {name: "Juany", email: "lala@gmail.com", state: "active"},
-  {name: "Juany", email: "lala@gmail.com", state: "active"},
-];
+
 
 const Drivers = () => {
 
   const dispatch = useDispatch();
+
+  /* Estado local */
+  const [searchString, setSearchString] = useState("");
 
   /* Estado global */
   const allDrivers = useSelector((state)=> state.allDrivers);
@@ -37,12 +27,26 @@ const Drivers = () => {
   //Primera renderizacion
   useEffect(() => {
     // Verifica si la lista de conductores ya está cargada en el estado global de Redux
-    if (!allDrivers.length) {
+    if (!allDrivers?.length) {
       // Si no está cargada, realiza la carga inicial
       dispatch(getDrivers());
     }
   }, [dispatch, allDrivers]);
   console.log("driverssss",allDrivers );
+
+  function handleChange(e) {
+    setSearchString(e.target.value);
+  
+    if (e.target.value === "") {
+      dispatch(getDrivers());
+    }
+  }
+
+  function handleSubmit(){
+    //console.log("aca lo que hay en searchString",searchString);
+    dispatch(getDriversByName(searchString))
+    
+  }
   
   return (
     <div className='relative h-[650px] mt-[150px] mx-[400px] p-[60px] border border-black rounded'>
@@ -51,11 +55,11 @@ const Drivers = () => {
         <div className='flex m-2 mb-10'>
           <div className="">
             <input 
-              type="text" 
+              type="search" value={searchString} onChange={handleChange}
               className='text-center border border-black rounded px-4 mr-2'
               placeholder='Nombre'
               />
-            <button className=' w-8 h-8 '><BsSearch className=' w-6 h-6' /></button>
+            <button onClick={handleSubmit} className=' w-8 h-8 '><BsSearch className=' w-6 h-6' /></button>
             <button className=''>
                 <Link
                     to="create"
@@ -68,7 +72,7 @@ const Drivers = () => {
         
         
       </div>
-      <DriversTable drivers={drivers} />
+      <DriversTable drivers={allDrivers} />
     </div>
   )
 }

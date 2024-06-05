@@ -28,7 +28,10 @@ export const POST_ENLISTMENT = "POST_ENLISTMENT";
 export const PUT_ENLISTMENT = "PUT_ENLISTMENT";
 export const DELETE_ENLISTMENT = "DELETE_ENLISTMENT";
 export const SET_ORDER_DATA = "SET_ORDER_DATA";
-
+export const SET_PAGE_CUSTOMERS = "SET_PAGE_CUSTOMERS";
+export const INCREASE_PAGE_CUSTOMERS = "INCREASE_PAGE_CUSTOMERS";
+export const DECREASE_PAGE_CUSTOMERS = "DECREASE_PAGE_CUSTOMERS";
+  
 
 /* Admin Drivers Actions */
 export const SET_PAGE_DRIVERS = "SET_PAGE_DRIVERS";
@@ -36,6 +39,8 @@ export const INCREASE_PAGE_DRIVERS = "INCREASE_PAGE_DRIVERS";
 export const DECREASE_PAGE_DRIVERS = "DECREASE_PAGE_DRIVERS";
 export const GET_DRIVERS = "GET_DRIVERS";
 export const POST_DRIVER = "POST_DRIVER";
+export const GET_DRIVERS_BY_NAME = "GET_DRIVERS_BY_NAME";
+export const DELETE_DRIVERS = "DELETE_DRIVERS";
 
 
 export const POST_IS_LOGING = "POST_IS_LOGING"
@@ -487,6 +492,7 @@ export const decreasePageDrivers = () => ({
   type: DECREASE_PAGE_DRIVERS
 });
 
+
 /* Drivers */
 
 export function getDrivers(){
@@ -494,7 +500,7 @@ export function getDrivers(){
       const response = await axios("http://localhost:3000/drivers")
       return dispatch({
           type: GET_DRIVERS,
-          payload: [{hola:"acaa"}] //response.data
+          payload: response.data
       })
   }
 }
@@ -502,7 +508,7 @@ export function getDrivers(){
 export function postDriver(driver) {
   return async function(dispatch) {
       try {
-      const response = await axios.post('http://localhost:300/drivers', driver);
+      const response = await axios.post('http://localhost:3000/drivers', driver);
 
       return dispatch({
           type: POST_DRIVER,
@@ -514,6 +520,47 @@ export function postDriver(driver) {
   };
 }
 
+/* Customers Paginate */
+export const setPageCustomers = (page) => ({
+  type: SET_PAGE_CUSTOMERS,
+  payload: page
+});
+
+export const increasePageCustomers = () => ({
+  type: INCREASE_PAGE_CUSTOMERS
+});
+
+export const decreasePageCustomers = () => ({
+  type: DECREASE_PAGE_CUSTOMERS
+});
+
+export function getDriversByName(name){
+  return async function(dispatch){
+      const response = await axios(`http://localhost:3000/drivers?name=${name}`)
+      return dispatch({
+          type: GET_DRIVERS_BY_NAME,
+          payload: response.data
+      })
+  }
+}
+
+export function deleteDrivers(id){
+  return async function(dispatch){
+    try {
+      
+      const response = await axios.delete(`http://localhost:3000/drivers/${id}`);
+
+      return dispatch({
+        type: DELETE_DRIVERS,
+        payload: response.data // Puedes omitir esto si no necesitas ningún dato adicional después de eliminar el conductor
+      });
+    } catch (error) {
+      // Maneja el error en caso de que ocurra
+      console.error('Error al eliminar el conductor:', error);
+      // Aquí podrías despachar una acción para manejar el error, si es necesario
+    }
+      }
+  }
 export {
   getUserDetail,
   getAllUsers,

@@ -17,13 +17,13 @@ const CreateDriver = () => {
   const [submitButtonClicked, setSubmitButtonClicked] = useState(false);
     const [driverData, setDriverData] = useState({
         name: "",
-        //email: "",
+        email: "",
         
       });
 
       const [errors, setErrors] = useState({
         name: "",
-        //email: "",
+        email: "",
       });
 
 
