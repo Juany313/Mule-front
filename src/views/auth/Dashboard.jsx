@@ -20,8 +20,10 @@ const Dashboard = () => {
   const idUser = infoUserLogged?.id;
 
   let role = infoUserLogged?.role;
+
   useEffect(() => {
-    // if (isAuthenticated) {
+    // if (isAuthenticated) {]
+    console.log("Hola");
     dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
     // }
   }, []);
@@ -30,10 +32,15 @@ const Dashboard = () => {
     var emailAuth = user.email;
     var nameAuth = user.name;
   }
+
+  // console.log(infoUserLogged);
   useEffect(() => {
     if (isAuthenticated) {
       handleLoginSubmitAuth();
-      dispatch(getUserDetail(infoUserLogged.id));
+
+      setTimeout(() => {
+        dispatch(getUserDetail(infoUserLogged.id));
+      }, 2000);
     }
   }, [isAuthenticated, dispatch]);
 

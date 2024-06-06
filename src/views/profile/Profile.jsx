@@ -32,13 +32,18 @@ const Profile = () => {
 
   const [errors, setErrors] = useState({});
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
+  useEffect(
+    () => {
+      if (localStorage.getItem("token")) {
+        dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
 
-      dispatch(getUserDetail(infoUserLogged.id));
-    }
-  }, [infoUserLogged.id]);
+        dispatch(getUserDetail(infoUserLogged.id));
+      }
+    },
+    [
+      // infoUserLogged.id
+    ]
+  );
 
   useEffect(() => {
     if (userDetail) {
