@@ -33,12 +33,8 @@ const Profile = () => {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    // console.log('useEffect', infoUserLogged)
-
     if (localStorage.getItem("token")) {
       dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
-
-      console.log("paso 1");
 
       dispatch(getUserDetail(infoUserLogged.id));
     }
@@ -46,7 +42,6 @@ const Profile = () => {
 
   useEffect(() => {
     if (userDetail) {
-      console.log("paso 2");
       setInput({
         name: userDetail.name || "",
         nickname: userDetail.nickname || "",
@@ -102,8 +97,6 @@ const Profile = () => {
 
   const submitHandler = () => {
     try {
-      console.log("info del user: ", infoUserLogged);
-      console.log("input: ", input);
       dispatch(updateUserDetail(infoUserLogged.id, input));
       setIsEditing(false);
       Swal.fire({
@@ -147,8 +140,6 @@ const Profile = () => {
       Swal.fire("Por favor, verifique sus datos");
     } else {
       submitHandler();
-      // window.location.reload();
-      // Si todos los campos están completos, guardar los datos
     }
   };
 
@@ -161,7 +152,6 @@ const Profile = () => {
               <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
                 <div className="text-gray-600">
                   <p className="font-medium text-lg">Datos personales</p>
-
                   <div className="flex items-center my-6 px-16">
                     <div
                       className="flex-shrink-0 w-40 h-40 rounded-full overflow-hidden"

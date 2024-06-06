@@ -59,24 +59,24 @@ const NavBar = () => {
                 : "hidden"
             } md:block`}
           >
-            <span className="text-white hover:text-s300 p-2 cursor-pointer">
-              <NavLink
-                to="/header"
-                spy={true}
-                smooth={true}
-                offset={0}
-                duration={700}
-                onClick={closeMenu}
-              >
-                Inicio
-              </NavLink>
-            </span>
+            {!isLogged && (
+              <span className="text-white hover:text-s300 p-2 cursor-pointer">
+                <Link
+                  to="header"
+                  smooth="true"
+                  offset={0}
+                  duration={700}
+                  onClick={closeMenu}
+                >
+                  Inicio
+                </Link>
+              </span>
+            )}
             {!isLogged && (
               <span className="text-white hover:text-s300 p-2 cursor-pointer">
                 <Link
                   to="service"
-                  spy={true}
-                  smooth={true}
+                  smooth="true"
                   offset={0}
                   duration={700}
                   onClick={closeMenu}
@@ -87,15 +87,26 @@ const NavBar = () => {
             )}
             {!isLogged && (
               <span className="text-white hover:text-s300 p-2 cursor-pointer">
-                <NavLink
+                <Link
                   to="about"
-                  spy={true}
-                  smooth={true}
+                  smooth="true"
                   offset={0}
                   duration={700}
                   onClick={closeMenu}
                 >
                   Nosotros
+                </Link>
+              </span>
+            )}
+            {isLogged && (
+              <span className="text-white hover:text-s300 p-2 cursor-pointer">
+                <NavLink
+                  to="/header"
+                  offset={0}
+                  duration={700}
+                  onClick={closeMenu}
+                >
+                  Inicio
                 </NavLink>
               </span>
             )}
