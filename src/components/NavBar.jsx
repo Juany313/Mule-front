@@ -7,6 +7,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Logout from "./Logout";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { setIsLogged } from "../redux/actions";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
