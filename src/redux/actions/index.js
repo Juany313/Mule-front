@@ -289,7 +289,9 @@ const orderDeclaredValue = (selectedValues) => {
         .map((field) => `${Object.keys(field)[0]}=${Object.values(field)[0]}`)
         .join("&");
       // Agregar la cadena de parámetros de consulta a la URL base
-      const url = `${import.meta.env.VITE_BACKEND_URL}/order_shipments?${queryParams}`;
+      const url = `${
+        import.meta.env.VITE_BACKEND_URL
+      }/order_shipments?${queryParams}`;
 
       // Realizar la solicitud GET con la URL construida
       const { data } = await axios.get(url);
@@ -401,7 +403,9 @@ const getAllEnlistments = () => {
 const getEnlistmentById = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`VITE_BACKEND_URL/enlistments/${id}`);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/enlistments/${id}`
+      );
       return dispatch({
         type: GET_ENLISTMENT_ID,
         payload: data,

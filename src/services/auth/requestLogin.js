@@ -3,7 +3,7 @@ import axios from "axios";
 export default async function loginUser(formData) {
   try {
     const response = await axios.post(
-      "VITE_BACKEND_URL/users/login",
+      `${import.meta.env.VITE_BACKEND_URL}/users/login`,
       formData
     );
 
