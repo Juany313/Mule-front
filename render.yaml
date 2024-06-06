@@ -1,9 +1,0 @@
-services:
-  - type: web
-    name: Mule
-    env: static
-    static_publish_path: dist
-    routes:
-      - type: rewrite
-        source: "/*"
-        destination: "/index.html"
