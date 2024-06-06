@@ -13,7 +13,7 @@ const Logout = () => {
     const logoutSuccess = () => {
         localStorage.removeItem("token");
         dispatch(setIsLogged(false));
-        logout({ logoutParams: { returnTo: "http://localhost:4000/header" } })
+        logout({ logoutParams: { returnTo: "https://mule-front.onrender.com/header" } })
     }
     return (
         <button 

@@ -33,7 +33,7 @@ const NavAdmin = ({ isChecked, handleCheck, setIsAuth }) => {
   }, [location]);
 
   const handleLogout = () => {
-    logout({ logoutParams: { returnTo: "http://localhost:4000/header" } });
+    logout({ logoutParams: { returnTo: "https://mule-front.onrender.com/header" } });
     dispatch(setIsLogged(false));
     localStorage.removeItem("token");
   };
