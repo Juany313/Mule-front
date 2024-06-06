@@ -1,7 +1,7 @@
 import React from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import UserLayout from "../profile/UserLayout";
-import LayoutAdminAlpha from "../../layouts/LayoutAdminAlpha"
+import LayoutAdminAlpha from "../../layouts/LayoutAdminAlpha";
 import Header from "../../assets/Header.png";
 import { FaBox, FaSearch, FaPaperPlane } from "react-icons/fa";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -14,28 +14,28 @@ import { setInfoUserLogged, getUserDetail } from "../../redux/actions";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const infoUserLogged = useSelector((state) => state.infoUserLogged);
   const { isAuthenticated, user } = useAuth0();
-  const idUser = infoUserLogged?.id
+  const idUser = infoUserLogged?.id;
 
-    let role = infoUserLogged?.role
-    useEffect(() => {
-      if (isAuthenticated) {
-        dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
-        dispatch(getUserDetail(infoUserLogged.id))
-      }
-    }, []);
+  let role = infoUserLogged?.role;
+  useEffect(() => {
+    // if (isAuthenticated) {
+    dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
+    // }
+  }, []);
 
   if (isAuthenticated) {
     var emailAuth = user.email;
     var nameAuth = user.name;
   }
   useEffect(() => {
-  if (isAuthenticated) {
-    handleLoginSubmitAuth();
-  } 
-}, [isAuthenticated, dispatch]);
+    if (isAuthenticated) {
+      handleLoginSubmitAuth();
+      dispatch(getUserDetail(infoUserLogged.id));
+    }
+  }, [isAuthenticated, dispatch]);
 
   const handleLoginSubmitAuth = async () => {
     try {
@@ -50,59 +50,59 @@ const Dashboard = () => {
   };
 
   // Funciones para manejar los clics en cada tarjeta
-   const handleQuote = () => {
-     navigate("/header/shipment-price");
-   };
+  const handleQuote = () => {
+    navigate("/header/shipment-price");
+  };
 
-   const handleTrack = () => {
-     navigate("/rastrear-pedido");
+  const handleTrack = () => {
+    navigate("/rastrear-pedido");
   };
 
   const handleSend = () => {
     navigate("/header/pedido");
   };
 
-  return (
-    role === "user" ? 
-      (<UserLayout >
-        <div className="flex flex-col h-screen pt-28">
-        
-          <header className="bg-#efefef shadow-md w-full py-0 px-0 text-center">
-            <img
-              className="  bg-cover h-full w-full"
-              src={Header}
-              alt="Delivery"
-            />
-          </header>
-          <div className="flex-1 p-0 overflow-y-auto">
-            <h2 className="text-xl font-semibold text-gray-800"></h2>
+  return role === "user" ? (
+    <UserLayout>
+      <div className="flex flex-col h-screen pt-28">
+        <header className="bg-#efefef shadow-md w-full py-0 px-0 text-center">
+          <img
+            className="  bg-cover h-full w-full"
+            src={Header}
+            alt="Delivery"
+          />
+        </header>
+        <div className="flex-1 p-0 overflow-y-auto">
+          <h2 className="text-xl font-semibold text-gray-800"></h2>
 
-            <div className="p-0 grid grid-cols-1 md:grid-cols-3 gap-4">
-              <ActionButton
-                icon={<FaBox size="3rem" />}
-                title="Cotizar Paquete"
-                onClick={handleQuote}
-              />
-              <ActionButton
-                icon={<FaSearch size="3rem" />}
-                title="Rastrear Pedido"
-                onClick={handleTrack}
-              /> 
-              <ActionButton
-                icon={<FaPaperPlane size="3rem" />}
-                title="Enviar Paquete"
-                onClick={handleSend}
-              />
-            </div>
+          <div className="p-0 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <ActionButton
+              icon={<FaBox size="3rem" />}
+              title="Cotizar Paquete"
+              onClick={handleQuote}
+            />
+            <ActionButton
+              icon={<FaSearch size="3rem" />}
+              title="Rastrear Pedido"
+              onClick={handleTrack}
+            />
+            <ActionButton
+              icon={<FaPaperPlane size="3rem" />}
+              title="Enviar Paquete"
+              onClick={handleSend}
+            />
           </div>
         </div>
-      </UserLayout>) :  role === "admin" && <Navigate to="/admin" />
+      </div>
+    </UserLayout>
+  ) : (
+    role === "admin" && <Navigate to="/admin" />
   );
 };
 
 const ActionButton = ({ icon, title, onClick }) => {
   return (
-    <div 
+    <div
       className="flex flex-col items-center justify-center bg-white shadow-md rounded-lg p-4 hover:bg-blue-100 cursor-pointer"
       onClick={onClick}
     >
