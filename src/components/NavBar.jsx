@@ -6,6 +6,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
 import Logout from "./Logout";
 import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
