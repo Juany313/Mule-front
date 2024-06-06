@@ -98,7 +98,7 @@ const OrderForm = () => {
       .typeError("Debe ser un número")
       .required("Peso es requerido")
       .min(1, "El peso debe ser mayor a 1")
-      .max(30, "El peso no puede ser menor a 30"),
+      .max(30, "El peso no puede ser mayor a 30"),
     typeShipmentId: Yup.string().required("Tamaño es requerido"),
     declared_value: Yup.string().required("Valor declarado es requerido"),
     measureId: Yup.string().required("Tamaño es requerido"),
