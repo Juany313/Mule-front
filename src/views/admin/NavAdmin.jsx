@@ -21,11 +21,14 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setIsLogged } from "../../redux/actions";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const NavAdmin = ({ isChecked, handleCheck, setIsAuth }) => {
   const dispatch = useDispatch();
   const { logout } = useAuth0();
   const location = useLocation();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Ocultar la barra de navegación al cambiar de ubicación
@@ -33,7 +36,8 @@ const NavAdmin = ({ isChecked, handleCheck, setIsAuth }) => {
   }, [location]);
 
   const handleLogout = () => {
-    logout({ logoutParams: { returnTo: "https://mule-front.onrender.com/header" } });
+    // logout({ logoutParams: { returnTo: "https://mule-front.onrender.com/header" } });
+    navigate("/header");
     dispatch(setIsLogged(false));
     localStorage.removeItem("token");
   };
@@ -118,7 +122,8 @@ const NavAdmin = ({ isChecked, handleCheck, setIsAuth }) => {
                   <BsBoxSeam className="h-8 w-8" />
                 </ListItemPrefix>
                 Pedidos
-              </Link> 
+              </Link>
+               
             </ListItem>
           </List>
         </Card>
