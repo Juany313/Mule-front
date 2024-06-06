@@ -38,12 +38,15 @@ const Profile = () => {
     if (localStorage.getItem("token")) {
       dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
 
+      console.log("paso 1");
+
       dispatch(getUserDetail(infoUserLogged.id));
     }
-  }, [dispatch, infoUserLogged.id]);
+  }, [infoUserLogged.id]);
 
   useEffect(() => {
     if (userDetail) {
+      console.log("paso 2");
       setInput({
         name: userDetail.name || "",
         nickname: userDetail.nickname || "",
