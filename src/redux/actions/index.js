@@ -352,9 +352,14 @@ const setInfoUserLogged = (user) => {
 const updateUserDetail = (id, infoUser) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(
+      const { data } = await axios.patch(
         `https://mule-server.onrender.com/users/profile/${id}`,
-        infoUser
+        infoUser,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       return dispatch({
         type: UPDATE_USER_DETAIL,
