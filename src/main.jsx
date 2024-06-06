@@ -12,7 +12,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <Auth0Provider
-        domain="dev-0n5ca62bbeftfxje.us.auth0.com" 
+        domain="dev-0n5ca62bbeftfxje.us.auth0.com"
         clientId="gsbv0q19tdJnoZfZi7sVwf9Y0zWwds5F"
         authorizationParams={{
           redirect_uri: "https://mule-front.onrender.com/auth/dashboard",
