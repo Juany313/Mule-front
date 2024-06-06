@@ -5,11 +5,20 @@ import { Link } from "react-scroll";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
 import Logout from "./Logout";
+import { useDispatch } from "react-redux";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, user } = useAuth0();
   const isLogged = useSelector((state) => state.isLogged);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      dispatch(setIsLogged(true));
+    }
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
