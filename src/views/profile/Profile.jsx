@@ -140,7 +140,7 @@ const Profile = () => {
 
         } else {
             submitHandler();
-            window.location.reload();
+            // window.location.reload();
             // Si todos los campos están completos, guardar los datos
         }
     }
