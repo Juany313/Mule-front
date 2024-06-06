@@ -17,7 +17,7 @@ export const IS_LOGGED = "IS_LOGGED";
 export const INFO_USER_LOGGED = "INFO_USER_LOGGED";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
 export const SET_ORDER_TYPE = "SET_ORDER_TYPE";
-export const UPDATE_USER_DETAIL = "UPDATE_USER_DETAIL"
+export const UPDATE_USER_DETAIL = "UPDATE_USER_DETAIL";
 /* Juanyyyy */
 export const AGREGAR_PEDIDO = "AGREGAR_PEDIDO";
 export const POST_USER = "AGREGAR_PEDIDO";
@@ -30,7 +30,6 @@ export const DELETE_ENLISTMENT = "DELETE_ENLISTMENT";
 export const SET_ORDER_DATA = "SET_ORDER_DATA";
 export const DELETE_USER = "DELETE_USER";
 
-
 /* Admin Drivers Actions */
 export const SET_PAGE_DRIVERS = "SET_PAGE_DRIVERS";
 export const INCREASE_PAGE_DRIVERS = "INCREASE_PAGE_DRIVERS";
@@ -40,27 +39,21 @@ export const POST_DRIVER = "POST_DRIVER";
 export const PUT_DRIVER = "PUT_DRIVER";
 export const DELETE_DRIVER = "DELETE_DRIVER";
 
-
-export const POST_IS_LOGING = "POST_IS_LOGING"
+export const POST_IS_LOGING = "POST_IS_LOGING";
 export const POST_REVIEWS = "POST_REVIEWS";
 
-
-
-
- const URL_BASE = "https://mule-server.onrender.com";
+const URL_BASE = "https://mule-server.onrender.com";
 
 // actions.js
 
 const deleteUser = (id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`https://mule-server.onrender.com/users/${id}`,
-        {
-          headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-          }
-        }
-      );
+      await axios.delete(`https://mule-server.onrender.com/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       dispatch({
         type: DELETE_USER,
         payload: id,
@@ -70,8 +63,6 @@ const deleteUser = (id) => {
     }
   };
 };
-
-
 
 export const setOrderType = (orderType) => {
   return {
@@ -87,14 +78,14 @@ export const agregarPedido = (pedido) => {
   };
 };
 
-
-
-
 //formulario de registro
 export function postUser(data) {
   return async function (dispatch) {
     try {
-      const response = await axios.post('https://mule-server.onrender.com/users/register', data);
+      const response = await axios.post(
+        "https://mule-server.onrender.com/users/register",
+        data
+      );
       dispatch({
         type: POST_USER,
         payload: response.data,
@@ -109,18 +100,15 @@ export function postUser(data) {
   };
 }
 
-
 //Permiso provisorio para que el usuario pueda ver los usuarios
 const getAllUsers = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${URL_BASE}/users`,
-        {
-          headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-          }
-        }
-      );
+      const { data } = await axios.get(`${URL_BASE}/users`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       return dispatch({
         type: GET_ALL_USERS,
         payload: data,
@@ -205,14 +193,17 @@ const createOrder = (userData, id) => {
 const getUserDetail = (id) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`https://mule-server.onrender.com/users/${id}`,{
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
-        },
-      });
+      const response = await fetch(
+        `https://mule-server.onrender.com/users/${id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
-    const data = await response.json();
+      const data = await response.json();
       return dispatch({
         type: GET_USER_DETAIL,
         payload: data,
@@ -231,29 +222,31 @@ const getOrdersByClient = (id) => {
       // if (!token) {
       //   throw new Error('No token found');
       // };
-      const response = await axios.get (`https://mule-server.onrender.com/order_shipments/${id}`
-      // , {
-      //   headers: {
-      //     "Authorization": `Bearer ${token}`
-      //   }
-      // }
-    )
-      return dispatch ({
+      const response = await axios.get(
+        `https://mule-server.onrender.com/order_shipments/${id}`
+        // , {
+        //   headers: {
+        //     "Authorization": `Bearer ${token}`
+        //   }
+        // }
+      );
+      return dispatch({
         type: GET_ORDERS_BY_CLIENT,
-        payload: response.data
-      })
+        payload: response.data,
+      });
     } catch (error) {
       // window.alert(error.message);
     }
-  }
-
-}
+  };
+};
 
 // Falla de seguridad?
 const getAllOrders = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("https://mule-server.onrender.com/order_shipments");
+      const { data } = await axios.get(
+        "https://mule-server.onrender.com/order_shipments"
+      );
       return dispatch({
         type: GET_ALL_ORDERS,
         payload: data,
@@ -263,7 +256,6 @@ const getAllOrders = () => {
     }
   };
 };
-
 
 /* Falla de seguridad */
 const getOrderById = (id) => {
@@ -310,28 +302,32 @@ const orderDeclaredValue = (selectedValues) => {
 const filterCity = (cities) => {
   return {
     type: FILTER_BY_CITY,
-    payload: cities
-  }
-}
+    payload: cities,
+  };
+};
 
 const orderDate = (date) => {
   return {
     type: ORDER_BY_DATE,
-    payload: date
-  }
-}
+    payload: date,
+  };
+};
 
 const setIsLogged = (isLogged) => {
   return {
     type: IS_LOGGED,
     payload: isLogged,
   };
-}
+};
 
 export function isLoging(data) {
   return async function (dispatch) {
     try {
-      const response = await axios.post('https://mule-server.onrender.com/users/register-auth0', data);
+      const response = await axios.post(
+        "https://mule-server.onrender.com/users/register-auth0",
+        data
+      );
+      console.log("data: ", data);
       dispatch({
         type: POST_IS_LOGING,
         payload: response.data,
@@ -351,23 +347,22 @@ const setInfoUserLogged = (user) => {
     type: INFO_USER_LOGGED,
     payload: user,
   };
-}
+};
 
 const updateUserDetail = (id, infoUser) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`https://mule-server.onrender.com/users/profile/${id}`, infoUser
+      const { data } = await axios.put(
+        `https://mule-server.onrender.com/users/profile/${id}`,
+        infoUser
       );
       return dispatch({
         type: UPDATE_USER_DETAIL,
         payload: data,
       });
-
-    } catch (error) {
-
-    }
-  }
-}
+    } catch (error) {}
+  };
+};
 
 const setEnlistments = (enlistments) => {
   return {
@@ -379,23 +374,26 @@ const setEnlistments = (enlistments) => {
 const getAllEnlistments = () => {
   return async (dispatch) => {
     try {
-      await axios.get("https://mule-server.onrender.com/enlistments")
-      .then((response) => {
-        dispatch({
-          type: GET_ALL_ENLISTMENTS,
-          payload: response.data,
+      await axios
+        .get("https://mule-server.onrender.com/enlistments")
+        .then((response) => {
+          dispatch({
+            type: GET_ALL_ENLISTMENTS,
+            payload: response.data,
+          });
         });
-      })
     } catch (error) {
       console.error(error.message);
     }
   };
-}
+};
 
 const getEnlistmentById = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`https://mule-server.onrender.com/enlistments/${id}`);
+      const { data } = await axios.get(
+        `https://mule-server.onrender.com/enlistments/${id}`
+      );
       return dispatch({
         type: GET_ENLISTMENT_ID,
         payload: data,
@@ -404,7 +402,7 @@ const getEnlistmentById = (id) => {
       // window.alert("No existe una orden de pedido con ese número");
     }
   };
-}
+};
 
 const postEnlistment = (enlistmentData) => {
   return async (dispatch) => {
@@ -508,38 +506,41 @@ const filterOrderShipmentsByUser = (userId) => {
       console.error(error.message);
     }
   };
-}
+};
 
 /* Driver Paginate */
 export const setPageDrivers = (page) => ({
   type: SET_PAGE_DRIVERS,
-  payload: page
+  payload: page,
 });
 
 export const increasePageDrivers = () => ({
-  type: INCREASE_PAGE_DRIVERS
+  type: INCREASE_PAGE_DRIVERS,
 });
 
 export const decreasePageDrivers = () => ({
-  type: DECREASE_PAGE_DRIVERS
+  type: DECREASE_PAGE_DRIVERS,
 });
 
 /* Drivers */
 
-export const getDrivers= () => {
-  return async function(dispatch){
-      const response = await axios("https://mule-server.onrender.com/drivers")
-      return dispatch({
-          type: GET_DRIVERS,
-          payload: response.data
-      })
-  }
-}
+export const getDrivers = () => {
+  return async function (dispatch) {
+    const response = await axios("https://mule-server.onrender.com/drivers");
+    return dispatch({
+      type: GET_DRIVERS,
+      payload: response.data,
+    });
+  };
+};
 
 export function postDriver(driver) {
-  return async function(dispatch) {
-      try {
-      const response = await axios.post('https://mule-server.onrender.com/drivers', driver);
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(
+        "https://mule-server.onrender.com/drivers",
+        driver
+      );
 
       return dispatch({
         type: POST_DRIVER,
@@ -552,52 +553,57 @@ export function postDriver(driver) {
 }
 
 export function putDriver(driver) {
-  return async function(dispatch) {
-      try {
-      const response = await axios.put(`https://mule-server.onrender.com/drivers/${driver.id}`, driver);
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(
+        `https://mule-server.onrender.com/drivers/${driver.id}`,
+        driver
+      );
 
       return dispatch({
-          type: PUT_DRIVER,
-          payload: response.data,
+        type: PUT_DRIVER,
+        payload: response.data,
       });
-      } catch (error) {
+    } catch (error) {
       console.error(error);
-      }
+    }
   };
 }
 
 export function deleteDriver(id) {
-  return async function(dispatch) {
-      try {
+  return async function (dispatch) {
+    try {
       await axios.delete(`https://mule-server.onrender.com/drivers/${id}`);
 
       return dispatch({
-          type: DELETE_DRIVER,
-          payload: id,
+        type: DELETE_DRIVER,
+        payload: id,
       });
-      } catch (error) {
+    } catch (error) {
       console.error(error);
-      }
+    }
   };
 }
-
 
 const postReviews = (userId, review) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post("https://mule-server.onrender.com/reviews", {
-        ...review,
-        user_id: userId,
-      });
+      const { data } = await axios.post(
+        "https://mule-server.onrender.com/reviews",
+        {
+          ...review,
+          user_id: userId,
+        }
+      );
       dispatch({
         type: POST_REVIEWS,
         payload: data,
       });
     } catch (error) {
-      console.log('no está llegando la data', error.message)
+      console.log("no está llegando la data", error.message);
     }
-  }
-}
+  };
+};
 
 export {
   getUserDetail,
@@ -623,5 +629,5 @@ export {
   setOrderData,
   setEnlistments,
   deleteUser,
-  postReviews
+  postReviews,
 };
