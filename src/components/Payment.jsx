@@ -14,7 +14,7 @@ const Payment = () => {
 
   const handlePay = async () => {
     try {
-      const response = await axios.post("https://mule-server.onrender.com/payments/", {
+      const response = await axios.post(`${VITE_BACKEND_URL}/payments/`, {
         id: orderData.typeShipmentId,
         title:
           orderData.typeShipmentId === 1

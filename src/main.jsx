@@ -8,6 +8,8 @@ import { store } from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
+console.log(`${import.meta.env.VITE_REDIRECT_URI}/auth/dashboard`);
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>

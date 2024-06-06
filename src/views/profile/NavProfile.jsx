@@ -21,14 +21,12 @@ import { useDispatch } from "react-redux";
 import { setIsLogged } from "../../redux/actions";
 import { useSelector } from "react-redux";
 import { setInfoUserLogged } from "../../redux/actions";
-// import { useNavigate } from "react-router-dom";
 
 const NavProfile = () => {
   const dispatch = useDispatch();
   const { logout, isAuthenticated } = useAuth0();
   const [isChecked, setIsChecked] = useState(false);
 
-  // const navigate = useNavigate();
   const infoUserLogged = useSelector((state) => state.infoUserLogged.name);
 
   const handleCheck = () => {
@@ -36,9 +34,9 @@ const NavProfile = () => {
   };
 
   const handleLogout = () => {
-     logout({ logoutParams: { returnTo: "https://mule-front.onrender.com/header" } })
-
-    // navigate("/header");
+    logout({
+      logoutParams: { returnTo: `${import.meta.env.VITE_REDIRECT_URI}/header` },
+    });
 
     dispatch(setIsLogged(false));
     localStorage.removeItem("token");

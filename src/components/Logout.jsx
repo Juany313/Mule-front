@@ -1,19 +1,18 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLogged } from "../redux/actions/index";
-// import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Logout = () => {
   const dispatch = useDispatch();
 
-  // const navigate = useNavigate();
   const { logout } = useAuth0();
   const logoutSuccess = () => {
     localStorage.removeItem("token");
     dispatch(setIsLogged(false));
-    logout({ logoutParams: { returnTo: "https://mule-front.onrender.com/header" } })
-    // navigate("/header");
+    logout({
+      logoutParams: { returnTo: `${import.meta.env.VITE_REDIRECT_URI}/header` },
+    });
   };
   return (
     <button

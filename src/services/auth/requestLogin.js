@@ -3,7 +3,7 @@ import axios from "axios";
 export default async function loginUser(formData) {
   try {
     const response = await axios.post(
-      "https://mule-server.onrender.com/users/login",
+      "VITE_BACKEND_URL/users/login",
       formData
     );
 

@@ -10,7 +10,7 @@ const ConfirmEmail = () => {
         const verificationCode = query.get('bearer'); // Obtener el token de la URL
 
         if (verificationCode) {
-            axios.get('https://mule-server.onrender.com/users/email-confirmation', {
+            axios.get('VITE_BACKEND_URL/users/email-confirmation', {
                 headers: {
                     Authorization: `Bearer ${verificationCode}`,
                 },

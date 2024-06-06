@@ -3,7 +3,7 @@ import axios from "axios";
 export default async function loginUserAuth(email, name) {
   try {
     const response = await axios.post(
-      "https://mule-server.onrender.com/users/register-auth0",
+      "VITE_BACKEND_URL/users/register-auth0",
       { email ,
         name
       } 

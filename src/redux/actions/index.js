@@ -42,14 +42,10 @@ export const DELETE_DRIVER = "DELETE_DRIVER";
 export const POST_IS_LOGING = "POST_IS_LOGING";
 export const POST_REVIEWS = "POST_REVIEWS";
 
-const URL_BASE = "https://mule-server.onrender.com";
-
-// actions.js
-
 const deleteUser = (id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`https://mule-server.onrender.com/users/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/users/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -83,7 +79,7 @@ export function postUser(data) {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        "https://mule-server.onrender.com/users/register",
+        `${import.meta.env.VITE_BACKEND_URL}/users/register`,
         data
       );
       dispatch({
@@ -104,11 +100,14 @@ export function postUser(data) {
 const getAllUsers = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${URL_BASE}/users`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/users`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       return dispatch({
         type: GET_ALL_USERS,
         payload: data,
@@ -122,7 +121,9 @@ const getAllUsers = () => {
 const getAllMeasures = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${URL_BASE}/measures`);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/measures`
+      );
       return dispatch({
         type: GET_ALL_MEASURES,
         payload: data,
@@ -136,7 +137,9 @@ const getAllMeasures = () => {
 const getTypeShipments = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${URL_BASE}/type_shipments`);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/type_shipments`
+      );
       return dispatch({
         type: GET_TYPES_SHIPMENTS,
         payload: data,
@@ -150,7 +153,9 @@ const getTypeShipments = () => {
 const getAllBranches = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${URL_BASE}/branches`);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/branches`
+      );
       return dispatch({
         type: GET_ALL_BRANCHES,
         payload: data,
@@ -165,7 +170,7 @@ const createOrder = (userData, id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "https://mule-server.onrender.com/order_shipments",
+        `${import.meta.env.VITE_BACKEND_URL}/order_shipments`,
         userData // Envía los datos del formulario como parte de la solicitud POST
       );
       dispatch({
@@ -194,7 +199,7 @@ const getUserDetail = (id) => {
   return async (dispatch) => {
     try {
       const response = await fetch(
-        `https://mule-server.onrender.com/users/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/users/${id}`,
         {
           method: "GET",
           headers: {
@@ -223,7 +228,7 @@ const getOrdersByClient = (id) => {
       //   throw new Error('No token found');
       // };
       const response = await axios.get(
-        `https://mule-server.onrender.com/order_shipments/${id}`
+        `${import.meta.env.VITE_BACKEND_URL}/order_shipments/${id}`
         // , {
         //   headers: {
         //     "Authorization": `Bearer ${token}`
@@ -245,7 +250,7 @@ const getAllOrders = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
-        "https://mule-server.onrender.com/order_shipments"
+        `${import.meta.env.VITE_BACKEND_URL}/order_shipments`
       );
       return dispatch({
         type: GET_ALL_ORDERS,
@@ -262,7 +267,7 @@ const getOrderById = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `https://mule-server.onrender.com/order_shipments/${id}`
+        `${import.meta.env.VITE_BACKEND_URL}/order_shipments/${id}`
       );
       // const data=orders.find(order => order.id === id)
       return dispatch({
@@ -284,7 +289,7 @@ const orderDeclaredValue = (selectedValues) => {
         .map((field) => `${Object.keys(field)[0]}=${Object.values(field)[0]}`)
         .join("&");
       // Agregar la cadena de parámetros de consulta a la URL base
-      const url = `https://mule-server.onrender.com/order_shipments?${queryParams}`;
+      const url = `${import.meta.env.VITE_BACKEND_URL}/order_shipments?${queryParams}`;
 
       // Realizar la solicitud GET con la URL construida
       const { data } = await axios.get(url);
@@ -324,7 +329,7 @@ export function isLoging(data) {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        "https://mule-server.onrender.com/users/register-auth0",
+        `${import.meta.env.VITE_BACKEND_URL}/users/register-auth0`,
         data
       );
       console.log("data: ", data);
@@ -353,7 +358,7 @@ const updateUserDetail = (id, infoUser) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.patch(
-        `https://mule-server.onrender.com/users/profile/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/users/profile/${id}`,
         infoUser,
         {
           headers: {
@@ -380,7 +385,7 @@ const getAllEnlistments = () => {
   return async (dispatch) => {
     try {
       await axios
-        .get("https://mule-server.onrender.com/enlistments")
+        .get(`${import.meta.env.VITE_BACKEND_URL}/enlistments`)
         .then((response) => {
           dispatch({
             type: GET_ALL_ENLISTMENTS,
@@ -396,9 +401,7 @@ const getAllEnlistments = () => {
 const getEnlistmentById = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(
-        `https://mule-server.onrender.com/enlistments/${id}`
-      );
+      const { data } = await axios.get(`VITE_BACKEND_URL/enlistments/${id}`);
       return dispatch({
         type: GET_ENLISTMENT_ID,
         payload: data,
@@ -413,7 +416,7 @@ const postEnlistment = (enlistmentData) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "https://mule-server.onrender.com/enlistments",
+        `${import.meta.env.VITE_BACKEND_URL}/enlistments`,
         enlistmentData
       );
       dispatch({
@@ -441,7 +444,7 @@ const putEnlistment = (id, enlistmentData) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.put(
-        `https://mule-server.onrender.com/enlistments/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/enlistments/${id}`,
         enlistmentData
       );
       dispatch({
@@ -468,7 +471,7 @@ const putEnlistment = (id, enlistmentData) => {
 const deleteEnlistment = (id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`https://mule-server.onrender.com/${id}`);
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/${id}`);
       dispatch({
         type: DELETE_ENLISTMENT,
         payload: id,
@@ -501,7 +504,7 @@ const filterOrderShipmentsByUser = (userId) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `https://mule-server.onrender.com/order_shipments/${userId}`
+        `${import.meta.env.VITE_BACKEND_URL}/order_shipments/${userId}`
       );
       return dispatch({
         type: GET_ORDERS_BY_CLIENT,
@@ -531,7 +534,7 @@ export const decreasePageDrivers = () => ({
 
 export const getDrivers = () => {
   return async function (dispatch) {
-    const response = await axios("https://mule-server.onrender.com/drivers");
+    const response = await axios(`${import.meta.env.VITE_BACKEND_URL}/drivers`);
     return dispatch({
       type: GET_DRIVERS,
       payload: response.data,
@@ -543,7 +546,7 @@ export function postDriver(driver) {
   return async function (dispatch) {
     try {
       const response = await axios.post(
-        "https://mule-server.onrender.com/drivers",
+        `${import.meta.env.VITE_BACKEND_URL}/drivers`,
         driver
       );
 
@@ -561,7 +564,7 @@ export function putDriver(driver) {
   return async function (dispatch) {
     try {
       const response = await axios.put(
-        `https://mule-server.onrender.com/drivers/${driver.id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/drivers/${driver.id}`,
         driver
       );
 
@@ -578,7 +581,7 @@ export function putDriver(driver) {
 export function deleteDriver(id) {
   return async function (dispatch) {
     try {
-      await axios.delete(`https://mule-server.onrender.com/drivers/${id}`);
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/drivers/${id}`);
 
       return dispatch({
         type: DELETE_DRIVER,
@@ -594,7 +597,7 @@ const postReviews = (userId, review) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "https://mule-server.onrender.com/reviews",
+        `${import.meta.env.VITE_BACKEND_URL}/reviews`,
         {
           ...review,
           user_id: userId,
