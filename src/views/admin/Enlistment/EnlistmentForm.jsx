@@ -1,13 +1,11 @@
 import React from 'react';
 import icon_cancel from '../../../assets/Icon_cancelar.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { createOrder, setInfoUserLogged } from '../../../redux/actions';
+import { setInfoUserLogged, createOrderAdmin } from '../../../redux/actions';
 import { useEffect, useState, useRef } from 'react';
 import { validateEnlistment } from '../../../helpers/validates.js'
 import parseJwt from '../../../helpers/parseJwt.js';
 import axios from 'axios'
-
-
 
 const EnlistmentForm = ({
     setShowModal,
@@ -37,7 +35,7 @@ const EnlistmentForm = ({
     const handleSave = (e) => {
         e.preventDefault();
         if (infoUserLogged.id){
-        dispatch(createOrder(actualBackOrder, infoUserLogged.id));
+        dispatch(createOrderAdmin(actualBackOrder, infoUserLogged.id));
         setShowModal(false);
     }
 }
@@ -105,7 +103,7 @@ const handleImageChange = async (e) => {
 return (
     <div className='fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center '>
         <div className='bg-white p-5 rounded flex-col justify-center items-center gap-5 mt-20' style={{ width: '500px', maxHeight: '80vh', overflowY: 'auto' }}>
-            a partir de este div se renderiza el formulario de creación de una orden de envío, no tocar arriba
+            CREAR PEDIDO
             <div className='icon-create-container' style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <img src={icon_cancel} alt="crear"
                     onClick={handleCancel}
@@ -186,7 +184,9 @@ return (
                         name="city_transmiter"
                         value={actualBackOrder.city_transmiter}
                         onChange={(e) => handleSelectChange(e)}
+                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     >
+                        <option value="">Seleccionar</option>
                         <option value="buenos aires">Buenos Aires</option>
                         <option value="cordoba">Córdoba</option>
                         <option value="corrientes">Corrientes</option>
@@ -204,6 +204,7 @@ return (
                         onChange={handleChange}
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
+                    {errors.address_transmiter && <p style={{ color: 'darkgrey' }}>{errors.address_transmiter}</p>}
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Nombre del destinatario</label>
@@ -214,9 +215,10 @@ return (
                         onChange={handleChange}
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
+                    {errors.name_receiver && <p style={{ color: 'darkgrey' }}>{errors.name_receiver}</p>}
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Telefono del destinatario</label>
+                    <label className="block text-sm font-medium text-gray-700">Teléfono del destinatario</label>
                     <input
                         type="number"
                         name="celphone_receiver"
@@ -224,6 +226,7 @@ return (
                         onChange={handleChange}
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
+                    {errors.celphone_receiver && <p style={{ color: 'darkgrey' }}>{errors.celphone_receiver}</p>}
                 </div>
 
                 <div>
@@ -232,12 +235,15 @@ return (
                         name="city_receiver"
                         value={actualBackOrder.city_receiver}
                         onChange={(e) => handleSelectChange(e)}
+                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     >
+                        <option value="">Seleccionar</option>
                         <option value="buenos aires">Buenos Aires</option>
                         <option value="cordoba">Córdoba</option>
                         <option value="corrientes">Corrientes</option>
                         <option value="entre rios">Entre Ríos</option>
                         <option value="santa fe">Santa Fe</option>
+                        
                     </select>
                 </div>
 
@@ -250,9 +256,10 @@ return (
                         onChange={handleChange}
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
+                    {errors.address_receiver && <p style={{ color: 'darkgrey' }}>{errors.address_receiver}</p>}
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Peso del pedido</label>
+                    <label className="block text-sm font-medium text-gray-700">Peso del pedido (kg)</label>
                     <input
                         type="number"
                         name="weight"
@@ -260,6 +267,7 @@ return (
                         onChange={handleChange}
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
+                    {errors.weight && <p style={{ color: 'darkgrey' }}>{errors.weight}</p>}
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Tipo de envío</label>
@@ -267,7 +275,9 @@ return (
                         name="typeShipmentId"
                         value={actualBackOrder.typeShipmentId}
                         onChange={(e) => handleSelectChange(e)}
+                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     >
+                        <option value="">Seleccionar</option>
                         <option value="1">Sucursal a Puerta</option>
                         <option value="2">Sucursal a Sucursal</option>
                         <option value="3">Puerta a Sucursal</option>
@@ -281,6 +291,7 @@ return (
                         name="measureId"
                         value={actualBackOrder.measureId}
                         onChange={(e) => handleSelectChange(e)}
+                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     >
                         <option value="">Seleccionar</option>
                         <option value="1">Pequeño</option>
@@ -298,6 +309,7 @@ return (
                         onChange={handleChange}
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
+                     {errors.declared_value && <p style={{ color: 'darkgrey' }}>{errors.declared_value}</p>}
                 </div>
 
                 <div>
@@ -319,7 +331,9 @@ return (
                         name="pay_method"
                         value={actualBackOrder.pay_method}
                         onChange={(e) => handleSelectChange(e)}
+                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     >
+                        <option value="">Seleccionar</option>
                         <option value="Efectivo">Efectivo</option>
                         <option value="Credito">Crédito</option>
                         <option value="Debito">Débito</option>

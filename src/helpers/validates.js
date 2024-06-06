@@ -5,7 +5,7 @@ export const validateEnlistment = (input) => {
     const nameRegex = /^[a-zA-Z\s]+$/
     const celPhoneRegex = /^\d{10}$/
     const addressRegex = /^[a-zA-Z0-9,.\-#\s]+$/
-    const weightRegex = /^\d+$/
+    const weightRegex = /^(?:[1-9]|[12][0-9]|30)$/
     const valueRegex = /^\d+$/
 
 
@@ -65,8 +65,8 @@ export const validateEnlistment = (input) => {
     }
 
     //celphone_receiver
-    if (input.cellphone_receiver && !celPhoneRegex.test(input.cellphone_receiver)) {
-        errors.cellphone_receiver = 'El campo sólo puede tener 10 digitos'
+    if (input.celphone_receiver && !celPhoneRegex.test(input.celphone_receiver)) {
+        errors.celphone_receiver = 'El campo sólo puede tener 10 digitos'
     }
 
     //address_receiver
@@ -78,13 +78,8 @@ export const validateEnlistment = (input) => {
     }
 
     //weight
-    if (input.weight !== undefined) {
-        if (input.weight === '' || input.weight.toString().length > 3) {
-            errors.weight = 'Peso máximo de 3 dígitos';
-        }
-        if (!weightRegex.test(input.weight.toString())) {
-            errors.weight = 'Sólo se permiten números enteros';
-        }
+    if (input.weight && !weightRegex.test(input.weight)){
+        errors.weight = 'Peso aceptado de 1kg a 30 kg'
     }
 
     //declared_value

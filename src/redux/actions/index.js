@@ -173,16 +173,11 @@ const getAllBranches = () => {
   };
 };
 
-const createOrder = (userData, id) => {
+const createOrder = (userData) => {
   return async (dispatch) => {
     try {
-      console.log("DATA:", id);
       const { data } = await axios.post(
-        "http://localhost:3000/order_shipments",
-        {
-          ...userData,
-          user_id: id,
-        } // Envía los datos del formulario como parte de la solicitud POST
+        "http://localhost:3000/order_shipments", userData
       );
       dispatch({
         type: CREATE_ORDER,
@@ -359,9 +354,7 @@ const updateUserDetail = (id, infoUser) => {
         type: UPDATE_USER_DETAIL,
         payload: data,
       });
-
     } catch (error) {
-
     }
   }
 }
@@ -596,6 +589,37 @@ const postReviews = (userId, review) => {
   }
 }
 
+const createOrderAdmin = (userData, id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3000/order_shipments",
+        {
+          ...userData,
+          user_id: id,
+        } // Envía los datos del formulario como parte de la solicitud POST
+      );
+      dispatch({
+        type: CREATE_ORDER,
+        payload: data,
+      });
+      Swal.fire({
+        title: "Orden de pedido creada!",
+        text: "La orden de pedido ha sido creada exitosamente",
+        icon: "success",
+        confirmButtonText: "Aceptar",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Error al crear el pedido",
+        icon: "Error",
+        confirmButtonText: "Aceptar",
+      });
+    }
+  };
+};
+
 export {
   getUserDetail,
   getAllUsers,
@@ -620,5 +644,6 @@ export {
   setOrderData,
   setEnlistments,
   deleteUser,
-  postReviews
+  postReviews,
+  createOrderAdmin
 };
