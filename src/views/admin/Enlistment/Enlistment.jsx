@@ -61,7 +61,7 @@ const Enlistments = () => {
                         className='icon-create'
                         style={{ cursor: 'pointer' }} />
                 </div>
-                <div className="md:w-2/3">
+                <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                     <EnlistmentTable 
                         setShowModalEdit={setShowModalEdit}
                         setShowModalDetail={setShowModalDetail}

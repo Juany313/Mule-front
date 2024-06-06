@@ -5,12 +5,22 @@ import { Link } from "react-scroll";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
 import Logout from "./Logout";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setIsLogged } from "../redux/actions";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated, user } = useAuth0();
   const isLogged = useSelector((state) => state.isLogged);
-  console.log(isLogged);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      dispatch(setIsLogged(true));
+    }
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -77,7 +87,7 @@ const NavBar = () => {
             )}
             {!isLogged && (
               <span className="text-white hover:text-s300 p-2 cursor-pointer">
-                <Link
+                <NavLink
                   to="about"
                   spy={true}
                   smooth={true}
@@ -86,21 +96,7 @@ const NavBar = () => {
                   onClick={closeMenu}
                 >
                   Nosotros
-                </Link>
-              </span>
-            )}
-            {!isLogged && (
-              <span className="text-white hover:text-s300 p-2 cursor-pointer">
-                <Link
-                  to="orderShipment"
-                  spy={true}
-                  smooth={true}
-                  offset={0}
-                  duration={700}
-                  onClick={closeMenu}
-                >
-                  Pedidos
-                </Link>
+                </NavLink>
               </span>
             )}
             {isLogged && (

@@ -33,7 +33,9 @@ const NavAdmin = ({ isChecked, handleCheck, setIsAuth }) => {
   }, [location]);
 
   const handleLogout = () => {
-    logout({ logoutParams: { returnTo: "http://localhost:4000/header" } });
+    logout({
+      logoutParams: { returnTo: `${import.meta.env.VITE_REDIRECT_URI}/header` },
+    });
     dispatch(setIsLogged(false));
     localStorage.removeItem("token");
   };
@@ -118,7 +120,8 @@ const NavAdmin = ({ isChecked, handleCheck, setIsAuth }) => {
                   <BsBoxSeam className="h-8 w-8" />
                 </ListItemPrefix>
                 Pedidos
-              </Link> 
+              </Link>
+               
             </ListItem>
           </List>
         </Card>

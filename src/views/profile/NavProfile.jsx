@@ -28,17 +28,17 @@ const NavProfile = () => {
   const [isChecked, setIsChecked] = useState(false);
 
   const infoUserLogged = useSelector((state) => state.infoUserLogged.name);
-  console.log("USERNAME: ",infoUserLogged);
 
   const handleCheck = () => {
     setIsChecked(!isChecked);
   };
 
   const handleLogout = () => {
-     logout({ logoutParams: { returnTo: "http://localhost:4000/header" } })
-     dispatch(
-      setIsLogged(false)
-    )
+    logout({
+      logoutParams: { returnTo: `${import.meta.env.VITE_REDIRECT_URI}/header` },
+    });
+
+    dispatch(setIsLogged(false));
     localStorage.removeItem("token");
   };
 
