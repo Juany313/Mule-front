@@ -13,7 +13,7 @@ root.render(
     <Provider store={store}>
       <Auth0Provider
         domain="dev-1m7fdf5yimzufwoe.us.auth0.com"
-        clientId="405186469025-bn37hadrfa5lmk1b4n319pkg8ad0dclo.apps.googleusercontent.com"
+        clientId="5fA00kciIw03oyxcwwmPnHAh9YgZvIQQ"
         authorizationParams={{
           redirect_uri: "https://mule-front.onrender.com/auth/dashboard",
         }}
