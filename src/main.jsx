@@ -15,7 +15,7 @@ root.render(
         domain={import.meta.env.VITE_DOMAIN}
         clientId={import.meta.env.VITE_CLIENT_ID}
         authorizationParams={{
-          redirect_uri: import.meta.env.VITE_REDIRECT_URI,
+          redirect_uri: `${import.meta.env.VITE_REDIRECT_URI}/auth/dashboard`,
         }}
       >
         <App />
