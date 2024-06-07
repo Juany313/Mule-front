@@ -17,9 +17,36 @@ const CustomerTable = (
 ) => {
   const { allUsers } = useUser();
   const dispatch = useDispatch();
+  const [dataAllUsers, setDataAllUsers] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Define cuántos elementos quieres mostrar por página
+
+    /* searchBar */
+    const [searchDNI, setSearchDNI] = useState("");
+
+    function handleChangeDNI(e) {
+        setSearchDNI(e.target.value);
+      
+        /* if (e.target.value === "") {
+          dispatch(getAllUsers());
+        } */
+      }
+      useEffect(() => {
+        setDataAllUsers([]); // Vacía dataAllUsers para reflejar que se está cargando la nueva búsqueda
+        if (searchDNI.trim() !== '') {
+            const filteredUsers = allUsers.filter(user => {
+                return user.cedula === searchDNI.trim();
+            });
+            setDataAllUsers(filteredUsers);
+        } else {
+            // Si el campo de búsqueda está vacío, muestra todos los usuarios
+            setDataAllUsers(allUsers);
+        }
+    }, [searchDNI, allUsers]);
+
+
+
 
   const totalPages = Math.ceil(allUsers.length / itemsPerPage);
 
@@ -46,6 +73,9 @@ const CustomerTable = (
       chargingData();
   }, [dispatch, allUsers]);
     
+  useEffect(() => {
+    setDataAllUsers(allUsers); 
+}, [allUsers]);
 
     return (
       <div>
@@ -57,6 +87,9 @@ const CustomerTable = (
                     <button onClick={handleNextPage} className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
                         Siguiente
                     </button>
+                    
+                    <input type="text" placeholder='D.N.I' className='bg-gray-300 ml-4 px-4 w-48' onChange={handleChangeDNI}/>
+
                 </div>
             </div>
       <table className="min-w-full divide-y divide-gray-200">
@@ -77,7 +110,7 @@ const CustomerTable = (
                 </tr>
             </thead>
           {
-              allUsers.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((user) => {
+              dataAllUsers.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((user) => {
                   return (
                       <CustomerRow
                           user={user}
