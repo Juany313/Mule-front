@@ -34,6 +34,8 @@ import {
     POST_IS_LOGING,
     PUT_DRIVER,
     POST_REVIEWS,
+    GET_ENLISTMENT_GUIDE_NUMBER,
+    CLEAR_ENLISTMENT_DETAIL
 
 } from "../actions";
 
@@ -280,6 +282,18 @@ function rootReducer(state = initialState, action) {
             ...state,
             reviews: action.payload
           }
+
+          case GET_ENLISTMENT_GUIDE_NUMBER:
+            return {
+                ...state,
+                enlistmentDetail: action.payload
+            }
+
+        case CLEAR_ENLISTMENT_DETAIL:
+            return {
+                ...state,
+                enlistmentDetail: []
+            }
 
 
     default:

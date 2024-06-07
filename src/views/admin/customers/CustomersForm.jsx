@@ -3,7 +3,9 @@ import icon_cancel from '../../../assets/Icon_cancelar.svg';
 import { useDispatch } from 'react-redux';
 import { postUser } from '../../../redux/actions';
 import { useEffect, useState, useRef } from 'react';
-import validateProfile from '../../profile/validateProfile.js';
+import validateCustomer from './validateCustomer.js';
+import axios from 'axios'
+
 
 const CustomersForm = ({
     setShowModal,
@@ -27,7 +29,7 @@ const CustomersForm = ({
 
     useEffect(() => {
         if (actualBackOrder) {
-            setErrors(validateProfile(actualBackOrder))
+            setErrors(validateCustomer(actualBackOrder))
         }
     }, [actualBackOrder])
 
@@ -58,6 +60,23 @@ const CustomersForm = ({
                 console.log('error al cargar la imagen')
             }
         }
+    const handleSelectsChange = (e) => {
+        const { name, value } = e.target;
+            if (value !== 'none') {
+                setActualBackOrder((prevState) => {
+                    const updatedField = Array.isArray(prevState[name])
+                        ? prevState[name].includes(value)
+                            ? prevState[name]
+                            : [...prevState[name], value]
+                        : value;
+
+                    return {
+                        ...prevState,
+                        [name]: updatedField,
+                    };
+                });
+            }
+        };
     }
 
     return (
@@ -105,6 +124,17 @@ const CustomersForm = ({
                         {errors.email && <p style={{ color: 'darkgrey' }}>{errors.email}</p>}
                     </div>
                     <div>
+                        <label className="block text-sm font-medium text-gray-700">Password</label>
+                        <input
+                            type="text"
+                            name="password"
+                            value={actualBackOrder.password || 'Hola123*'}
+                            onChange={handleChange}
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+                        {errors.password && <p style={{ color: 'darkgrey' }}>{errors.password}</p>}
+                    </div>
+                    <div>
                         <label className="block text-sm font-medium text-gray-700">DNI</label>
                         <input
                             type="number"
@@ -127,6 +157,48 @@ const CustomersForm = ({
                         />
                         {errors.cel_Phone_Number && <p style={{ color: 'darkgrey' }}>{errors.cel_Phone_Number}</p>}
                     </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Categoría</label>
+                        <select
+                            name="category"
+                            value={actualBackOrder.category}
+                            onChange={(e) => handlesSelectChange(e)}
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        >
+                            <option value="">Seleccionar</option>
+                            <option value="regular">Regular</option>
+                            <option value="pro">Pro</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Rol</label>
+                        <select
+                            name="role"
+                            value={actualBackOrder.role}
+                            onChange={(e) => handlesSelectChange(e)}
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        >
+                            <option value="">Seleccionar</option>
+                            <option value="admin">Administrador</option>
+                            <option value="user">Usuario</option>
+                            <option value="asesor">Asesor</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Estado</label>
+                        <select
+                            name="role"
+                            value={actualBackOrder.role}
+                            onChange={(e) => handlesSelectChange(e)}
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        >
+                            <option value="">Seleccionar</option>
+                            <option value="true">Activo</option>
+                            <option value="false">Inactivo</option>
+                        </select>
+                    </div>
+
                     <div>
                         <label className="block text-sm font-medium text-gray-700">Edad</label>
                         <input
@@ -140,17 +212,17 @@ const CustomersForm = ({
                     </div>
 
                     <div>
-                    <label className="block text-sm font-medium text-gray-700">Selecciona tu imagen</label>
-                    <input
-                        type="file"
-                        name="product_image"
-                        ref={inputRef} onChange={handleImageChange}
-                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    />
-                    {actualBackOrder.product_image && (
-                        <img src={actualBackOrder.photo} alt="product_image" className="mt-2 h-20 w-20 object-cover" />
-                    )}
-                </div>
+                        <label className="block text-sm font-medium text-gray-700">Selecciona tu imagen</label>
+                        <input
+                            type="file"
+                            name="product_image"
+                            ref={inputRef} onChange={handleImageChange}
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+                        {actualBackOrder.photo && (
+                            <img src={actualBackOrder.photo} alt="product_image" className="mt-2 h-20 w-20 object-cover" />
+                        )}
+                    </div>
 
                     <button type="submit" className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Guardar

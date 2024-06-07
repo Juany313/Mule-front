@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 /* views */
 import About from "../About";
 import Service from "../Service";
 import SearchBar from "../../components/SearchBar";
-import Ordershipment from "../Ordershipment";
-import { NavLink } from "react-router-dom";
 
 const Home = () => {
+
   return (
     <>
       <div id="header"

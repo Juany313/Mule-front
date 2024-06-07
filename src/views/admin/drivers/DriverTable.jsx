@@ -48,16 +48,8 @@ const DriverTable = (
 
     return (
         <div>
-            <div className="px-5 py-5 bg-white justify-start">
-                <div className="inline-flex mt-2 xs:mt-0">
-                    <button onClick={handlePreviousPage} className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
-                        Anterior
-                    </button>
-                    <button onClick={handleNextPage} className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
-                        Siguiente
-                    </button>
-                </div>
-            </div>
+            
+            <h2 className="px-5 py-5 justify-center font-semibold text-gray-600">CONDUCTORES</h2>
             <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                     <tr>
@@ -84,6 +76,16 @@ const DriverTable = (
                     })
                 }
             </table>
+            <div className="fixed bottom-0 left-0 right-0 flex justify-center bg-white py-5">
+                <div className="inline-flex mt-2 xs:mt-0">
+                    <button onClick={handlePreviousPage} className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
+                        Anterior
+                    </button>
+                    <button onClick={handleNextPage} className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
+                        Siguiente
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };
