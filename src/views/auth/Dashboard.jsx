@@ -33,7 +33,6 @@ const Dashboard = () => {
       if (token) {
         try {
           const decodedToken = jwtDecode(token);
-          console.log("TOKEN DECO:", decodedToken);
           dispatch(getUserDetail(decodedToken.id));
         } catch (error) {
           console.log(error);
