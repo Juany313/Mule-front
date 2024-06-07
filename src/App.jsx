@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import {
   BrowserRouter as Router,
@@ -32,6 +33,7 @@ import AuthenticatedApp from "./views/profile/AuthenticatedApp";
 import Shipments from "./views/auth/Shipments";
 import History from "./views/auth/History";
 import ConfirmEmail from "./views/auth/ConfirmEmail";
+import ConfirmPasswordReset from "./views/auth/ConfirmPasswordReset";
 
 
 /* Admin */
@@ -42,8 +44,29 @@ import AdminHome from "./views/admin/adminHome/AdminHome"
 
 import ShipmentPrice from "./components/ShipmentPrice";
 import ReviewForm from "./components/ReviewForm";
+import { getUserDetail, setInfoUserLogged } from "./redux/actions";
+import parseJwt from "./helpers/parseJwt";
+import { jwtDecode } from "jwt-decode";
 
 function App() {
+
+  const dispatch = useDispatch()
+  
+  
+  
+  useEffect(() =>{
+    const token = localStorage.getItem("token")
+    if(token){
+      try {
+        const decodedToken = jwtDecode(token);
+        dispatch(getUserDetail(decodedToken.id));
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+  ), [dispatch]
+
   return (
     <Router>
       <Routes>
@@ -57,6 +80,7 @@ function App() {
           <Route path="shipments" element={<Shipments />} />
           <Route path="history" element={<History />} />
           <Route path="emailConfirm" element={<ConfirmEmail />} />
+          <Route path="reset-password" element={<ConfirmPasswordReset />} />
 
         </Route>
         <Route path="/" element={<Landing />} />

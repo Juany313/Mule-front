@@ -34,6 +34,7 @@ import {
     POST_IS_LOGING,
     PUT_DRIVER,
     POST_REVIEWS,
+    SET_USER_DETAIL,
 
 } from "../actions";
 
@@ -106,6 +107,12 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 userDetail: action.payload,
+            };
+        
+        case SET_USER_DETAIL:
+            return {
+                ...state,
+                useeDetail: action.payload
             };
 
         case GET_ORDERS_BY_CLIENT:

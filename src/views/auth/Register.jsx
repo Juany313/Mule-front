@@ -253,7 +253,6 @@ const Register = () => {
       return; // No se envía la solicitud si hay errores presentes
     }
     const result = await dispatch(postUser(userData));
-    console.log("result.success", result);
     if (result.success) {
       localStorage.setItem("email", userData.email);
       navigate("/auth/");

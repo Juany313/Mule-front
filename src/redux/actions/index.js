@@ -2,6 +2,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
+export const SET_USER_DETAIL = "SET_USER_DETAIL";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_ORDER_ID = "GET_ORDER_ID";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
@@ -42,6 +43,10 @@ export const DELETE_DRIVER = "DELETE_DRIVER";
 export const POST_IS_LOGING = "POST_IS_LOGING";
 export const POST_REVIEWS = "POST_REVIEWS";
 
+//! Forgot Passaword !//
+
+export const FORGOT_PASSWORD = "FORGOT_PASSWORD";
+
 const deleteUser = (id) => {
   return async (dispatch) => {
     try {
@@ -57,6 +62,13 @@ const deleteUser = (id) => {
     } catch (error) {
       console.error(error.message);
     }
+  };
+};
+
+export const setUserDetail = (userDetail) =>{
+  return{
+    type: SET_USER_DETAIL,
+    payload: userDetail,
   };
 };
 
@@ -334,7 +346,6 @@ export function isLoging(data) {
         `${import.meta.env.VITE_BACKEND_URL}/users/register-auth0`,
         data
       );
-      console.log("data: ", data);
       dispatch({
         type: POST_IS_LOGING,
         payload: response.data,
@@ -648,6 +659,32 @@ const createOrderAdmin = (userData, id) => {
   };
 };
 
+const forgotPassword = (data) => {
+  return async (dispatch) => {
+    try {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/request-password-reset`, data);
+      dispatch({
+        type: FORGOT_PASSWORD,
+        payload: data,
+      });
+      Swal.fire({
+        title: "Instrucciones enviadas!",
+        text: "Revisa tu correo electrónico para las instrucciones de restablecimiento de contraseña.",
+        icon: "success",
+        confirmButtonText: "Aceptar",
+      });
+    } catch (error) {
+      console.error("Error al enviar las instrucciones:", error.message);
+      Swal.fire({
+        title: "Error!",
+        text: "No se pudieron enviar las instrucciones. Intenta nuevamente más tarde.",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+    }
+  };
+};
+
 export {
   getUserDetail,
   getAllUsers,
@@ -673,5 +710,6 @@ export {
   setEnlistments,
   deleteUser,
   postReviews,
-  createOrderAdmin
+  createOrderAdmin,
+  forgotPassword,
 };

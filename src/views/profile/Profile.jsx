@@ -32,13 +32,19 @@ const Profile = () => {
 
   const [errors, setErrors] = useState({});
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
-
-      dispatch(getUserDetail(infoUserLogged.id));
-    }
-  }, [infoUserLogged.id]);
+//   useEffect(
+//     () => {
+//       if (localStorage.getItem("token")) {
+//         dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
+//         setTimeout(() => {
+//         dispatch(getUserDetail(infoUserLogged.id));
+//         }, 2000);
+//       }
+//     },
+//     [
+//       // infoUserLogged.id
+//     ]
+//   );
 
   useEffect(() => {
     if (userDetail) {
@@ -97,7 +103,9 @@ const Profile = () => {
 
   const submitHandler = () => {
     try {
+      setTimeout(() => {
       dispatch(updateUserDetail(infoUserLogged.id, input));
+      }, 2000);
       setIsEditing(false);
       Swal.fire({
         icon: "success",

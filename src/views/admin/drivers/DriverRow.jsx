@@ -16,7 +16,6 @@ const DriverRow = ({
     }) => {
 
     
-    console.log('DriverRow', driver);
     
 
     const onEdit = () => {

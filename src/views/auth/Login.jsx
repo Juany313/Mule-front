@@ -682,6 +682,7 @@ import {
 } from "../../redux/actions/index";
 
 import "./Conten.css";
+import "./Conten.css";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -884,3 +885,4 @@ const Login = () => {
 };
 
 export default Login;
+

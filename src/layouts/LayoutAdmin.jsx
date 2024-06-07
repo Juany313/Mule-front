@@ -12,11 +12,7 @@ const LayoutAdmin = () => {
 
   const infoUserLogged = useSelector((state) => state.infoUserLogged);
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
-    }
-  }, [infoUserLogged.id]);
+
 
   return (
     <div className="min-h-screen ">

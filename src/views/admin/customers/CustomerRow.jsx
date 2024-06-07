@@ -13,7 +13,6 @@ const CustomerRow = ({
     }) => {
 
     
-    console.log('UserRow', user);
 
     const onDelete = () => {
         setCurrentUserId(user.id);

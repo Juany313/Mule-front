@@ -17,7 +17,6 @@ const ConfirmEmail = () => {
           },
         })
         .then((response) => {
-          console.log(response.data);
           navigate("/login?verified=true");
         })
         .catch((error) => {

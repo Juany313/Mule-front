@@ -11,7 +11,6 @@ const EnlistmentDetail = (
     }
 ) => {
     const enlistment = actualBackOrder; 
-    console.log('actualDetail',actualDetail);
 
     const handleCancel = () => {
         setShowModalDetail(false);
