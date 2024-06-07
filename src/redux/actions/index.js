@@ -2,6 +2,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
+export const SET_USER_DETAIL = "SET_USER_DETAIL";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_ORDER_ID = "GET_ORDER_ID";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
@@ -63,6 +64,13 @@ const deleteUser = (id) => {
     } catch (error) {
       console.error(error.message);
     }
+  };
+};
+
+export const setUserDetail = (userDetail) =>{
+  return{
+    type: SET_USER_DETAIL,
+    payload: userDetail,
   };
 };
 

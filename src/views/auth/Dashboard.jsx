@@ -11,6 +11,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import loginUserAuth from "../../services/auth/requestAuthLogin";
 import parseJwt from "../../helpers/parseJwt";
 import { setInfoUserLogged, getUserDetail } from "../../redux/actions";
+import { jwtDecode } from "jwt-decode";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -21,11 +22,24 @@ const Dashboard = () => {
 
   let role = infoUserLogged?.role;
 
-  useEffect(() => {
-    // if (isAuthenticated) {]
-    dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
-    // }
-  }, []);
+  // useEffect(() => {
+  //   // if (isAuthenticated) {]
+  //   dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
+  //   // }
+  // }, []);
+
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const decodedToken = jwtDecode(token);
+          dispatch(getUserDetail(decodedToken.id));
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }),
+      [dispatch];
 
   if (isAuthenticated) {
     var emailAuth = user.email;
@@ -35,10 +49,6 @@ const Dashboard = () => {
   useEffect(() => {
     if (isAuthenticated) {
       handleLoginSubmitAuth();
-
-      setTimeout(() => {
-        dispatch(getUserDetail(infoUserLogged.id));
-      }, 2000);
     }
   }, [isAuthenticated, dispatch]);
 

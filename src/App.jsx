@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import {
   BrowserRouter as Router,
@@ -43,8 +44,29 @@ import AdminHome from "./views/admin/adminHome/AdminHome"
 
 import ShipmentPrice from "./components/ShipmentPrice";
 import ReviewForm from "./components/ReviewForm";
+import { getUserDetail, setInfoUserLogged } from "./redux/actions";
+import parseJwt from "./helpers/parseJwt";
+import { jwtDecode } from "jwt-decode";
 
 function App() {
+
+  const dispatch = useDispatch()
+  
+  
+  
+  useEffect(() =>{
+    const token = localStorage.getItem("token")
+    if(token){
+      try {
+        const decodedToken = jwtDecode(token);
+        dispatch(getUserDetail(decodedToken.id));
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+  ), [dispatch]
+
   return (
     <Router>
       <Routes>
