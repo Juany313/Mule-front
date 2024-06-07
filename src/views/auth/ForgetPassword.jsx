@@ -1,4 +1,3 @@
-
 // import React from "react";
 // import { Link } from "react-router-dom";
 
@@ -29,8 +28,7 @@
 //                 value="Recuperar Cuenta"
 //               />
 //              </Link>
-           
-          
+
 //         </div>
 //       </form>
 //       <div className="flex flex-col flex-gap-4 items-center ">
@@ -60,11 +58,13 @@
 
 // export default ForgetPassword;
 
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 /* icons */
 import { RiMailLine } from "react-icons/ri";
+import { useDispatch } from "react-redux";
+import { forgotPassword } from "../../redux/actions"
 
 // Email validation function
 const validateEmailForgetPassword = (email) => {
@@ -88,6 +88,8 @@ const ForgetPassword = () => {
   const [errors, setErrors] = useState({});
   const [isDisabled, setIsDisabled] = useState(true);
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   // Handle input change
   const handleInputChange = (e) => {
@@ -113,18 +115,24 @@ const ForgetPassword = () => {
     e.preventDefault();
     if (!isDisabled) {
       // Redirect to "/auth"
+      dispatch(forgotPassword({ email }));
       navigate("/auth");
     }
   };
 
   return (
     <div className="content-loging w-full">
-      <div className="bg-gradient-to-r from-blue-400 to-blue-500 p-8 rounded-xl w-auto lg:w-[450px] 
-       shadow-xl shadow-black">
+      <div
+        className="bg-gradient-to-r from-blue-400 to-blue-500 p-8 rounded-xl w-auto lg:w-[450px] 
+       shadow-xl shadow-black"
+      >
         <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-white mb-8">
           Recuperar <span className="text-primary">contraseña</span>
         </h1>
-        <form className="mb-8  items-center justify-center" onSubmit={handleSubmit}>
+        <form
+          className="mb-8  items-center justify-center"
+          onSubmit={handleSubmit}
+        >
           <div className="relative mb-8">
             <RiMailLine className="absolute top-1/2 -translate-y-1/2 left-2 text-primary" />
             <input
@@ -136,11 +144,17 @@ const ForgetPassword = () => {
               onChange={handleInputChange}
             />
           </div>
-            {errors.email && <span className="flex items-center justify-center font-bold text-red-600 mb-4">{errors.email}</span>}
+          {errors.email && (
+            <span className="flex items-center justify-center font-bold text-red-600 mb-4">
+              {errors.email}
+            </span>
+          )}
           <div>
             <button
               type="submit"
-              className={`bg-s300 text-black uppercase font-extrabold text-sm w-full py-3 px-4 rounded-lg hover:text-gray-100 transition-colors shadow-md shadow-black ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
+              className={`bg-s300 text-black uppercase font-extrabold text-sm w-full py-3 px-4 rounded-lg hover:text-gray-100 transition-colors shadow-md shadow-black ${
+                isDisabled ? "opacity-50 cursor-not-allowed" : ""
+              }`}
               disabled={isDisabled}
             >
               Recuperar Cuenta
@@ -172,6 +186,4 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword
-
-
+export default ForgetPassword;

@@ -131,7 +131,7 @@ const NavProfile = () => {
                   Ver mis envíos
                 </Link>
               </ListItem>
-              <ListItem className=" gap-3 text-white">
+              {/* <ListItem className=" gap-3 text-white">
                 <ListItemPrefix>
                   <TfiLocationPin className="h-8 w-8" />
                 </ListItemPrefix>
@@ -144,7 +144,7 @@ const NavProfile = () => {
                     className="rounded-full"
                   />
                 </ListItemSuffix>
-              </ListItem>
+              </ListItem> */}
             </List>
           </Card>
         </div>
