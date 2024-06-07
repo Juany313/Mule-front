@@ -334,7 +334,6 @@ export function isLoging(data) {
         `${import.meta.env.VITE_BACKEND_URL}/users/register-auth0`,
         data
       );
-      console.log("data: ", data);
       dispatch({
         type: POST_IS_LOGING,
         payload: response.data,

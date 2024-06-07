@@ -11,7 +11,6 @@ const DriverDetail = (
     }
 ) => {
     const driver = actualBackOrder; 
-    console.log('actualDetail',actualDetail);
 
     const handleCancel = () => {
         setShowModalDetail(false);

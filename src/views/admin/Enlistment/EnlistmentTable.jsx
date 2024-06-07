@@ -50,7 +50,6 @@ const EnlistmentTable = (
             const orderWithEnlistmet = allEnlistments.map((enlistment) => {
                 const orderShipment_Id = enlistment.ordershipment_id;
                 const order = allOrders.find(order => order.id === orderShipment_Id);
-                console.log('order', order);    
                 return {
                     ...enlistment,
                     order
