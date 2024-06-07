@@ -23,7 +23,6 @@
 //   } from "../../redux/actions/index";
 // import { IoCloseCircleOutline } from "react-icons/io5";
 
-
 // import "./Conten.css"
 
 // const Login = () => {
@@ -55,12 +54,9 @@
 //     }
 //   };
 
-
-
-
 //   //Función que escucha el cambio del estado autenticación
 //   useEffect(() => {
-    
+
 //     // Verificar la validez del token inmediatamente
 //     checkToken();
 //     // Verificar la validez del token cada minuto
@@ -68,7 +64,6 @@
 //     // Limpiar el intervalo cuando el componente se desmonte
 //     //return () => clearInterval(intervalId);
 //   }, [isLogged, isAuthenticated]);
-
 
 //   // Submit de inicio de sesión
 //   const handleLoginSubmit = async (event) => {
@@ -85,7 +80,7 @@
 //           text: "Bienvenido a la plataforma",
 //           showConfirmButton: true,
 //         });
-        
+
 //       dispatch(setIsLogged(
 //         parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
 //       ));
@@ -104,7 +99,7 @@
 //     <div className="content-loging w-full
 //   "
 //     >
-      
+
 //       <div className="bg-gradient-to-r from-blue-400 to-blue-500 p-8 rounded-xl w-auto  lg:w-[450px] items-center justify-center shadow-2xl shadow-blue-800"
 //       >
 //         <>
@@ -174,7 +169,7 @@
 //             onClick={handleLoginSubmit}
 //             value="Iniciar sesión"
 //             />
-              
+
 //         </div>
 
 //         <p className=" text-black py-3 text-center "> O Ingresa con alguna de tus redes Sociales: </p>
@@ -186,8 +181,7 @@
 //             <FcGoogle
 //               className="w-9  h-9"
 //             />
-          
-            
+
 //         </button>
 
 //         </div>
@@ -208,15 +202,14 @@
 //               </Link>
 //             </span>
 //         </div>
-        
+
 //         </div>
-      
+
 //     </div>
 //   );
 // };
 
 // export default Login;
-
 
 //*Funciona
 // import  { useState, useEffect } from "react";
@@ -289,7 +282,7 @@
 
 //   const handleLoginSubmit = async (event) => {
 //     event.preventDefault();
-      
+
 //     const validationErrors = validateLogin({...formData});
 //     setErrors(validationErrors);
 //     if (Object.keys(validationErrors)) {
@@ -301,14 +294,14 @@
 //       dispatch(setInfoUserLogged(
 //         localStorage.getItem("token") && parseJwt(localStorage.getItem("token"))
 //       ));
-      
+
 //       Swal.fire({
 //         icon: "success",
 //         title: "Inicio de sesión exitoso",
 //         text: "Bienvenido a la plataforma",
 //         showConfirmButton: true,
 //       });
-        
+
 //       dispatch(setIsLogged(
 //         parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
 //       ));
@@ -329,9 +322,6 @@
 //       });
 //     }
 //   };
-
-
-
 
 //   return (
 //     <div className="content-loging w-full">
@@ -428,7 +418,6 @@
 // };
 
 // export default Login;
-
 
 // import { useState, useEffect } from "react";
 // import { useDispatch, useSelector } from "react-redux";
@@ -657,7 +646,6 @@
 
 // export default Login;
 
-
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
@@ -676,10 +664,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 import loginUser from "../../services/auth/requestLogin";
 import parseJwt from "../../helpers/parseJwt";
 import { validateLogin } from "../../utils/validateImputs";
-import {
-  setIsLogged,
-  setInfoUserLogged
-} from "../../redux/actions/index";
+import { setIsLogged, setInfoUserLogged } from "../../redux/actions/index";
 
 import "./Conten.css";
 import "./Conten.css";
@@ -699,14 +684,17 @@ const Login = () => {
   });
 
   const checkToken = () => {
-    if (localStorage.getItem("token") && (isLogged || isAuthenticated)) {
-      dispatch(setIsLogged(
-        parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
-      ));
-      navigate("dashboard");
-    }
-    if (localStorage.getItem("token") && !isLogged) {
-      dispatch(setIsLogged(false));
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = parseJwt(token);
+      if (decodedToken.exp * 1000 > Date.now()) {
+        dispatch(setIsLogged(true));
+        dispatch(setInfoUserLogged(decodedToken));
+        navigate("/auth/dashboard");
+      } else {
+        localStorage.removeItem("token");
+        dispatch(setIsLogged(false));
+      }
     }
   };
 
@@ -729,7 +717,7 @@ const Login = () => {
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
-    if (isSocialLogin) return; // Prevent local login logic if a social login is used
+    if (isSocialLogin) return;
 
     const validationErrors = validateLogin({ ...formData });
     setErrors(validationErrors);
@@ -739,9 +727,12 @@ const Login = () => {
 
         localStorage.setItem("token", token);
 
-        dispatch(setInfoUserLogged(
-          localStorage.getItem("token") && parseJwt(localStorage.getItem("token"))
-        ));
+        dispatch(
+          setInfoUserLogged(
+            localStorage.getItem("token") &&
+              parseJwt(localStorage.getItem("token"))
+          )
+        );
 
         Swal.fire({
           icon: "success",
@@ -750,9 +741,11 @@ const Login = () => {
           showConfirmButton: true,
         });
 
-        dispatch(setIsLogged(
-          parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
-        ));
+        dispatch(
+          setIsLogged(
+            parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
+          )
+        );
       } catch (error) {
         Swal.fire({
           icon: "error",
@@ -773,17 +766,18 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     setIsSocialLogin(true);
-    loginWithRedirect({ connection: 'google-oauth2' });
+    loginWithRedirect({ connection: "google-oauth2" });
   };
 
   const handleGitHubLogin = () => {
     setIsSocialLogin(true);
-    loginWithRedirect({ connection: 'github' });
+    loginWithRedirect({ connection: "github" });
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen content-loging w-full">
-      <form className="bg-gradient-to-r from-blue-400 to-blue-500 p-8 rounded-xl w-full max-w-lg shadow-2xl"
+      <form
+        className="bg-gradient-to-r from-blue-400 to-blue-500 p-8 rounded-xl w-full max-w-lg shadow-2xl"
         onSubmit={handleLoginSubmit}
       >
         <button className="bg-blue-300 hover:bg-blue-700 text-gray-300 font-bold rounded-md shadow-lg uppercase m-2">
@@ -811,7 +805,11 @@ const Login = () => {
             onClick={() => setFormData({ ...formData, email: "" })}
           />
         </div>
-        {errors.email && <span className="flex items-center justify-center font-bold text-red-600 mb-4 w-full">{errors.email}</span>}
+        {errors.email && (
+          <span className="flex items-center justify-center font-bold text-red-600 mb-4 w-full">
+            {errors.email}
+          </span>
+        )}
 
         <div className="relative mb-8 flex items-center justify-center">
           <RiLock2Line className="absolute top-1/2 transform -translate-y-1/2 left-2 text-primary" />
@@ -836,7 +834,11 @@ const Login = () => {
             />
           )}
         </div>
-        {errors.password && <span className="flex items-center justify-center font-bold text-red-600 mb-6">{errors.password}</span>}
+        {errors.password && (
+          <span className="flex items-center justify-center font-bold text-red-600 mb-6">
+            {errors.password}
+          </span>
+        )}
 
         <div>
           <input
@@ -868,21 +870,25 @@ const Login = () => {
         </div>
 
         <div className="flex flex-col items-center">
-          <Link to="/auth/olvide-password" className="hover:text-primary transition-colors">
+          <Link
+            to="/auth/olvide-password"
+            className="hover:text-primary transition-colors"
+          >
             ¿Olvidaste tu contraseña?
           </Link>
           <span className="flex items-center gap-2">
             ¿No tienes cuenta?
-            <Link to="/auth/registro" className="text-primary hover:text-gray-100 transition-colors">
+            <Link
+              to="/auth/registro"
+              className="text-primary hover:text-gray-100 transition-colors"
+            >
               Registrate
             </Link>
           </span>
         </div>
-
       </form>
     </div>
   );
 };
 
 export default Login;
-
