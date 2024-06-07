@@ -16,7 +16,6 @@ const EnlistmentRow = ({
     }) => {
 
     
-    console.log('EnlistmentRow', enlistment);
     
 
     const onEdit = () => {

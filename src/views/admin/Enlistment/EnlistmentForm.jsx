@@ -28,7 +28,6 @@ const EnlistmentForm = ({
                 setInfoUserLogged(
                     parseJwt(localStorage.getItem('token'))))
                 }
-            console.log('user ID:', infoUserLogged.id)
         }, [dispatch]
     );
 
@@ -45,7 +44,6 @@ const handleCancel = () => {
 };
 
 useEffect(() => {
-    console.log('actualBackOrder', actualBackOrder);
     if (actualBackOrder) {
         setErrors(validateEnlistment(actualBackOrder))
     }
