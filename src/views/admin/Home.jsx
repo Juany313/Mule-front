@@ -10,7 +10,7 @@ import { NavLink } from "react-router-dom";
 const Home = () => {
   return (
     <>
-      <div
+      <div id="header"
         className="relative bg-cover bg-end h-[100vh]"
         style={{
           backgroundImage: `url(https://ontrack.global/wp-content/uploads/2023/10/logistica-contra-entrega.jpg)`,

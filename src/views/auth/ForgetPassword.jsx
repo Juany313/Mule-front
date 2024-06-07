@@ -1,23 +1,35 @@
-
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { forgotPassword } from "../../redux/actions";
 
 /* icons */
 import { RiMailLine } from "react-icons/ri";
 
 const ForgetPassword = () => {
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+
+  const handleForgot = (event) => {
+    event.preventDefault();
+    dispatch(forgotPassword({ email }));
+  };
+
   return (
-    <div className="bg-p100 p-8 rounded-xl w-auto  lg:w-[450px]">
+    <div className="bg-p100 p-8 rounded-xl w-auto lg:w-[450px]">
       <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] text-white mb-8">
         Recuperar <span className="text-primary">contraseña</span>
       </h1>
-      <form className="mb-8">
+      <form className="mb-8" onSubmit={handleForgot}>
         <div className="relative mb-8">
           <RiMailLine className="absolute top-1/2 -translate-y-1/2 left-2 text-primary" />
           <input
             type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
             placeholder="Correo electrónico"
+            required
           />
         </div>
         <div>
@@ -29,12 +41,12 @@ const ForgetPassword = () => {
           </button>
         </div>
       </form>
-      <div className="flex flex-col flex-gap-4 items-center ">
+      <div className="flex flex-col gap-4 items-center ">
         <span className="flex items-center gap-2">
           ¿Ya tienes cuenta?
           <Link
             to="/auth"
-            className="text-primary hover:text-gray-100 transition-colors "
+            className="text-primary hover:text-gray-100 transition-colors"
           >
             Ingresa
           </Link>
@@ -43,9 +55,9 @@ const ForgetPassword = () => {
           ¿No tienes cuenta?
           <Link
             to="/auth/registro"
-            className="text-primary hover:text-gray-100 transition-colors "
+            className="text-primary hover:text-gray-100 transition-colors"
           >
-            Registrate
+            Regístrate
           </Link>
         </span>
       </div>

@@ -32,6 +32,7 @@ import AuthenticatedApp from "./views/profile/AuthenticatedApp";
 import Shipments from "./views/auth/Shipments";
 import History from "./views/auth/History";
 import ConfirmEmail from "./views/auth/ConfirmEmail";
+import ConfirmPasswordReset from "./views/auth/ConfirmPasswordReset";
 
 
 /* Admin */
@@ -57,6 +58,7 @@ function App() {
           <Route path="shipments" element={<Shipments />} />
           <Route path="history" element={<History />} />
           <Route path="emailConfirm" element={<ConfirmEmail />} />
+          <Route path="reset-password" element={<ConfirmPasswordReset />} />
 
         </Route>
         <Route path="/" element={<Landing />} />

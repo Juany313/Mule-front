@@ -14,44 +14,47 @@ const Payment = () => {
 
   const handlePay = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/payments", {
-        id: orderData.typeShipmentId,
-        title:
-          orderData.typeShipmentId === 1
-            ? "Sucursal a puerta"
-            : orderData.typeShipmentId === 2
-            ? "Sucursal a sucursal"
-            : orderData.typeShipmentId === 3
-            ? "Puerta a sucursal"
-            : orderData.typeShipmentId === 4
-            ? "Puerta a Puerta"
-            : null,
-        quantity: 1,
-        unit_price: orderData.cost,
-        payer: {
-          name: orderData.name_transmiter,
-          surname: orderData.surname_transmiter,
-          email: orderData.email,
-          phone: {
-            area_code: "54",
-            number: orderData.celphone_transmiter,
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/payments/`,
+        {
+          id: orderData.typeShipmentId,
+          title:
+            orderData.typeShipmentId === 1
+              ? "Sucursal a puerta"
+              : orderData.typeShipmentId === 2
+              ? "Sucursal a sucursal"
+              : orderData.typeShipmentId === 3
+              ? "Puerta a sucursal"
+              : orderData.typeShipmentId === 4
+              ? "Puerta a Puerta"
+              : null,
+          quantity: 1,
+          unit_price: orderData.cost,
+          payer: {
+            name: orderData.name_transmiter,
+            surname: orderData.surname_transmiter,
+            email: orderData.email,
+            phone: {
+              area_code: "54",
+              number: orderData.celphone_transmiter,
+            },
+            address: {
+              street_name: orderData.address_transmiter,
+            },
+            identification: {
+              type: "DNI",
+              number: orderData.cedula_claimant,
+            },
           },
-          address: {
-            street_name: orderData.address_transmiter,
+          pay_method: orderData.pay_method,
+          shipments: {
+            receiver_address: {
+              street_name: orderData.address_receiver,
+              city_name: orderData.city_receiver,
+            },
           },
-          identification: {
-            type: "DNI",
-            number: orderData.cedula_claimant,
-          },
-        },
-        pay_method: orderData.pay_method,
-        shipments: {
-          receiver_address: {
-            street_name: orderData.address_receiver,
-            city_name: orderData.city_receiver,
-          },
-        },
-      });
+        }
+      );
       const iDpreference = response.data.id;
       setPreferenceId(iDpreference);
     } catch (error) {

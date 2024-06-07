@@ -30,7 +30,6 @@ const EnlistmentFormEdit = (
     };
 
     const handleChange = (e) => {
-        console.log(e.target.value);
     };
     
     

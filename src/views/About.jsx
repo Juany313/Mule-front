@@ -6,7 +6,7 @@ import { BsFillBoxSeamFill } from "react-icons/bs";
 
 const About = () => {
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-white relative overflow-hidden">
+    <div id="about" className="min-h-screen flex flex-col justify-between bg-white relative overflow-hidden">
       <div className="bg-p300 h-1/4 lg:h-1/4 w-full" style={{ borderBottomRightRadius: '6rem' }}>
         <div className="font-Merriweather font-bold text-gray-200 text-2xl md:text-3xl lg:text-4xl mb-16 mt-16 mx-auto text-center">SOBRE NOSOTROS</div>
       </div>
@@ -32,7 +32,7 @@ const About = () => {
       </div>
 
       {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10"> */}
-      <div class="flex justify-center gap-8 mb-10 mx-32">
+      <div className="flex justify-center gap-8 mb-10 mx-32">
         
         <div className="bg-white rounded-xl shadow-md border border-gray-300 p-6 w-10/12 h-4/5">
           <div className="bg-white h-20 rounded-t-xl flex justify-center items-center">

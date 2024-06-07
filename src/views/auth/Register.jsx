@@ -65,7 +65,6 @@ const Register = () => {
       return; // No se envía la solicitud si hay errores presentes
     }
     const result = await dispatch(postUser(userData));
-    console.log("result.success", result);
     if (result.success) {
       localStorage.setItem("email", userData.email);
       navigate("/auth/");
@@ -90,7 +89,7 @@ const Register = () => {
     
 
   return (
-    <div className="content-loging  flex   grid ">
+    <div className="content-loging w-full flex">
       
     <div className="bg-gradient-to-r from-blue-400 to-blue-500 p-8 rounded-xl w-auto  lg:w-[450px] items-center justify-center shadow-2xl shadow-blue-800">
       <>

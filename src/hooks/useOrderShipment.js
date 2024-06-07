@@ -1,16 +1,15 @@
 import { useEffect } from "react";
-import { useSelector } from 'react-redux';
-import { getAllOrders } from '../redux/actions/index';
-
+import { useSelector } from "react-redux";
+import { getAllOrders } from "../redux/actions/index";
 
 const useOrderShipment = () => {
-    const allOrders = useSelector(state => state.allOrders);
+  const allOrders = useSelector((state) => state.allOrders);
 
-    useEffect(() => {
-        getAllOrders()
-    }, []);
+  useEffect(() => {
+    getAllOrders();
+  }, []);
 
-    return { allOrders };
-}
+  return { allOrders };
+};
 
 export default useOrderShipment;
