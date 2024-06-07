@@ -36,25 +36,26 @@ const Login = () => {
   });
 
   // Función que verifica y cambia el estado de la sesión
-  const checkToken = () => {
-    if (
-      localStorage.getItem("token") &&
-      (isLogged === true || isAuthenticated === true)
-    ) {
-      dispatch(
-        setIsLogged(
-          parseJwt(localStorage.getItem("token")).exp * 1000 > Date.now()
-        )
-      );
-      //const emailAuth = infoUserLogged.email;
-      navigate("dashboard");
+const checkToken = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = parseJwt(token);
+      if (decodedToken.exp * 1000 > Date.now()) {
+        dispatch(setIsLogged(true));
+        dispatch(setInfoUserLogged(decodedToken));
+        navigate("/auth/dashboard"); // Redirige a la página de dashboard
+      } else {
+        localStorage.removeItem("token");
+        dispatch(setIsLogged(false));
+      }
     }
+  };
     // if (localStorage.getItem("token") && isLogged === false) {
 
 
     // dispatch(setIsLogged(false));
     // }
-  };
+
 
   //Función que escucha el cambio del estado autenticación
   useEffect(() => {

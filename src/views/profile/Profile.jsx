@@ -32,19 +32,19 @@ const Profile = () => {
 
   const [errors, setErrors] = useState({});
 
-  useEffect(
-    () => {
-      if (localStorage.getItem("token")) {
-        dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
-        setTimeout(() => {
-        dispatch(getUserDetail(infoUserLogged.id));
-        }, 2000);
-      }
-    },
-    [
-      // infoUserLogged.id
-    ]
-  );
+//   useEffect(
+//     () => {
+//       if (localStorage.getItem("token")) {
+//         dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
+//         setTimeout(() => {
+//         dispatch(getUserDetail(infoUserLogged.id));
+//         }, 2000);
+//       }
+//     },
+//     [
+//       // infoUserLogged.id
+//     ]
+//   );
 
   useEffect(() => {
     if (userDetail) {
