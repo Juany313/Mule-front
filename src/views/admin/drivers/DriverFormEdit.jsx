@@ -30,7 +30,6 @@ const DriverFormEdit = (
     };
 
     const handleChange = (e) => {
-        console.log(e.target.value);
     };
     
     

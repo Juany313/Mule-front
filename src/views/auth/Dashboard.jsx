@@ -23,7 +23,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     // if (isAuthenticated) {]
-    console.log("Hola");
     dispatch(setInfoUserLogged(parseJwt(localStorage.getItem("token"))));
     // }
   }, []);
@@ -33,7 +32,6 @@ const Dashboard = () => {
     var nameAuth = user.name;
   }
 
-  // console.log(infoUserLogged);
   useEffect(() => {
     if (isAuthenticated) {
       handleLoginSubmitAuth();

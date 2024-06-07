@@ -51,7 +51,6 @@ const Login = () => {
     }
     // if (localStorage.getItem("token") && isLogged === false) {
 
-    // console.log("Hola");
 
     // dispatch(setIsLogged(false));
     // }
