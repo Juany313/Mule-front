@@ -43,8 +43,8 @@ export const DELETE_DRIVER = "DELETE_DRIVER";
 
 export const POST_IS_LOGING = "POST_IS_LOGING";
 export const POST_REVIEWS = "POST_REVIEWS";
-export const GET_ENLISTMENT_GUIDE_NUMBER = "GET_ENLISTMENT_GUIDE_NUMBER"
-export const CLEAR_ENLISTMENT_DETAIL = "CLEAR_ENLISTMENT_DETAIL"
+export const GET_ENLISTMENT_GUIDE_NUMBER = "GET_ENLISTMENT_GUIDE_NUMBER";
+export const CLEAR_ENLISTMENT_DETAIL = "CLEAR_ENLISTMENT_DETAIL";
 //! Forgot Passaword !//
 
 export const FORGOT_PASSWORD = "FORGOT_PASSWORD";
@@ -67,8 +67,8 @@ const deleteUser = (id) => {
   };
 };
 
-export const setUserDetail = (userDetail) =>{
-  return{
+export const setUserDetail = (userDetail) => {
+  return {
     type: SET_USER_DETAIL,
     payload: userDetail,
   };
@@ -303,8 +303,9 @@ const orderDeclaredValue = (selectedValues) => {
         .map((field) => `${Object.keys(field)[0]}=${Object.values(field)[0]}`)
         .join("&");
       // Agregar la cadena de parámetros de consulta a la URL base
-      const url = `${import.meta.env.VITE_BACKEND_URL
-        }/order_shipments?${queryParams}`;
+      const url = `${
+        import.meta.env.VITE_BACKEND_URL
+      }/order_shipments?${queryParams}`;
 
       // Realizar la solicitud GET con la URL construida
       const { data } = await axios.get(url);
@@ -384,7 +385,7 @@ const updateUserDetail = (id, infoUser) => {
         type: UPDATE_USER_DETAIL,
         payload: data,
       });
-    } catch (error) { }
+    } catch (error) {}
   };
 };
 
@@ -487,7 +488,9 @@ const putEnlistment = (id, enlistmentData) => {
 const deleteEnlistment = (id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/${id}`);
+      await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/enlistments/${id}`
+      );
       dispatch({
         type: DELETE_ENLISTMENT,
         payload: id,
@@ -626,8 +629,8 @@ const postReviews = (userId, review) => {
     } catch (error) {
       console.log("no está llegando la data", error.message);
     }
-  }
-}
+  };
+};
 
 const createOrderAdmin = (userData, id) => {
   return async (dispatch) => {
@@ -663,7 +666,10 @@ const createOrderAdmin = (userData, id) => {
 const forgotPassword = (data) => {
   return async (dispatch) => {
     try {
-      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/request-password-reset`, data);
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/users/request-password-reset`,
+        data
+      );
       dispatch({
         type: FORGOT_PASSWORD,
         payload: data,
@@ -690,10 +696,12 @@ const getEnlistmentByGuideNumber = (number) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/enlistments/?guide_number=${number}`
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/enlistments/?guide_number=${number}`
       );
-      const [x] = data
-      const {guide_number} = x
+      const [x] = data;
+      const { guide_number } = x;
       if (!guide_number) {
         Swal.fire({
           title: "Error!",
@@ -705,8 +713,8 @@ const getEnlistmentByGuideNumber = (number) => {
         return dispatch({
           type: GET_ENLISTMENT_GUIDE_NUMBER,
           payload: data,
-        })
-      };
+        });
+      }
     } catch (error) {
       Swal.fire({
         title: "Error!",
@@ -718,10 +726,8 @@ const getEnlistmentByGuideNumber = (number) => {
   };
 };
 const clearEnlistmentDetail = () => ({
-  type: 'CLEAR_ENLISTMENT_DETAIL'
-})
-
-
+  type: "CLEAR_ENLISTMENT_DETAIL",
+});
 
 export {
   getUserDetail,
@@ -751,5 +757,5 @@ export {
   createOrderAdmin,
   forgotPassword,
   getEnlistmentByGuideNumber,
-  clearEnlistmentDetail
+  clearEnlistmentDetail,
 };

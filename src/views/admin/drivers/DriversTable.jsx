@@ -1,11 +1,14 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { increasePageDrivers, decreasePageDrivers } from '../../../redux/actions/index';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  increasePageDrivers,
+  decreasePageDrivers,
+} from "../../../redux/actions/index";
 
 function DriversTable({ drivers }) {
-    const dispatch = useDispatch();
-    const currentPage = useSelector(state => state.currentPageDrivers);
-  const itemsPerPage = useSelector(state => state.itemsPerPageDrivers);
+  const dispatch = useDispatch();
+  const currentPage = useSelector((state) => state.currentPageDrivers);
+  const itemsPerPage = useSelector((state) => state.itemsPerPageDrivers);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -16,9 +19,15 @@ function DriversTable({ drivers }) {
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Nombre
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Email
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Estado
+            </th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -35,7 +44,7 @@ function DriversTable({ drivers }) {
         {/* Botón Anterior */}
         <button
           onClick={() => {
-              dispatch(decreasePageDrivers())
+            dispatch(decreasePageDrivers());
           }}
           disabled={currentPage === 1}
           className="mx-1 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
@@ -45,7 +54,7 @@ function DriversTable({ drivers }) {
         {/* Botón Siguiente */}
         <button
           onClick={() => {
-              dispatch(increasePageDrivers())
+            dispatch(increasePageDrivers());
           }}
           disabled={endIndex >= drivers?.length}
           className="mx-1 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
@@ -58,4 +67,3 @@ function DriversTable({ drivers }) {
 }
 
 export default DriversTable;
-
