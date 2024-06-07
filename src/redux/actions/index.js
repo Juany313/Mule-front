@@ -42,6 +42,10 @@ export const DELETE_DRIVER = "DELETE_DRIVER";
 export const POST_IS_LOGING = "POST_IS_LOGING";
 export const POST_REVIEWS = "POST_REVIEWS";
 
+//! Forgot Passaword !//
+
+export const FORGOT_PASSWORD = "FORGOT_PASSWORD";
+
 const deleteUser = (id) => {
   return async (dispatch) => {
     try {
@@ -648,6 +652,32 @@ const createOrderAdmin = (userData, id) => {
   };
 };
 
+const forgotPassword = (data) => {
+  return async (dispatch) => {
+    try {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/request-password-reset`, data);
+      dispatch({
+        type: FORGOT_PASSWORD,
+        payload: data,
+      });
+      Swal.fire({
+        title: "Instrucciones enviadas!",
+        text: "Revisa tu correo electrónico para las instrucciones de restablecimiento de contraseña.",
+        icon: "success",
+        confirmButtonText: "Aceptar",
+      });
+    } catch (error) {
+      console.error("Error al enviar las instrucciones:", error.message);
+      Swal.fire({
+        title: "Error!",
+        text: "No se pudieron enviar las instrucciones. Intenta nuevamente más tarde.",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+    }
+  };
+};
+
 export {
   getUserDetail,
   getAllUsers,
@@ -673,5 +703,6 @@ export {
   setEnlistments,
   deleteUser,
   postReviews,
-  createOrderAdmin
+  createOrderAdmin,
+  forgotPassword,
 };
