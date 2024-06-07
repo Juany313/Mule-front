@@ -21,10 +21,13 @@ const ConfirmPasswordReset = () => {
     }
     try {
       // Enviar la nueva contraseña junto con el token al backend
-      await axios.patch("http://localhost:3000/users/reset-password", {
-        token,
-        newPassword,
-      });
+      await axios.patch(
+        `${import.meta.env.VITE_BACKEND_URL}/users/reset-password`,
+        {
+          token,
+          newPassword,
+        }
+      );
       alert("Password reset successfully!");
       navigate("/auth");
     } catch (error) {
