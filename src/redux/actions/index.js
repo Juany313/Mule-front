@@ -19,6 +19,7 @@ export const INFO_USER_LOGGED = "INFO_USER_LOGGED";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
 export const SET_ORDER_TYPE = "SET_ORDER_TYPE";
 export const UPDATE_USER_DETAIL = "UPDATE_USER_DETAIL";
+
 /* Juanyyyy */
 export const AGREGAR_PEDIDO = "AGREGAR_PEDIDO";
 export const POST_USER = "AGREGAR_PEDIDO";
@@ -42,7 +43,8 @@ export const DELETE_DRIVER = "DELETE_DRIVER";
 
 export const POST_IS_LOGING = "POST_IS_LOGING";
 export const POST_REVIEWS = "POST_REVIEWS";
-
+export const GET_ENLISTMENT_GUIDE_NUMBER = "GET_ENLISTMENT_GUIDE_NUMBER"
+export const CLEAR_ENLISTMENT_DETAIL = "CLEAR_ENLISTMENT_DETAIL"
 //! Forgot Passaword !//
 
 export const FORGOT_PASSWORD = "FORGOT_PASSWORD";
@@ -301,9 +303,8 @@ const orderDeclaredValue = (selectedValues) => {
         .map((field) => `${Object.keys(field)[0]}=${Object.values(field)[0]}`)
         .join("&");
       // Agregar la cadena de parámetros de consulta a la URL base
-      const url = `${
-        import.meta.env.VITE_BACKEND_URL
-      }/order_shipments?${queryParams}`;
+      const url = `${import.meta.env.VITE_BACKEND_URL
+        }/order_shipments?${queryParams}`;
 
       // Realizar la solicitud GET con la URL construida
       const { data } = await axios.get(url);
@@ -383,7 +384,7 @@ const updateUserDetail = (id, infoUser) => {
         type: UPDATE_USER_DETAIL,
         payload: data,
       });
-    } catch (error) {}
+    } catch (error) { }
   };
 };
 
@@ -685,6 +686,43 @@ const forgotPassword = (data) => {
   };
 };
 
+const getEnlistmentByGuideNumber = (number) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/enlistments/?guide_number=${number}`
+      );
+      const [x] = data
+      const {guide_number} = x
+      if (!guide_number) {
+        Swal.fire({
+          title: "Error!",
+          text: "No existe un pedido con ese número de guía",
+          icon: "Error",
+          confirmButtonText: "Aceptar",
+        });
+      } else {
+        return dispatch({
+          type: GET_ENLISTMENT_GUIDE_NUMBER,
+          payload: data,
+        })
+      };
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "No existe un pedido con ese número de guía",
+        icon: "Error",
+        confirmButtonText: "Aceptar",
+      });
+    }
+  };
+};
+const clearEnlistmentDetail = () => ({
+  type: 'CLEAR_ENLISTMENT_DETAIL'
+})
+
+
+
 export {
   getUserDetail,
   getAllUsers,
@@ -712,4 +750,6 @@ export {
   postReviews,
   createOrderAdmin,
   forgotPassword,
+  getEnlistmentByGuideNumber,
+  clearEnlistmentDetail
 };

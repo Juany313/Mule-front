@@ -35,6 +35,8 @@ import {
     PUT_DRIVER,
     POST_REVIEWS,
     SET_USER_DETAIL,
+    GET_ENLISTMENT_GUIDE_NUMBER,
+    CLEAR_ENLISTMENT_DETAIL
 
 } from "../actions";
 
@@ -112,7 +114,7 @@ function rootReducer(state = initialState, action) {
         case SET_USER_DETAIL:
             return {
                 ...state,
-                useeDetail: action.payload
+                userDetail: action.payload
             };
 
         case GET_ORDERS_BY_CLIENT:
@@ -287,6 +289,18 @@ function rootReducer(state = initialState, action) {
             ...state,
             reviews: action.payload
           }
+
+          case GET_ENLISTMENT_GUIDE_NUMBER:
+            return {
+                ...state,
+                enlistmentDetail: action.payload
+            }
+
+        case CLEAR_ENLISTMENT_DETAIL:
+            return {
+                ...state,
+                enlistmentDetail: []
+            }
 
 
     default:
