@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 //import CustomerForm from './CustomerForm';
 import CustomerTable from './CustomersTable';
 import CustomerDelete from './CustomerDelete';
+import CustomerForm from './CustomersForm';
 import icon_crear from '../../../assets/Icon_crear.svg';
 
 const Customers = () => {
@@ -38,7 +39,12 @@ const Customers = () => {
                 />
             }
             <div className=" md:space-x-6 space-y-6 md:space-y-0 m-8">
-                
+            <div className='icon-create-container'>
+                    <img src={icon_crear} alt="crear" 
+                        onClick={handleCreate} 
+                        className='icon-create'
+                        style={{ cursor: 'pointer' }} />
+                </div>
                 <div className="md:w-2/3">
                     <CustomerTable 
                         setShowModalDelete={setShowModalDelete}
