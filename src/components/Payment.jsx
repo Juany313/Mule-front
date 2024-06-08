@@ -66,7 +66,8 @@ const Payment = () => {
     <div className="container mx-auto p-4">
       {orderData && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="bg-white rounded-xl shadow-lg p-4 transform hover:scale-105 transition-transform duration-300">
+          <div></div>
+          <div className="mt-20 mb-5 bg-white rounded-xl shadow-lg p-4 transform hover:scale-105 transition-transform duration-300">
             <h1 className="font-bold text-lg">
               Tipo de envío:{" "}
               {orderData.typeShipmentId === 1
@@ -105,6 +106,7 @@ const Payment = () => {
               className="mt-4"
             />
           </div>
+          <div></div>
         </div>
       )}
       <div className="p-4">

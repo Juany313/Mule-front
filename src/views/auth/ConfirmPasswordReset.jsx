@@ -3,7 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import "./ConfirmPasswordReset.css";
+// import "./ConfirmPasswordReset.css";
+import "./Conten.css";
 
 const ConfirmPasswordReset = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -66,7 +67,7 @@ const ConfirmPasswordReset = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600 p-4">
+    <div className="content-loging min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-400 to-blue-500 p-4">
       <form
         className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md"
         onSubmit={handleSubmit}
