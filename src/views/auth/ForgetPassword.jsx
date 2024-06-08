@@ -64,7 +64,7 @@ import { Link, useNavigate } from "react-router-dom";
 /* icons */
 import { RiMailLine } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { forgotPassword } from "../../redux/actions"
+import { forgotPassword } from "../../redux/actions";
 
 // Email validation function
 const validateEmailForgetPassword = (email) => {

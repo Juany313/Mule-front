@@ -26,10 +26,12 @@ const validateRegister = (userData) => {
     errors.password = "Completar Campo!";
   } else {
     // Validación de contraseña: debe de ser al menos de 8 caracteres minimos o 12 carateres maximo, al menos un carácter especial un numero una letra mayúscula y una letra minuscula
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,12}$/
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{5,25}$/;
 
     if (!passwordRegex.test(userData.password)) {
-      errors.password = "La contraseña debe tener al menos de 8 a 12 caracteres, un carácter especial un numero una letra mayúscula y una letra minúscula";
+      errors.password =
+        "La contraseña debe tener al menos de 5 a 25 caracteres, un carácter especial un numero una letra mayúscula y una letra minúscula";
     }
   }
 
@@ -54,15 +56,15 @@ const validateLogin = (formData) => {
     errors.password = "Completar Campo!";
   } else {
     // Validación de contraseña: debe de ser al menos de 8 caracteres minimos o 12 carateres maximo, al menos un carácter especial un numero una letra mayúscula y una letra minuscula
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,12}$/;
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{5,25}$/;
     if (!passwordRegex.test(formData.password)) {
-      errors.password = "La contraseña debe tener al menos de 8 a 12 caracteres, un carácter especial un numero una letra mayúscula y una letra minúscula";
-    } 
+      errors.password =
+        "La contraseña debe tener al menos de 5 a 25 caracteres, un carácter especial un numero una letra mayúscula y una letra minúscula";
+    }
   }
 
   return errors;
 };
 
-
-
-export {validateLogin, validateRegister};
+export { validateLogin, validateRegister };

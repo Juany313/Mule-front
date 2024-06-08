@@ -17,7 +17,8 @@ const ConfirmPasswordReset = () => {
   const token = query.get("token");
 
   const validatePassword = (password) => {
-    const regex = /^(?=.[A-Z])(?=.\d)(?=.[!@#$%^&]).{8,}$/;
+    const regex =
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{5,25}$/;
     return regex.test(password);
   };
 
