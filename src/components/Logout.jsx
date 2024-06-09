@@ -4,6 +4,7 @@ import { setIsLogged } from "../redux/actions/index";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Logout = () => {
+
   const dispatch = useDispatch();
 
   const { logout } = useAuth0();
@@ -23,5 +24,6 @@ const Logout = () => {
     </button>
   );
 };
+
 
 export default Logout;

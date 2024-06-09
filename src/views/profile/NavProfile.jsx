@@ -34,11 +34,13 @@ const NavProfile = () => {
   };
 
   const handleLogout = () => {
+
     logout({
       logoutParams: { returnTo: `${import.meta.env.VITE_REDIRECT_URI}/header` },
     });
 
     dispatch(setIsLogged(false));
+
     localStorage.removeItem("token");
   };
 

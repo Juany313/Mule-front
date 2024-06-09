@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { createOrder } from "../redux/actions/index";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -126,7 +127,6 @@ const OrderForm = () => {
       cedula_claimant: "",
       cellphone_claimant: "",
       name_transmiter: "",
-      surname_transmiter: "",
       celphone_transmiter: "",
       city_transmiter: "",
       address_transmiter: "",
@@ -135,8 +135,6 @@ const OrderForm = () => {
       city_receiver: "",
       address_receiver: "",
       weight: "",
-      typeShipmentId: null,
-      measureId: null,
       declared_value: "",
       product_image: null,
       pay_method: "",
@@ -166,8 +164,10 @@ const OrderForm = () => {
     }) => {
       const formData = new FormData();
       try {
+
         formData.append("file", product_image);
         formData.append("upload_preset", import.meta.env.VITE_PRESET);
+
         const res = await axios.post(
           `https://api.cloudinary.com/v1_1/${
             import.meta.env.VITE_CLOUD_NAME
@@ -385,6 +385,7 @@ const OrderForm = () => {
               <div className="relative mb-4">
                 <input
                   type="text"
+
                   name="surname_transmiter"
                   value={formik.values.surname_transmiter}
                   onChange={handleFieldChange}
@@ -400,6 +401,7 @@ const OrderForm = () => {
               <div className="relative mt-7 mb-7">
                 <input
                   type="text"
+
                   name="celphone_transmiter"
                   value={formik.values.celphone_transmiter}
                   onChange={handleFieldChange}
@@ -424,7 +426,9 @@ const OrderForm = () => {
                   onChange={handleFieldChange}
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                 >
+
                   <option value="">Seleccionar</option>
+
                   <option value="buenos aires">Buenos Aires</option>
                   <option value="cordoba">Córdoba</option>
                   <option value="corrientes">Corrientes</option>
@@ -477,7 +481,6 @@ const OrderForm = () => {
                   </span>
                 )}
               </div>
-
               <div className="relative mb-4">
                 <input
                   type="text"
@@ -505,7 +508,9 @@ const OrderForm = () => {
                   onChange={handleFieldChange}
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                 >
+
                   <option value="">Seleccionar</option>
+
                   <option value="buenos aires">Buenos Aires</option>
                   <option value="cordoba">Córdoba</option>
                   <option value="corrientes">Corrientes</option>
@@ -559,6 +564,7 @@ const OrderForm = () => {
                 )}
               </div>
               <div className="relative mb-4">
+
                 <h2 className="text-sm text-left ml-2 uppercase font-bold tracking-[5px] text-white mb-2">
                   Tipo de envío
                 </h2>
@@ -592,6 +598,7 @@ const OrderForm = () => {
                 </select>
               </div>
               <div className="relative mt-7 mb-4">
+
                 <input
                   type="number"
                   name="declared_value"
@@ -635,7 +642,9 @@ const OrderForm = () => {
                   onChange={handleFieldChange}
                   className="py-3 pl-8 pr-8 bg-secondary-900 w-full outline-none rounded-lg focus:border focus:border-primary"
                 >
+
                   <option value="">Seleccionar</option>
+
                   <option value="Efectivo">Efectivo</option>
                   <option value="Credito">Tarjeta de crédito</option>
                   <option value="Debito">Tarjeta de débito</option>

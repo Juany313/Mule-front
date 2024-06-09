@@ -48,6 +48,12 @@ import { getUserDetail, setInfoUserLogged } from "./redux/actions";
 import parseJwt from "./helpers/parseJwt";
 import { jwtDecode } from "jwt-decode";
 
+
+/* Enlistment */
+import Enlistment from "./views/admin/Enlistment/Enlistment";
+import EnlistmentTable from "./views/admin/Enlistment/EnlistmentTable";
+import EnlistmentForm from "./views/admin/Enlistment/EnlistmentForm";
+
 function App() {
 
   const dispatch = useDispatch()
@@ -93,6 +99,7 @@ function App() {
           <Route path="ordershipment/detail/:id" element={<Detail />} />
           <Route path="payment" element={<Payment />} />
 
+
          
 
           <Route path= "shipment-price" element={ <ShipmentPrice /> } />
@@ -104,6 +111,7 @@ function App() {
           <Route path="enlistment" element={<Enlistment />} />
           <Route path="customers" element={<Customers />} />
           <Route path="drivers" element={<Drivers />} />
+
         </Route>
         <Route path="*" element={<LayoutError />} />
       </Routes>

@@ -1,7 +1,37 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React from "react";
 import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
 import axios from "axios";
+import { useState } from "react";
+
+const products = [
+  {
+    id: 1,
+    type_shipments: "Puerta a Puerta",
+    measure: "Pequeño",
+    city_receiver: "Córdoba",
+    city_transmiter: "Santa Fe",
+    price: 2500,
+    quantity: 1,
+  },
+  {
+    id: 2,
+    type_shipments: "Puerta a Sucursal",
+    measure: "Mediano",
+    city_receiver: "Buenos Aires",
+    city_transmiter: "Corrientes",
+    price: 5000,
+    quantity: 1,
+  },
+  {
+    id: 3,
+    type_shipments: "Sucursal a Puerta",
+    measure: "Grande",
+    city_receiver: "Córdoba",
+    city_transmiter: "Entre Ríos",
+    price: 7500,
+    quantity: 1,
+  },
+];
 
 const Payment = () => {
   const [preferenceId, setPreferenceId] = useState(null);
@@ -12,7 +42,7 @@ const Payment = () => {
     locale: "es-AR",
   });
 
-  const handlePay = async () => {
+  const handlePay = async (id, title, quantity, unit_price) => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/payments/`,
@@ -64,35 +94,20 @@ const Payment = () => {
 
   return (
     <div className="container mx-auto p-4">
+
       {orderData && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div></div>
           <div className="mt-20 mb-5 bg-white rounded-xl shadow-lg p-4 transform hover:scale-105 transition-transform duration-300">
+
             <h1 className="font-bold text-lg">
-              Tipo de envío:{" "}
-              {orderData.typeShipmentId === 1
-                ? "Sucursal a puerta"
-                : orderData.typeShipmentId === 2
-                ? "Sucursal a sucursal"
-                : orderData.typeShipmentId === 3
-                ? "Puerta a sucursal"
-                : orderData.typeShipmentId === 4
-                ? "Puerta a Puerta"
-                : null}
+              Tipo de envío: {elem.type_shipments}
             </h1>
-            <h2 className="text-md">
-              Tamaño:{" "}
-              {orderData.measureId === 1
-                ? "Pequeño"
-                : orderData.measureId === 2
-                ? "Mediano"
-                : orderData.typeShipmentId === 3
-                ? "Grande"
-                : null}
-            </h2>
+            <h2 className="text-md">Tamaño: {elem.measure}</h2>
             <label className="block mt-2">Remitente:</label>
-            <h4 className="text-sm">{orderData.city_transmiter}</h4>
+            <h4 className="text-sm">{elem.city_transmiter}</h4>
             <label className="block mt-2">Destinatario:</label>
+
             <h4 className="text-sm">{orderData.city_receiver}</h4>
             <label className="block mt-2">Peso:</label>
             <h4 className="text-sm">{orderData.weight}kg</h4>
@@ -110,6 +125,7 @@ const Payment = () => {
         </div>
       )}
       <div className="p-4">
+
         <button
           onClick={() => handlePay()}
           className="bg-s300 text-black uppercase font-bold text-sm w-full py-3 px-4 rounded-lg hover:text-gray-100 transition-colors"
@@ -117,9 +133,12 @@ const Payment = () => {
           Pagar
         </button>
       </div>
-      {preferenceId && <Wallet initialization={{ preferenceId }} />}
+          </div>
+        ))}
+      </div>
     </div>
   );
-};
+
 
 export default Payment;
+

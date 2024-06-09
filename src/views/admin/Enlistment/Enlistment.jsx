@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import EnlistmentForm from './EnlistmentForm';
+
 import EnlistmentFormEdit from './EnlistmentFormEdit';
 import EnlistmentTable from './EnlistmentTable';
 import EnlistmentDetail from './EnlistmentDetail';
@@ -73,6 +74,7 @@ const Enlistments = () => {
             </div>
         </div>
         
+
     );
 };
 
