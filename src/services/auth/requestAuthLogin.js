@@ -1,12 +1,10 @@
 import axios from "axios";
 
-export default async function loginUserAuth(email,name) {
+export default async function loginUserAuth(email, name) {
   try {
     const response = await axios.post(
-      "https://mule-server.onrender.com/users/register-auth0",
-      { email ,
-        name
-      } 
+      `${import.meta.env.VITE_BACKEND_URL}/users/register-auth0`,
+      { email, name }
     );
 
     if (response.data) {

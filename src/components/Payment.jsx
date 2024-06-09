@@ -44,50 +44,47 @@ const Payment = () => {
 
   const handlePay = async (id, title, quantity, unit_price) => {
     try {
-      const response = await axios.post("https://mule-server.onrender.com/payments/", {
-        id: orderData.typeShipmentId,
-        title:
-          orderData.typeShipmentId === 1
-            ? "Sucursal a puerta"
-            : orderData.typeShipmentId === 2
-            ? "Sucursal a sucursal"
-            : orderData.typeShipmentId === 3
-            ? "Puerta a sucursal"
-            : orderData.typeShipmentId === 4
-            ? "Puerta a Puerta"
-            : null,
-        quantity: 1,
-        unit_price: orderData.cost,
-        // orderData.measureId === 1
-        //   ? 15000
-        //   : orderData.measureId === 2
-        //   ? 30000
-        //   : orderData.measureId === 3
-        //   ? 45000
-        //   : null,
-        payer: {
-          name: orderData.name_transmiter,
-          surname: orderData.surname_transmiter,
-          phone: {
-            area_code: "54",
-            number: orderData.celphone_transmiter,
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/payments/`,
+        {
+          id: orderData.typeShipmentId,
+          title:
+            orderData.typeShipmentId === 1
+              ? "Sucursal a puerta"
+              : orderData.typeShipmentId === 2
+              ? "Sucursal a sucursal"
+              : orderData.typeShipmentId === 3
+              ? "Puerta a sucursal"
+              : orderData.typeShipmentId === 4
+              ? "Puerta a Puerta"
+              : null,
+          quantity: 1,
+          unit_price: orderData.cost,
+          payer: {
+            name: orderData.name_transmiter,
+            surname: orderData.surname_transmiter,
+            email: orderData.email,
+            phone: {
+              area_code: "54",
+              number: orderData.celphone_transmiter,
+            },
+            address: {
+              street_name: orderData.address_transmiter,
+            },
+            identification: {
+              type: "DNI",
+              number: orderData.cedula_claimant,
+            },
           },
-          address: {
-            street_name: orderData.address_transmiter,
+          pay_method: orderData.pay_method,
+          shipments: {
+            receiver_address: {
+              street_name: orderData.address_receiver,
+              city_name: orderData.city_receiver,
+            },
           },
-          identification: {
-            type: "DNI",
-            number: orderData.cedula_claimant,
-          },
-        },
-        pay_method: orderData.pay_method,
-        shipments: {
-          receiver_address: {
-            street_name: orderData.address_receiver,
-            city_name: orderData.city_receiver,
-          },
-        },
-      });
+        }
+      );
       const iDpreference = response.data.id;
       setPreferenceId(iDpreference);
     } catch (error) {
@@ -97,12 +94,12 @@ const Payment = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {products.map((elem, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-xl shadow-lg p-4 transform hover:scale-105 transition-transform duration-300"
-          >
+
+      {orderData && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div></div>
+          <div className="mt-20 mb-5 bg-white rounded-xl shadow-lg p-4 transform hover:scale-105 transition-transform duration-300">
+
             <h1 className="font-bold text-lg">
               Tipo de envío: {elem.type_shipments}
             </h1>
@@ -110,11 +107,25 @@ const Payment = () => {
             <label className="block mt-2">Remitente:</label>
             <h4 className="text-sm">{elem.city_transmiter}</h4>
             <label className="block mt-2">Destinatario:</label>
-            <h4 className="text-sm">{elem.city_receiver}</h4>
-            <label className="block mt-2">Precio:</label>
-            <h3 className="text-md font-semibold">{elem.price}</h3>
 
-            <div className="p-4">
+            <h4 className="text-sm">{orderData.city_receiver}</h4>
+            <label className="block mt-2">Peso:</label>
+            <h4 className="text-sm">{orderData.weight}kg</h4>
+            <label className="block mt-2">Declarado:</label>
+            <h4 className="text-sm">{orderData.declared_value}$</h4>
+            <label className="block mt-2">Método de pago:</label>
+            <h4 className="text-sm">{orderData.pay_method}</h4>
+            <img
+              src={orderData.product_image}
+              alt="Producto"
+              className="mt-4"
+            />
+          </div>
+          <div></div>
+        </div>
+      )}
+      <div className="p-4">
+
         <button
           onClick={() => handlePay()}
           className="bg-s300 text-black uppercase font-bold text-sm w-full py-3 px-4 rounded-lg hover:text-gray-100 transition-colors"
@@ -128,5 +139,6 @@ const Payment = () => {
     </div>
   );
 
-};
+
 export default Payment;
+

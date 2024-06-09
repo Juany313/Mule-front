@@ -2,6 +2,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
+export const SET_USER_DETAIL = "SET_USER_DETAIL";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_ORDER_ID = "GET_ORDER_ID";
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
@@ -17,14 +18,61 @@ export const IS_LOGGED = "IS_LOGGED";
 export const INFO_USER_LOGGED = "INFO_USER_LOGGED";
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
 export const SET_ORDER_TYPE = "SET_ORDER_TYPE";
-export const UPDATE_USER_DETAIL = "UPDATE_USER_DETAIL"
+export const UPDATE_USER_DETAIL = "UPDATE_USER_DETAIL";
+
 /* Juanyyyy */
 export const AGREGAR_PEDIDO = "AGREGAR_PEDIDO";
 export const POST_USER = "AGREGAR_PEDIDO";
+/* Admin Actions */
+export const GET_ALL_ENLISTMENTS = "GET_ALL_ENLISTMENTS";
+export const GET_ENLISTMENT_ID = "GET_ENLISTMENT_BY_ID";
+export const POST_ENLISTMENT = "POST_ENLISTMENT";
+export const PUT_ENLISTMENT = "PUT_ENLISTMENT";
+export const DELETE_ENLISTMENT = "DELETE_ENLISTMENT";
+export const SET_ORDER_DATA = "SET_ORDER_DATA";
+export const DELETE_USER = "DELETE_USER";
 
-// const URL_BASE = "http://localhost:3000";
+/* Admin Drivers Actions */
+export const SET_PAGE_DRIVERS = "SET_PAGE_DRIVERS";
+export const INCREASE_PAGE_DRIVERS = "INCREASE_PAGE_DRIVERS";
+export const DECREASE_PAGE_DRIVERS = "DECREASE_PAGE_DRIVERS";
+export const GET_DRIVERS = "GET_DRIVERS";
+export const POST_DRIVER = "POST_DRIVER";
+export const PUT_DRIVER = "PUT_DRIVER";
+export const DELETE_DRIVER = "DELETE_DRIVER";
 
-// actions.js
+export const POST_IS_LOGING = "POST_IS_LOGING";
+export const POST_REVIEWS = "POST_REVIEWS";
+export const GET_ENLISTMENT_GUIDE_NUMBER = "GET_ENLISTMENT_GUIDE_NUMBER";
+export const CLEAR_ENLISTMENT_DETAIL = "CLEAR_ENLISTMENT_DETAIL";
+//! Forgot Passaword !//
+
+export const FORGOT_PASSWORD = "FORGOT_PASSWORD";
+
+const deleteUser = (id) => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      dispatch({
+        type: DELETE_USER,
+        payload: id,
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+};
+
+export const setUserDetail = (userDetail) => {
+  return {
+    type: SET_USER_DETAIL,
+    payload: userDetail,
+  };
+};
 
 export const setOrderType = (orderType) => {
   return {
@@ -40,27 +88,14 @@ export const agregarPedido = (pedido) => {
   };
 };
 
-
-/* export function postUser(data) {
-  return async function(dispatch) {
-      try {
-      const response = await axios.post('http://localhost:3000/users/register', data);
-
-      return dispatch({
-          type: POST_USER,
-          payload: response.data,
-      });
-      } catch (error) {
-      console.error(error.message);
-      }
-  };
-} */
-
 //formulario de registro
 export function postUser(data) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
-      const response = await axios.post('https://mule-server.onrender.com/users/register', data);
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/users/register`,
+        data
+      );
       dispatch({
         type: POST_USER,
         payload: response.data,
@@ -75,12 +110,18 @@ export function postUser(data) {
   };
 }
 
-
 //Permiso provisorio para que el usuario pueda ver los usuarios
 const getAllUsers = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${URL_BASE}/users`);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/users`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       return dispatch({
         type: GET_ALL_USERS,
         payload: data,
@@ -94,7 +135,9 @@ const getAllUsers = () => {
 const getAllMeasures = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${URL_BASE}/measures`);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/measures`
+      );
       return dispatch({
         type: GET_ALL_MEASURES,
         payload: data,
@@ -108,7 +151,9 @@ const getAllMeasures = () => {
 const getTypeShipments = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${URL_BASE}/type_shipments`);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/type_shipments`
+      );
       return dispatch({
         type: GET_TYPES_SHIPMENTS,
         payload: data,
@@ -122,7 +167,9 @@ const getTypeShipments = () => {
 const getAllBranches = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${URL_BASE}/branches`);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/branches`
+      );
       return dispatch({
         type: GET_ALL_BRANCHES,
         payload: data,
@@ -137,7 +184,7 @@ const createOrder = (userData) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "https://mule-server.onrender.com/order_shipments",
+        `${import.meta.env.VITE_BACKEND_URL}/order_shipments`,
         userData // Envía los datos del formulario como parte de la solicitud POST
       );
       dispatch({
@@ -150,7 +197,7 @@ const createOrder = (userData) => {
         icon: "success",
         confirmButtonText: "Aceptar",
       });
-      } catch (error) {
+    } catch (error) {
       Swal.fire({
         title: "Error!",
         text: "Error al crear el pedido",
@@ -165,17 +212,17 @@ const createOrder = (userData) => {
 const getUserDetail = (id) => {
   return async (dispatch) => {
     try {
-      const response = await fetch(`https://mule-server.onrender.com/users/${id}`,{
-        method: "GET",
-        headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-        },
-    });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/users/${id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
-    const data = await response.json();
-
-      //    const data=users.find(usuario => usuario.id === 4)
-      console.log(data);
+      const data = await response.json();
       return dispatch({
         type: GET_USER_DETAIL,
         payload: data,
@@ -187,37 +234,38 @@ const getUserDetail = (id) => {
 };
 
 //Bien de Seguridad, incluye el token, bearer configurado en back ?
-const getOrdersByClient = (id) =>{
-  return async (dispatch)=>{
+const getOrdersByClient = (id) => {
+  return async (dispatch) => {
     try {
       // const token = localStorage.getItem('token')
       // if (!token) {
       //   throw new Error('No token found');
       // };
-      const response = await axios.get (`https://mule-server.onrender.com/order_shipments/${id}`
-      // , {
-      //   headers: {
-      //     "Authorization": `Bearer ${token}`
-      //   }
-      // }
-    )
-      return dispatch ({
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/order_shipments/${id}`
+        // , {
+        //   headers: {
+        //     "Authorization": `Bearer ${token}`
+        //   }
+        // }
+      );
+      return dispatch({
         type: GET_ORDERS_BY_CLIENT,
-        payload: response.data
-      })
-    }catch (error) {
+        payload: response.data,
+      });
+    } catch (error) {
       // window.alert(error.message);
     }
-  }
-
-}
+  };
+};
 
 // Falla de seguridad?
 const getAllOrders = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("https://mule-server.onrender.com/order_shipments");
-      console.log('X', data);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/order_shipments`
+      );
       return dispatch({
         type: GET_ALL_ORDERS,
         payload: data,
@@ -228,13 +276,12 @@ const getAllOrders = () => {
   };
 };
 
-
 /* Falla de seguridad */
 const getOrderById = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(
-        `https://mule-server.onrender.com/order_shipments/${id}`
+        `${import.meta.env.VITE_BACKEND_URL}/order_shipments/${id}`
       );
       // const data=orders.find(order => order.id === id)
       return dispatch({
@@ -256,7 +303,9 @@ const orderDeclaredValue = (selectedValues) => {
         .map((field) => `${Object.keys(field)[0]}=${Object.values(field)[0]}`)
         .join("&");
       // Agregar la cadena de parámetros de consulta a la URL base
-      const url = `https://mule-server.onrender.com/order_shipments?${queryParams}`;
+      const url = `${
+        import.meta.env.VITE_BACKEND_URL
+      }/order_shipments?${queryParams}`;
 
       // Realizar la solicitud GET con la URL construida
       const { data } = await axios.get(url);
@@ -271,24 +320,45 @@ const orderDeclaredValue = (selectedValues) => {
   };
 };
 
-const filterCity = (cities)=>{
+const filterCity = (cities) => {
   return {
     type: FILTER_BY_CITY,
-    payload: cities
-  }
-}
+    payload: cities,
+  };
+};
 
-const orderDate = (date)=>{
+const orderDate = (date) => {
   return {
     type: ORDER_BY_DATE,
-    payload: date
-  }
-}
+    payload: date,
+  };
+};
 
 const setIsLogged = (isLogged) => {
   return {
     type: IS_LOGGED,
     payload: isLogged,
+  };
+};
+
+export function isLoging(data) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/users/register-auth0`,
+        data
+      );
+      dispatch({
+        type: POST_IS_LOGING,
+        payload: response.data,
+      });
+      // Devuelve un objeto de acción indicando que la solicitud se completó con éxito
+      return { success: true };
+    } catch (error) {
+      console.error("Error al crear el usuario:", error.message);
+      // Devuelve un objeto de acción indicando que la solicitud falló
+      return { success: false };
+    }
   };
 }
 
@@ -297,23 +367,367 @@ const setInfoUserLogged = (user) => {
     type: INFO_USER_LOGGED,
     payload: user,
   };
-}
+};
 
-const updateUserDetail = (id, infoUser)=>{
-  return async (dispatch)=>{
+const updateUserDetail = (id, infoUser) => {
+  return async (dispatch) => {
     try {
-      const { data } = await axios.put(`https://mule-server.onrender.com/users/profile/${id}`, infoUser
+      const { data } = await axios.patch(
+        `${import.meta.env.VITE_BACKEND_URL}/users/profile/${id}`,
+        infoUser,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       return dispatch({
         type: UPDATE_USER_DETAIL,
         payload: data,
       });
-      
+    } catch (error) {}
+  };
+};
+
+const setEnlistments = (enlistments) => {
+  return {
+    type: GET_ALL_ENLISTMENTS,
+    payload: enlistments,
+  };
+};
+
+const getAllEnlistments = () => {
+  return async (dispatch) => {
+    try {
+      await axios
+        .get(`${import.meta.env.VITE_BACKEND_URL}/enlistments`)
+        .then((response) => {
+          dispatch({
+            type: GET_ALL_ENLISTMENTS,
+            payload: response.data,
+          });
+        });
     } catch (error) {
-      
+      console.error(error.message);
     }
-  }
+  };
+};
+
+const getEnlistmentById = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/enlistments/${id}`
+      );
+      return dispatch({
+        type: GET_ENLISTMENT_ID,
+        payload: data,
+      });
+    } catch (error) {
+      // window.alert("No existe una orden de pedido con ese número");
+    }
+  };
+};
+
+const postEnlistment = (enlistmentData) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/enlistments`,
+        enlistmentData
+      );
+      dispatch({
+        type: POST_ENLISTMENT,
+        payload: data,
+      });
+      Swal.fire({
+        title: "Enlistment created!",
+        text: "The enlistment has been created successfully",
+        icon: "success",
+        confirmButtonText: "Accept",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Error creating the enlistment",
+        icon: "Error",
+        confirmButtonText: "Accept",
+      });
+    }
+  };
+};
+
+const putEnlistment = (id, enlistmentData) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/enlistments/${id}`,
+        enlistmentData
+      );
+      dispatch({
+        type: PUT_ENLISTMENT,
+        payload: data,
+      });
+      Swal.fire({
+        title: "Enlistment updated!",
+        text: "The enlistment has been updated successfully",
+        icon: "success",
+        confirmButtonText: "Accept",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Error updating the enlistment",
+        icon: "Error",
+        confirmButtonText: "Accept",
+      });
+    }
+  };
+};
+
+const deleteEnlistment = (id) => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/enlistments/${id}`
+      );
+      dispatch({
+        type: DELETE_ENLISTMENT,
+        payload: id,
+      });
+      Swal.fire({
+        title: "Enlistment deleted!",
+        text: "The enlistment has been deleted successfully",
+        icon: "success",
+        confirmButtonText: "Accept",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Error deleting the enlistment",
+        icon: "Error",
+        confirmButtonText: "Accept",
+      });
+    }
+  };
+};
+
+const setOrderData = (orderData) => {
+  return {
+    type: SET_ORDER_DATA,
+    payload: orderData,
+  };
+};
+
+const filterOrderShipmentsByUser = (userId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/order_shipments/${userId}`
+      );
+      return dispatch({
+        type: GET_ORDERS_BY_CLIENT,
+        payload: data,
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+};
+
+/* Driver Paginate */
+export const setPageDrivers = (page) => ({
+  type: SET_PAGE_DRIVERS,
+  payload: page,
+});
+
+export const increasePageDrivers = () => ({
+  type: INCREASE_PAGE_DRIVERS,
+});
+
+export const decreasePageDrivers = () => ({
+  type: DECREASE_PAGE_DRIVERS,
+});
+
+/* Drivers */
+
+export const getDrivers = () => {
+  return async function (dispatch) {
+    const response = await axios(`${import.meta.env.VITE_BACKEND_URL}/drivers`);
+    return dispatch({
+      type: GET_DRIVERS,
+      payload: response.data,
+    });
+  };
+};
+
+export function postDriver(driver) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/drivers`,
+        driver
+      );
+
+      return dispatch({
+        type: POST_DRIVER,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 }
+
+export function putDriver(driver) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/drivers/${driver.id}`,
+        driver
+      );
+
+      return dispatch({
+        type: PUT_DRIVER,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export function deleteDriver(id) {
+  return async function (dispatch) {
+    try {
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/drivers/${id}`);
+
+      return dispatch({
+        type: DELETE_DRIVER,
+        payload: id,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+const postReviews = (userId, review) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/reviews`,
+        {
+          ...review,
+          user_id: userId,
+        }
+      );
+      dispatch({
+        type: POST_REVIEWS,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("no está llegando la data", error.message);
+    }
+  };
+};
+
+const createOrderAdmin = (userData, id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/order_shipments`,
+        {
+          ...userData,
+          user_id: id,
+        } // Envía los datos del formulario como parte de la solicitud POST
+      );
+      dispatch({
+        type: CREATE_ORDER,
+        payload: data,
+      });
+      Swal.fire({
+        title: "Orden de pedido creada!",
+        text: "La orden de pedido ha sido creada exitosamente",
+        icon: "success",
+        confirmButtonText: "Aceptar",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Error al crear el pedido",
+        icon: "Error",
+        confirmButtonText: "Aceptar",
+      });
+    }
+  };
+};
+
+const forgotPassword = (data) => {
+  return async (dispatch) => {
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/users/request-password-reset`,
+        data
+      );
+      dispatch({
+        type: FORGOT_PASSWORD,
+        payload: data,
+      });
+      Swal.fire({
+        title: "Instrucciones enviadas!",
+        text: "Revisa tu correo electrónico para las instrucciones de restablecimiento de contraseña.",
+        icon: "success",
+        confirmButtonText: "Aceptar",
+      });
+    } catch (error) {
+      console.error("Error al enviar las instrucciones:", error.message);
+      Swal.fire({
+        title: "Error!",
+        text: "No se pudieron enviar las instrucciones. Intenta nuevamente más tarde.",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+    }
+  };
+};
+
+const getEnlistmentByGuideNumber = (number) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/enlistments/?guide_number=${number}`
+      );
+      const [x] = data;
+      const { guide_number } = x;
+      if (!guide_number) {
+        Swal.fire({
+          title: "Error!",
+          text: "No existe un pedido con ese número de guía",
+          icon: "Error",
+          confirmButtonText: "Aceptar",
+        });
+      } else {
+        return dispatch({
+          type: GET_ENLISTMENT_GUIDE_NUMBER,
+          payload: data,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "No existe un pedido con ese número de guía",
+        icon: "Error",
+        confirmButtonText: "Aceptar",
+      });
+    }
+  };
+};
+const clearEnlistmentDetail = () => ({
+  type: "CLEAR_ENLISTMENT_DETAIL",
+});
 
 export {
   getUserDetail,
@@ -330,5 +744,18 @@ export {
   orderDate,
   setIsLogged,
   setInfoUserLogged,
-  updateUserDetail
+  updateUserDetail,
+  getAllEnlistments,
+  getEnlistmentById,
+  postEnlistment,
+  putEnlistment,
+  deleteEnlistment,
+  setOrderData,
+  setEnlistments,
+  deleteUser,
+  postReviews,
+  createOrderAdmin,
+  forgotPassword,
+  getEnlistmentByGuideNumber,
+  clearEnlistmentDetail,
 };

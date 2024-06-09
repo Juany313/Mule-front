@@ -12,10 +12,12 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <Auth0Provider
-        domain="dev-h0iezuyqkhhjz3e7.us.auth0.com"
-        clientId="Yx41UTDIBR1mBOyoClCO8DFR8h0pMWKD"
+        domain={import.meta.env.VITE_DOMAIN}
+        clientId={import.meta.env.VITE_CLIENT_ID}
         authorizationParams={{
-          redirect_uri: "http://localhost:4000/auth/dashboard",
+
+          redirect_uri: `${import.meta.env.VITE_REDIRECT_URI}/auth/dashboard`,
+
         }}
       >
         <App />

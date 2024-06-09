@@ -14,12 +14,35 @@ import {
     IS_LOGGED,
     INFO_USER_LOGGED,
     SET_ORDER_TYPE,
-    UPDATE_USER_DETAIL
+    UPDATE_USER_DETAIL,
+    GET_ALL_ENLISTMENTS,
+    GET_ENLISTMENT_ID,
+    POST_ENLISTMENT,
+    PUT_ENLISTMENT,
+    DELETE_ENLISTMENT,
+    DELETE_USER,
+    DELETE_DRIVER,
+
+    
+    SET_PAGE_DRIVERS,
+    INCREASE_PAGE_DRIVERS,
+    DECREASE_PAGE_DRIVERS,
+    GET_DRIVERS,
+    
+
+  SET_ORDER_DATA,
+    POST_IS_LOGING,
+    PUT_DRIVER,
+    POST_REVIEWS,
+    SET_USER_DETAIL,
+    GET_ENLISTMENT_GUIDE_NUMBER,
+    CLEAR_ENLISTMENT_DETAIL
+
 } from "../actions";
 
 let initialState = {
     allUsers: [],
-    userDetail: [],
+    userDetail: {},
     allOrders: [],
     allOrdersCopy: [],
     filteredOrders: [],
@@ -31,10 +54,39 @@ let initialState = {
     isLogged: false,
     infoUserLogged: {},
     orderType: "",
+    allEnlistments: [],
+    enlistmentDetail: [],
+    orderData: [],
+    currentPageDrivers: 1,
+    itemsPerPageDrivers: 5,
+    allDrivers: [],
+    reviews: []
 }
 
 function rootReducer(state = initialState, action) {
+
     switch (action.type) {
+        case SET_PAGE_DRIVERS:
+            return {
+                ...state,
+                currentPageDrivers: action.payload
+            };
+        case INCREASE_PAGE_DRIVERS:
+            return {
+                ...state,
+                currentPageDrivers: state.currentPageDrivers + 1
+            };
+        case DECREASE_PAGE_DRIVERS:
+            return {
+                ...state,
+                currentPageDrivers: state.currentPageDrivers - 1
+            };
+
+        case GET_DRIVERS:
+            return {
+                ...state,
+                allDrivers: action.payload,
+            };
         case GET_ALL_USERS:
             return {
                 ...state,
@@ -57,6 +109,12 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 userDetail: action.payload,
+            };
+        
+        case SET_USER_DETAIL:
+            return {
+                ...state,
+                userDetail: action.payload
             };
 
         case GET_ORDERS_BY_CLIENT:
@@ -151,11 +209,103 @@ function rootReducer(state = initialState, action) {
                 userDetail: action.payload
             }
 
+        case GET_ALL_ENLISTMENTS:
+            return {
+                ...state,
+                allEnlistments: action.payload
+            }
 
-        default:
-            return state;
-    }
+        case GET_ENLISTMENT_ID:
+            return {
+                ...state,
+                enlistmentDetail: action.payload
+            }
+        
+        case POST_ENLISTMENT:
+            return {
+                ...state,
+                allEnlistments: state.allEnlistments.concat(action.payload)
+            }
+
+        case PUT_ENLISTMENT:
+            return {
+                ...state,
+                allEnlistments: state.allEnlistments.map(enlistment => {
+                    if (enlistment.id === action.payload.id) {
+                        return action.payload;
+                    }
+                    return enlistment;
+                })
+            }
+
+        case PUT_DRIVER:
+            return {
+                ...state,
+                allDrivers: state.allDrivers.map(driver => {
+                    if (driver.id === action.payload.id) {
+                        return action.payload;
+                    }
+                    return driver;
+                })
+            }
+
+        
+        
+        case DELETE_ENLISTMENT:
+            return {
+                ...state,
+                allEnlistments: state.allEnlistments.filter(enlistment => enlistment.id !== action.payload)
+            }
+
+        case DELETE_USER:
+            return {
+                ...state,
+                allUsers: state.allUsers.filter(user => user.id !== action.payload)
+            }
+
+        case DELETE_DRIVER:
+            return {
+                ...state,
+                allDrivers: state.allDrivers.filter(driver => driver.id !== action.payload)
+            }
+
+        case SET_ORDER_DATA:
+            return {
+                ...state,
+                orderData: action.payload
+            }
+
+
+            
+        
+      case POST_IS_LOGING:
+        return {
+          ...state,
+          allUsers: action.payload
+        }
+
+        case POST_REVIEWS:
+          return {
+            ...state,
+            reviews: action.payload
+          }
+
+          case GET_ENLISTMENT_GUIDE_NUMBER:
+            return {
+                ...state,
+                enlistmentDetail: action.payload
+            }
+
+        case CLEAR_ENLISTMENT_DETAIL:
+            return {
+                ...state,
+                enlistmentDetail: []
+            }
+
+
+    default:
+      return state;
+  }
 }
-
 
 export default rootReducer;

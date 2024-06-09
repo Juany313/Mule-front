@@ -3,7 +3,7 @@ import Error404 from "../views/Error404";
 
 const LayoutError = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-black">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-blue-500">
       <Error404 />
     </div>
   );

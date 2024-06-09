@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import {
   BrowserRouter as Router,
@@ -13,7 +14,7 @@ import LayoutAuth from "./layouts/LayoutAuth";
 import LayoutAdmin from "./layouts/LayoutAdmin";
 import LayoutAdminAlpha from "./layouts/LayoutAdminAlpha";
 import LayoutError from "./layouts/LayoutError";
-import Landing from "./views/Landing";
+import Landing from "./views/Landing/Landing";
 import Detail from "./views/Detail";
 import About from "./views/About";
 import Service from "./views/Service";
@@ -26,10 +27,26 @@ import Home from "./views/admin/Home";
 import Profile from "./views/profile/Profile";
 import Payment from "./components/Payment";
 import Dashboard from "./views/auth/Dashboard";
+import Customers from "./views/admin/customers/Customers"
+import Drivers from "./views/admin/drivers/Drivers"
 import AuthenticatedApp from "./views/profile/AuthenticatedApp";
 import Shipments from "./views/auth/Shipments";
 import History from "./views/auth/History";
 import ConfirmEmail from "./views/auth/ConfirmEmail";
+import ConfirmPasswordReset from "./views/auth/ConfirmPasswordReset";
+
+
+/* Admin */
+import Enlistment from "./views/admin/Enlistment/Enlistment";
+import AdminHome from "./views/admin/adminHome/AdminHome"
+
+
+
+import ShipmentPrice from "./components/ShipmentPrice";
+import ReviewForm from "./components/ReviewForm";
+import { getUserDetail, setInfoUserLogged } from "./redux/actions";
+import parseJwt from "./helpers/parseJwt";
+import { jwtDecode } from "jwt-decode";
 
 
 /* Enlistment */
@@ -38,6 +55,24 @@ import EnlistmentTable from "./views/admin/Enlistment/EnlistmentTable";
 import EnlistmentForm from "./views/admin/Enlistment/EnlistmentForm";
 
 function App() {
+
+  const dispatch = useDispatch()
+  
+  
+  
+  useEffect(() =>{
+    const token = localStorage.getItem("token")
+    if(token){
+      try {
+        const decodedToken = jwtDecode(token);
+        dispatch(getUserDetail(decodedToken.id));
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+  ), [dispatch]
+
   return (
     <Router>
       <Routes>
@@ -51,6 +86,7 @@ function App() {
           <Route path="shipments" element={<Shipments />} />
           <Route path="history" element={<History />} />
           <Route path="emailConfirm" element={<ConfirmEmail />} />
+          <Route path="reset-password" element={<ConfirmPasswordReset />} />
 
         </Route>
         <Route path="/" element={<Landing />} />
@@ -62,14 +98,20 @@ function App() {
           <Route path="pedido" element={<OrderForm />} />
           <Route path="ordershipment/detail/:id" element={<Detail />} />
           <Route path="payment" element={<Payment />} />
-          {/* <Route path="prueba" element={<Products />} /> */}
+
+
+         
+
+          <Route path= "shipment-price" element={ <ShipmentPrice /> } />
+
+          <Route path="prueba" element={<ReviewForm />} />
         </Route>
         <Route path="/admin" element={<LayoutAdminAlpha />}>
-          <Route index element={<Home />} />
-          <Route path="enlistment" element={<Enlistment />}>
-            <Route index element={<EnlistmentForm />} />
-            <Route path="list" element={<EnlistmentTable />} />
-          </Route>
+          <Route index element={<AdminHome />} />
+          <Route path="enlistment" element={<Enlistment />} />
+          <Route path="customers" element={<Customers />} />
+          <Route path="drivers" element={<Drivers />} />
+
         </Route>
         <Route path="*" element={<LayoutError />} />
       </Routes>

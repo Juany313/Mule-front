@@ -1,34 +1,80 @@
 import React, { useState } from 'react';
 import EnlistmentForm from './EnlistmentForm';
+
+import EnlistmentFormEdit from './EnlistmentFormEdit';
 import EnlistmentTable from './EnlistmentTable';
+import EnlistmentDetail from './EnlistmentDetail';
+import EnlistmentDelete from './EnlistmentDelete';
+import icon_crear from '../../../assets/Icon_crear.svg';
 
 const Enlistments = () => {
-    const [enlistments, setEnlistments] = useState([]);
-    const [enlistment, setEnlistment] = useState({});
+    const [actualBackOrder, setActualBackOrder] = useState('')
+    const [selectSubmit, setSelectSubmit] = useState('')
+    const [createOnOff, setCreateOnOff] = useState(false)
+    const [showModal, setShowModal] = useState(false);
+    const [showModalEdit, setShowModalEdit] = useState(false);
+    const [ShowModalDetail, setShowModalDetail] = useState(false);
+    const [ShowModalDelete, setShowModalDelete] = useState(false)
+    const [currentEnlistmentId, setCurrentEnlistmentId] = useState('')
+    const [actualDetail, setActualDetail] = useState({})
 
-    const handleSave = (e) => {
-        e.preventDefault();
-        // Aquí irá la lógica para guardar o actualizar los datos de enlistamiento
-    };
-
-    const handleEdit = (index) => {
-        // Aquí irá la lógica para editar un enlistamiento
-    };
-
-    const handleDelete = (index) => {
-        // Aquí irá la lógica para eliminar un enlistamiento
-    };
-
+    const handleCreate = () => {
+        setShowModal(true);
+    }
+    
     return (
-        <div className="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0 m-8">
-            <div className="md:w-1/3">
-                <h1 className="text-2xl font-semibold mb-4">Enlistments</h1>
-                <EnlistmentForm enlistment={enlistment} setEnlistment={setEnlistment} handleSave={handleSave} />
-            </div>
-            <div className="md:w-2/3">
-                <EnlistmentTable enlistments={enlistments} handleEdit={handleEdit} handleDelete={handleDelete} />
+        <div>
+            {
+                showModal && 
+                <EnlistmentForm
+                setShowModal={setShowModal}
+                createOnOff={createOnOff}
+                setCreateOnOff={setCreateOnOff}
+                actualBackOrder={actualBackOrder}
+                setActualBackOrder={setActualBackOrder}
+                setSelectSubmit={setSelectSubmit}
+                />
+            }
+            {
+                showModalEdit &&
+                <EnlistmentFormEdit
+                setShowModalEdit={setShowModalEdit}
+                />
+            }
+            {
+                ShowModalDetail &&
+                <EnlistmentDetail
+                setShowModalDetail={setShowModalDetail}
+                actualDetail={actualDetail}
+                />
+            }
+            {
+                ShowModalDelete &&
+                <EnlistmentDelete
+                setShowModalDelete={setShowModalDelete}
+                currentEnlistmentId={currentEnlistmentId}
+                />
+            }
+            <div className=" md:space-x-6 space-y-6 md:space-y-0 m-8">
+                <div className='icon-create-container'>
+                    <img src={icon_crear} alt="crear" 
+                        onClick={handleCreate} 
+                        className='icon-create'
+                        style={{ cursor: 'pointer' }} />
+                </div>
+                <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                    <EnlistmentTable 
+                        setShowModalEdit={setShowModalEdit}
+                        setShowModalDetail={setShowModalDetail}
+                        setShowModalDelete={setShowModalDelete}
+                        setCurrentEnlistmentId={setCurrentEnlistmentId}
+                        setActualDetail={setActualDetail}
+                        />
+                </div>
             </div>
         </div>
+        
+
     );
 };
 
