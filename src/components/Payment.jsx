@@ -133,12 +133,12 @@ const Payment = () => {
           Pagar
         </button>
       </div>
-          </div>
-        ))}
-      </div>
+      
+       
+      
     </div>
   );
+}
 
 
 export default Payment;
-

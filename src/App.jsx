@@ -37,7 +37,7 @@ import ConfirmPasswordReset from "./views/auth/ConfirmPasswordReset";
 
 
 /* Admin */
-import Enlistment from "./views/admin/Enlistment/Enlistment";
+//import Enlistment from "./views/admin/Enlistment/Enlistment";
 import AdminHome from "./views/admin/adminHome/AdminHome"
 
 
